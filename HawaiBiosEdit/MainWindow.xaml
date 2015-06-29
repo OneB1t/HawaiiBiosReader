@@ -97,6 +97,32 @@
             	Height="210" Width="287" Margin="523,657,0,0"
             	HorizontalAlignment="Left" VerticalAlignment="Top" 
             	Background="DarkOrange" />
+            <TextBox x:Name="fanspeed1" Text=""
+            	Height="27" Width="287" Margin="854,456,0,0"
+            	HorizontalAlignment="Left" VerticalAlignment="Top" 
+            	Background="DarkOrange" />
+            <TextBox x:Name="fanspeed2" Text=""
+            	Height="27" Width="287" Margin="854,490,0,0"
+            	HorizontalAlignment="Left" VerticalAlignment="Top" 
+            	Background="DarkOrange" />
+            <TextBox x:Name="fanspeed3" Text=""
+            	Height="27" Width="287" Margin="854,522,0,0"
+            	HorizontalAlignment="Left" VerticalAlignment="Top" 
+            	Background="DarkOrange" />
+            <TextBox x:Name="fantemperature1" Text=""
+            	Height="27" Width="287" Margin="854,580,0,0"
+            	HorizontalAlignment="Left" VerticalAlignment="Top" 
+            	Background="DarkOrange" />
+            <TextBox x:Name="fantemperature2" Text=""
+            	Height="27" Width="287" Margin="854,612,0,0"
+            	HorizontalAlignment="Left" VerticalAlignment="Top" 
+            	Background="DarkOrange" />
+            <TextBox x:Name="fantemperature3" Text=""
+            	Height="27" Width="287" Margin="854,644,0,0"
+            	HorizontalAlignment="Left" VerticalAlignment="Top" 
+            	Background="DarkOrange" />
+            <TextBlock Text="Fan speeds:" Margin="854,430,-38,505" FontSize="16" />
+            <TextBlock Text="Fan temperature target:" Margin="854,554,-38,381" FontSize="16" />
 
         </Grid>
     </Grid>

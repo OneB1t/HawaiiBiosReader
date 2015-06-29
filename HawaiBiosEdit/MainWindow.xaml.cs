@@ -21,15 +21,18 @@ namespace HawaiBiosReader
     {
         Byte[] buffer; // whole rom
         Byte[] PowerTablepattern = new byte[] { 0x03, 0xe8, 0x03, 0x58 }; // pattern to search for in buffer
+        Byte[] FanControlpattern = new byte[] { 0x07, 0x06, 0x7C, 0x15 }; // pattern to search for in buffer
+        Byte[] FanControl2pattern = new byte[] { 0x03, 0x06, 0x7C, 0x15 }; // pattern to search for in buffer
         int powerTablePosition; // start position of powertable in rom
+        int fanTablePosition;
         int voltagetableoffset = 319; // 290 have different voltagetable offset than 390
         int memoryfrequencytableoffset = 278;
         int gpufrequencytableoffset = 231;
         int somevalueoffset = 396;
         int somevalue2offset = 549;
         int somevalue4offset = 441;
-        
-        
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -59,6 +62,16 @@ namespace HawaiBiosReader
                 {
                     buffer = br.ReadBytes((int)fileStream.Length);
                     powerTablePosition = PatternAt(buffer, PowerTablepattern);
+                    fanTablePosition = PatternAt(buffer, FanControlpattern);
+                    if (fanTablePosition == 0)
+                    {
+                        fanTablePosition = PatternAt(buffer, FanControl2pattern);
+                        if (fanTablePosition == 0)
+                        {
+                            // no fan table found
+                        }
+                    }
+
                     if (powerTablePosition == 0)
                     {
                         MessageBoxResult result = MessageBox.Show("PowerTable position not found in this file", "Error", MessageBoxButton.OK);
@@ -118,12 +131,12 @@ namespace HawaiBiosReader
                         tbResults.Text = powerTablePosition.ToString();
                         powerTable.Text = returnTextFromBinary(buffer, powerTablePosition, tablesize);
 
-                        
+
                         // gpu clock1
                         int position = powerTablePosition + 98; // helper for position
                         gpuclock1.Text = position.ToString() + " -- ";
                         gpuclock1.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
-                        
+
                         // gpu clock 2
                         position = powerTablePosition + 107;
                         gpuclock2.Text = position.ToString() + " -- ";
@@ -131,20 +144,20 @@ namespace HawaiBiosReader
 
                         // gpu clock 3
                         position = powerTablePosition + 116;
-                        gpuclock3.Text = position.ToString() +" -- "; 
+                        gpuclock3.Text = position.ToString() + " -- ";
                         gpuclock3.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
 
                         // mem clock 1
                         position = powerTablePosition + 101;
-                        memclock1.Text = position.ToString() + " -- "; 
+                        memclock1.Text = position.ToString() + " -- ";
                         memclock1.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
                         // mem clock 2
                         position = powerTablePosition + 110;
-                        memclock2.Text = position.ToString() + " -- "; 
+                        memclock2.Text = position.ToString() + " -- ";
                         memclock2.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
                         // mem clock 3
                         position = powerTablePosition + 119;
-                        memclock3.Text = position.ToString() + " -- "; 
+                        memclock3.Text = position.ToString() + " -- ";
                         memclock3.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
 
                         // read voltage table
@@ -181,7 +194,7 @@ namespace HawaiBiosReader
                             position = powerTablePosition + somevalueoffset + (i * 3);
                             somevalues.Text += position.ToString() + "  -- ";
                             somevalues.Text += i.ToString() + "  -- ";
-                            somevalues.Text += get24BitValueFromPosition(position, buffer)  + System.Environment.NewLine;
+                            somevalues.Text += get24BitValueFromPosition(position, buffer) + System.Environment.NewLine;
                         }
 
                         // StartSAMULimitTable + StartACPLimitTable
@@ -207,7 +220,7 @@ namespace HawaiBiosReader
 
                         // StartUVDLimitTable
                         somevalues4.Text = "";
-                        for(int i = 0;i < 8;i++)
+                        for (int i = 0; i < 8; i++)
                         {
                             position = powerTablePosition + somevalue4offset + (i * 3);
                             somevalues4.Text += position.ToString() + "  -- ";
@@ -215,23 +228,64 @@ namespace HawaiBiosReader
                             somevalues4.Text += buffer[position] + System.Environment.NewLine;
                         }
 
+                        position = fanTablePosition + 2;
+                        fanspeed1.Text = position.ToString() + " -- ";
+                        fanspeed1.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " %";
+
+                        position = fanTablePosition + 6;
+                        fanspeed2.Text = position.ToString() + " -- ";
+                        fanspeed2.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " %";
+
+                        position = fanTablePosition + 10;
+                        fanspeed3.Text = position.ToString() + " -- ";
+                        fanspeed3.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " %";
+
+                        position = fanTablePosition + 4;
+                        fantemperature1.Text = position.ToString() + " -- ";
+                        fantemperature1.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " °C";
+
+                        position = fanTablePosition + 8;
+                        fantemperature2.Text = position.ToString() + " -- ";
+                        fantemperature2.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " °C";
+
+                        position = fanTablePosition + 12;
+                        fantemperature3.Text = position.ToString() + " -- ";
+                        fantemperature3.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " °C";
+
                     }
                     fileStream.Close();
                 }
             }
         }
-        
-        public int PatternAt(byte[] source, byte[] pattern) // search for powertable pattern this way is slow but works fine
+
+
+        private static int PatternAt(byte[] data, byte[] pattern)
         {
-            for (int i = 0; i < source.Length; i++)
+            if (pattern.Length > data.Length)
             {
-                if (source.Skip(i).Take(pattern.Length).SequenceEqual(pattern))
-                {
-                    return i;
-                }
+                return -1;
             }
-            return 0;
+            for (int i = 0; i < data.Length; )
+            {
+                int j;
+                for (j = 0; j < pattern.Length; j++)
+                {
+
+                    if (pattern[j] != data[i])
+                        break;
+                    i++;
+                }
+                if (j == pattern.Length)
+                {
+                    return i - pattern.Length;
+                }
+                if (j != 0) continue;
+                i++;
+            }
+
+            return -1;
         }
+
         public String returnTextFromBinary(byte[] binary, int offset, int lenght)
         {
             String result = "";
