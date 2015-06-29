@@ -48,6 +48,7 @@ namespace HawaiBiosReader
             {
                 // Open the selected file to read.
                 System.IO.Stream fileStream = openFileDialog1.OpenFile();
+                filename.Text = openFileDialog1.FileName;
 
                 using (BinaryReader br = new BinaryReader(fileStream)) // binary reader
                 {

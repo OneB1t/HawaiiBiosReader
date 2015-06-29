@@ -9,6 +9,11 @@
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Click="bOpenFileDialog_Click" />
             <TextBlock Text="PowerTable Location:" Margin="17,68,799,874" FontSize="16" />
+            <TextBlock Text="File name:" Margin="116,13,700,929" FontSize="16" />
+            <TextBox x:Name="filename" Text=""
+                 Height="27" Width="287" Margin="193,13,0,0"
+                 HorizontalAlignment="Left" VerticalAlignment="Top" 
+                 Background="DarkOrange" />
             <TextBox x:Name="tbResults" Text=""
                  Height="27" Width="287" Margin="193,68,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
