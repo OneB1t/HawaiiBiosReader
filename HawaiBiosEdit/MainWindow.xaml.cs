@@ -25,6 +25,8 @@ namespace HawaiBiosReader
         int voltagetableoffset = 319; // 290 have different voltagetable offset than 390
         int memoryfrequencytableoffset = 278;
         int gpufrequencytableoffset = 231;
+        int somevalueoffset = 396;
+        int somevalue2offset = 549;
         
         
         public MainWindow()
@@ -81,18 +83,24 @@ namespace HawaiBiosReader
                                 voltagetableoffset = 319;
                                 memoryfrequencytableoffset = 278;
                                 gpufrequencytableoffset = 231;
+                                somevalueoffset = 396;
+                                somevalue2offset = 549;
                                 break;
                             case 648:
                                 powerTablesize.Text = powerTablesize.Text + " - R9 290/290X";
                                 voltagetableoffset = 307;
                                 memoryfrequencytableoffset = 266;
                                 gpufrequencytableoffset = 219;
+                                somevalueoffset = 384;
+                                somevalue2offset = 537;
                                 break;
                             case 658: // Slith mining bios for 290/290X
                                 powerTablesize.Text = powerTablesize.Text + " - R9 290/290X The Stilt mining bios";
                                 voltagetableoffset = 316;
                                 memoryfrequencytableoffset = 275;
                                 gpufrequencytableoffset = 228;
+                                somevalueoffset = 394;
+                                somevalue2offset = 547;
                                 break;
                             case 642:
                                 powerTablesize.Text = powerTablesize.Text + " - PT1/PT3 bios";
@@ -165,7 +173,9 @@ namespace HawaiBiosReader
                         somevalues.Text = "";
                         for (int i = 0; i < 14; i++)
                         {
-                            somevalues.Text += get24BitValueFromPosition(powerTablePosition + 396 + (i * 3), buffer) + " DUNNO" + System.Environment.NewLine;
+                            position = powerTablePosition + somevalueoffset + (i * 3);
+                            somevalues.Text += position.ToString() + "  -- ";
+                            somevalues.Text += get24BitValueFromPosition(position, buffer) + " DUNNO" + System.Environment.NewLine;
                         }
 
                         // some other values?
@@ -180,9 +190,11 @@ namespace HawaiBiosReader
                                 }
                                 else
                                 {
-                                    somevalues2.Text += buffer[powerTablePosition + 547 + (i * 5)] + "  -> ";
+                                    position = powerTablePosition + somevalue2offset - 2 + (i * 5);
+                                    somevalues2.Text += buffer[position] + "  -> ";
                                 }
-                                somevalues2.Text += get24BitValueFromPosition(powerTablePosition + 549 + (i * 5), buffer) + " DUNNO" + System.Environment.NewLine;
+                                position = powerTablePosition + somevalue2offset + (i * 5);
+                                somevalues2.Text += get24BitValueFromPosition(position, buffer) + " DUNNO" + System.Environment.NewLine;
                             }
                             else
                             {
@@ -192,9 +204,11 @@ namespace HawaiBiosReader
                                 }
                                 else
                                 {
-                                    somevalues2.Text += buffer[powerTablePosition + 549 + (i * 5)] + "  -> ";
+                                    position = powerTablePosition + somevalue2offset + (i * 5);
+                                    somevalues2.Text += buffer[position] + "  -> ";
                                 }
-                                somevalues2.Text += get24BitValueFromPosition(powerTablePosition + 551 + (i * 5), buffer) + " DUNNO" + System.Environment.NewLine;
+                                position = powerTablePosition + somevalue2offset + 2 + (i * 5);
+                                somevalues2.Text += get24BitValueFromPosition(position, buffer) + " DUNNO" + System.Environment.NewLine;
                             }
                         }
 
