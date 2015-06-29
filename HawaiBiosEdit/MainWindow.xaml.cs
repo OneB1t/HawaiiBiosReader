@@ -170,11 +170,11 @@ namespace HawaiBiosReader
                             {
                                 if (i == 0)
                                 {
-                                    somevalues2.Text += "1  -- "; // this value is not in table but it seems to be 1 (maybe need correction)
+                                    somevalues2.Text += "1  -> "; // this value is not in table but it seems to be 1 (maybe need correction)
                                 }
                                 else
                                 {
-                                    somevalues2.Text += buffer[powerTablePosition + 547 + (i * 5)] + "  -- ";
+                                    somevalues2.Text += buffer[powerTablePosition + 547 + (i * 5)] + "  -> ";
                                 }
                                 somevalues2.Text += get24BitValueFromPosition(powerTablePosition + 549 + (i * 5), buffer) + " DUNNO" + System.Environment.NewLine;
                             }
@@ -182,11 +182,11 @@ namespace HawaiBiosReader
                             {
                                 if (i == 8)
                                 {
-                                    somevalues2.Text += "1  -- "; // this value is not in table but it seems to be 1 (maybe need correction)
+                                    somevalues2.Text += "1  -> "; // this value is not in table but it seems to be 1 (maybe need correction)
                                 }
                                 else
                                 {
-                                    somevalues2.Text += buffer[powerTablePosition + 549 + (i * 5)] + "  -- ";
+                                    somevalues2.Text += buffer[powerTablePosition + 549 + (i * 5)] + "  -> ";
                                 }
                                 somevalues2.Text += get24BitValueFromPosition(powerTablePosition + 551 + (i * 5), buffer) + " DUNNO" + System.Environment.NewLine;
                             }
