@@ -37,6 +37,7 @@
             <TextBlock Text="MEM Clock 3:" Margin="17,421,804,521" FontSize="16" />
             <TextBlock Text="MEM Freq Table:" Margin="498,588,360,353" FontSize="16" />
             <TextBlock Text="GPU Freq Table:" Margin="498,758,360,183" FontSize="16" />
+            <TextBlock Text="Values in voltage/mem/gpu before -- are locations in ROM if you want to edit them by hand." Margin="10,931,304,10" FontSize="16" />
             <TextBlock Text="Some values:" Margin="498,68,360,874" FontSize="16" />
             <TextBlock Text="Some values 2:" Margin="498,283,360,658" FontSize="16" RenderTransformOrigin="0.5,1.964" />
 
@@ -53,15 +54,15 @@
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Background="DarkOrange" />
 
-            <TextBox x:Name="memclock" Text=""
+            <TextBox x:Name="memclock1" Text=""
                  Height="27" Width="287" Margin="193,357,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Background="DarkOrange" />
-            <TextBox x:Name="memlowclock" Text=""
+            <TextBox x:Name="memclock2" Text=""
                  Height="27" Width="287" Margin="193,389,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Background="DarkOrange" />
-            <TextBox x:Name="memsaveclock" Text=""
+            <TextBox x:Name="memclock3" Text=""
                  Height="27" Width="287" Margin="193,421,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Background="DarkOrange" />

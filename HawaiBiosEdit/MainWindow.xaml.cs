@@ -99,34 +99,60 @@ namespace HawaiBiosReader
 
                         tbResults.Text = powerTablePosition.ToString();
                         powerTable.Text = returnTextFromBinary(buffer, powerTablePosition, tablesize);
-                        // gpu clock
-                        gpuclock1.Text = get24BitValueFromPosition(powerTablePosition + 98, buffer, true).ToString() + " Mhz";
-                        gpuclock2.Text = get24BitValueFromPosition(powerTablePosition + 107, buffer, true).ToString() + " Mhz";
-                        gpuclock3.Text = get24BitValueFromPosition(powerTablePosition + 116, buffer, true).ToString() + " Mhz";
 
-                        /// mem clock
-                        memclock.Text = get24BitValueFromPosition(powerTablePosition + 101, buffer, true).ToString() + " Mhz";
-                        memlowclock.Text = get24BitValueFromPosition(powerTablePosition + 110, buffer, true).ToString() + " Mhz";
-                        memsaveclock.Text = get24BitValueFromPosition(powerTablePosition + 119, buffer, true).ToString() + " Mhz";
+                        
+                        // gpu clock1
+                        int position = powerTablePosition + 98; // helper for position
+                        gpuclock1.Text = position.ToString() + " -- ";
+                        gpuclock1.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
+                        
+                        // gpu clock 2
+                        position = powerTablePosition + 107;
+                        gpuclock2.Text = position.ToString() + " -- ";
+                        gpuclock2.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
+
+                        // gpu clock 3
+                        position = powerTablePosition + 116;
+                        gpuclock3.Text = position.ToString() +" -- "; 
+                        gpuclock3.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
+
+                        // mem clock 1
+                        position = powerTablePosition + 101;
+                        memclock1.Text = position.ToString() + " -- "; 
+                        memclock1.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
+                        // mem clock 2
+                        position = powerTablePosition + 110;
+                        memclock2.Text = position.ToString() + " -- "; 
+                        memclock2.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
+                        // mem clock 3
+                        position = powerTablePosition + 119;
+                        memclock3.Text = position.ToString() + " -- "; 
+                        memclock3.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
 
                         // read voltage table
                         voltagetable.Text = "";
                         for (int i = 0; i < 24; i++)
                         {
-                            voltagetable.Text += get16BitValueFromPosition(powerTablePosition + voltagetableoffset + (i * 2), buffer) + " mV" + System.Environment.NewLine;
+                            position = powerTablePosition + voltagetableoffset + (i * 2);
+                            voltagetable.Text += position.ToString() + " -- ";
+                            voltagetable.Text += get16BitValueFromPosition(position, buffer) + " mV" + System.Environment.NewLine;
                         }
                         // memory frequency table?
                         memfrequencytable.Text = "";
                         for (int i = 0; i < 8; i++)
                         {
-                            memfrequencytable.Text += get24BitValueFromPosition(powerTablePosition + memoryfrequencytableoffset + (i * 5), buffer, true) + " Mhz" + System.Environment.NewLine;
+                            position = powerTablePosition + memoryfrequencytableoffset + (i * 5);
+                            memfrequencytable.Text += position.ToString() + " -- ";
+                            memfrequencytable.Text += get24BitValueFromPosition(position, buffer, true) + " Mhz" + System.Environment.NewLine;
                         }
 
                         // gpu frequency table?
                         gpufrequencytable.Text = "";
                         for (int i = 0; i < 8; i++)
                         {
-                            gpufrequencytable.Text += get24BitValueFromPosition(powerTablePosition + gpufrequencytableoffset + (i * 5), buffer, true) + " Mhz" + System.Environment.NewLine;
+                            position = powerTablePosition + gpufrequencytableoffset + (i * 5);
+                            gpufrequencytable.Text += position.ToString() + " -- ";
+                            gpufrequencytable.Text += get24BitValueFromPosition(position, buffer, true) + " Mhz" + System.Environment.NewLine;
                         }
 
                         // some values :D
