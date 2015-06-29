@@ -113,27 +113,27 @@ namespace HawaiBiosReader
                         voltagetable.Text = "";
                         for (int i = 0; i < 24; i++)
                         {
-                            voltagetable.Text += get16BitValueFromPosition(powerTablePosition + voltagetableoffset + (i * 2), buffer, false) + " mV" + System.Environment.NewLine;
+                            voltagetable.Text += get16BitValueFromPosition(powerTablePosition + voltagetableoffset + (i * 2), buffer) + " mV" + System.Environment.NewLine;
                         }
                         // memory frequency table?
                         memfrequencytable.Text = "";
                         for (int i = 0; i < 8; i++)
                         {
-                            memfrequencytable.Text += get24BitValueFromPosition(powerTablePosition + memoryfrequencytableoffset + (i * 5), buffer, false) + " Mhz" + System.Environment.NewLine;
+                            memfrequencytable.Text += get24BitValueFromPosition(powerTablePosition + memoryfrequencytableoffset + (i * 5), buffer, true) + " Mhz" + System.Environment.NewLine;
                         }
 
                         // gpu frequency table?
                         gpufrequencytable.Text = "";
                         for (int i = 0; i < 8; i++)
                         {
-                            gpufrequencytable.Text += get24BitValueFromPosition(powerTablePosition + gpufrequencytableoffset + (i * 5), buffer, false) + " Mhz" + System.Environment.NewLine;
+                            gpufrequencytable.Text += get24BitValueFromPosition(powerTablePosition + gpufrequencytableoffset + (i * 5), buffer, true) + " Mhz" + System.Environment.NewLine;
                         }
 
                         // some values :D
                         somevalues.Text = "";
                         for (int i = 0; i < 14; i++)
                         {
-                            somevalues.Text += get24BitValueFromPosition(powerTablePosition + 396 + (i * 3), buffer, false) + " DUNNO" + System.Environment.NewLine;
+                            somevalues.Text += get24BitValueFromPosition(powerTablePosition + 396 + (i * 3), buffer) + " DUNNO" + System.Environment.NewLine;
                         }
 
                         // some other values?
@@ -150,7 +150,7 @@ namespace HawaiBiosReader
                                 {
                                     somevalues2.Text += buffer[powerTablePosition + 547 + (i * 5)] + "  -- ";
                                 }
-                                somevalues2.Text += get24BitValueFromPosition(powerTablePosition + 549 + (i * 5), buffer, false) + " DUNNO" + System.Environment.NewLine;
+                                somevalues2.Text += get24BitValueFromPosition(powerTablePosition + 549 + (i * 5), buffer) + " DUNNO" + System.Environment.NewLine;
                             }
                             else
                             {
@@ -162,7 +162,7 @@ namespace HawaiBiosReader
                                 {
                                     somevalues2.Text += buffer[powerTablePosition + 549 + (i * 5)] + "  -- ";
                                 }
-                                somevalues2.Text += get24BitValueFromPosition(powerTablePosition + 551 + (i * 5), buffer, false) + " DUNNO" + System.Environment.NewLine;
+                                somevalues2.Text += get24BitValueFromPosition(powerTablePosition + 551 + (i * 5), buffer) + " DUNNO" + System.Environment.NewLine;
                             }
                         }
 
