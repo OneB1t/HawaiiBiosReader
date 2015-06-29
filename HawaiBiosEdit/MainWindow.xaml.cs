@@ -22,7 +22,7 @@ namespace HawaiBiosReader
         Byte[] buffer; // whole rom
         Byte[] PowerTablepattern = new byte[] { 0x03, 0xe8, 0x03, 0x58 }; // pattern to search for in buffer
         int powerTablePosition; // start position of powertable in rom
-        short voltagetablesize = 24; // 290 have different voltagetablesize than 390X (or its maybe moved by 6 bits this needs test)
+        short voltagetableoffset = 319; // 290 have different voltagetable offset than 390
         
         
         public MainWindow()
@@ -75,11 +75,11 @@ namespace HawaiBiosReader
                         {
                             case 660:
                                 powerTablesize.Text = powerTablesize.Text + " - R9 390/390X";
-                                voltagetablesize = 24;
+                                voltagetableoffset = 319;
                                 break;
                             case 648:
                                 powerTablesize.Text = powerTablesize.Text + " - R9 290/290X";
-                                voltagetablesize = 18;
+                                voltagetableoffset = 307;
                                 break;
                             case 642:
                                 powerTablesize.Text = powerTablesize.Text + " - PT1/PT3 bios";
@@ -104,9 +104,9 @@ namespace HawaiBiosReader
 
                         // read voltage table
                         voltagetable.Text = "";
-                        for (int i = 0; i < voltagetablesize; i++)
+                        for (int i = 0; i < 24; i++)
                         {
-                            voltagetable.Text = voltagetable.Text + get16BitValueFromPosition(powerTablePosition + 319 + (i * 2), buffer, false) + " mV" + System.Environment.NewLine;
+                            voltagetable.Text = voltagetable.Text + get16BitValueFromPosition(powerTablePosition + voltagetableoffset + (i * 2), buffer, false) + " mV" + System.Environment.NewLine;
                         }
                         // memory frequency table?
                         frequencytable.Text = "";
