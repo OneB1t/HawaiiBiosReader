@@ -106,27 +106,50 @@ namespace HawaiBiosReader
                         voltagetable.Text = "";
                         for (int i = 0; i < 24; i++)
                         {
-                            voltagetable.Text = voltagetable.Text + get16BitValueFromPosition(powerTablePosition + voltagetableoffset + (i * 2), buffer, false) + " mV" + System.Environment.NewLine;
+                            voltagetable.Text += get16BitValueFromPosition(powerTablePosition + voltagetableoffset + (i * 2), buffer, false) + " mV" + System.Environment.NewLine;
                         }
                         // memory frequency table?
                         frequencytable.Text = "";
                         for (int i = 0; i < 8; i++)
                         {
-                            frequencytable.Text = frequencytable.Text + get24BitValueFromPosition(powerTablePosition + 278 + (i * 5), buffer, false) + " Mhz" + System.Environment.NewLine;
+                            frequencytable.Text += get24BitValueFromPosition(powerTablePosition + 278 + (i * 5), buffer, false) + " Mhz" + System.Environment.NewLine;
                         }
 
                         // some values :D
                         somevalues.Text = "";
                         for (int i = 0; i < 14; i++)
                         {
-                            somevalues.Text = somevalues.Text + get24BitValueFromPosition(powerTablePosition + 396 + (i * 3), buffer, false) + " DUNNO" + System.Environment.NewLine;
+                            somevalues.Text += get24BitValueFromPosition(powerTablePosition + 396 + (i * 3), buffer, false) + " DUNNO" + System.Environment.NewLine;
                         }
 
                         // some other values?
                         somevalues2.Text = "";
-                        for (int i = 0; i < 8; i++)
+                        for (int i = 0; i < 16; i++)
                         {
-                            somevalues2.Text = somevalues2.Text + get24BitValueFromPosition(powerTablePosition + 549 + (i * 5), buffer, false) + " DUNNO" + System.Environment.NewLine;
+                            if (i <= 7)
+                            {
+                                if (i == 0)
+                                {
+                                    somevalues2.Text += "1  -- "; // this value is not in table but it seems to be 1 (maybe need correction)
+                                }
+                                else
+                                {
+                                    somevalues2.Text += buffer[powerTablePosition + 547 + (i * 5)] + "  -- ";
+                                }
+                                somevalues2.Text += get24BitValueFromPosition(powerTablePosition + 549 + (i * 5), buffer, false) + " DUNNO" + System.Environment.NewLine;
+                            }
+                            else
+                            {
+                                if (i == 8)
+                                {
+                                    somevalues2.Text += "1  -- "; // this value is not in table but it seems to be 1 (maybe need correction)
+                                }
+                                else
+                                {
+                                    somevalues2.Text += buffer[powerTablePosition + 549 + (i * 5)] + "  -- ";
+                                }
+                                somevalues2.Text += get24BitValueFromPosition(powerTablePosition + 551 + (i * 5), buffer, false) + " DUNNO" + System.Environment.NewLine;
+                            }
                         }
 
                     }

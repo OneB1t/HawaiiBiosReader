@@ -30,9 +30,9 @@
             <TextBlock Text="MEM Clock 1:" Margin="17,357,804,585" FontSize="16" />
             <TextBlock Text="MEM Clock 2:" Margin="17,389,804,553" FontSize="16" />
             <TextBlock Text="MEM Clock 3:" Margin="17,421,804,521" FontSize="16" />
-            <TextBlock Text="MEM Freq Table:" Margin="498,421,360,520" FontSize="16" />
+            <TextBlock Text="MEM Freq Table:" Margin="498,588,360,353" FontSize="16" />
             <TextBlock Text="Some values:" Margin="498,68,360,874" FontSize="16" />
-            <TextBlock Text="Some values 2:" Margin="498,245,360,696" FontSize="16" />
+            <TextBlock Text="Some values 2:" Margin="498,283,360,658" FontSize="16" RenderTransformOrigin="0.5,1.964" />
 
             <TextBox x:Name="gpuclock1" Text=""
                  Height="27" Width="287" Margin="193,245,0,0"
@@ -64,15 +64,15 @@
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Background="DarkOrange" />
             <TextBox x:Name="frequencytable" Text=""
-                 Height="165" Width="287" Margin="632,421,0,0"
+                 Height="165" Width="287" Margin="632,588,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Background="DarkOrange" />
             <TextBox x:Name="somevalues" Text=""
-                 Height="165" Width="287" Margin="632,68,0,0"
+                 Height="210" Width="287" Margin="632,68,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Background="DarkOrange" />
             <TextBox x:Name="somevalues2" Text=""
-                 Height="165" Width="287" Margin="632,245,0,0"
+                 Height="300" Width="287" Margin="632,283,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Background="DarkOrange" />
             <TextBlock Text="Voltage Table:" Margin="17,483,799,452" FontSize="16" />
