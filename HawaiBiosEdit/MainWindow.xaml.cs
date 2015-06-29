@@ -27,6 +27,7 @@ namespace HawaiBiosReader
         int gpufrequencytableoffset = 231;
         int somevalueoffset = 396;
         int somevalue2offset = 549;
+        int somevalue4offset = 441;
         
         
         public MainWindow()
@@ -85,6 +86,7 @@ namespace HawaiBiosReader
                                 gpufrequencytableoffset = 231;
                                 somevalueoffset = 396;
                                 somevalue2offset = 549;
+                                somevalue4offset = 441;
                                 break;
                             case 648:
                                 powerTablesize.Text = powerTablesize.Text + " - R9 290/290X";
@@ -93,6 +95,7 @@ namespace HawaiBiosReader
                                 gpufrequencytableoffset = 219;
                                 somevalueoffset = 384;
                                 somevalue2offset = 537;
+                                somevalue4offset = 429;
                                 break;
                             case 658: // Slith mining bios for 290/290X
                                 powerTablesize.Text = powerTablesize.Text + " - R9 290/290X The Stilt mining bios";
@@ -101,6 +104,7 @@ namespace HawaiBiosReader
                                 gpufrequencytableoffset = 228;
                                 somevalueoffset = 394;
                                 somevalue2offset = 547;
+                                somevalue4offset = 439;
                                 break;
                             case 642:
                                 powerTablesize.Text = powerTablesize.Text + " - PT1/PT3 bios";
@@ -151,6 +155,7 @@ namespace HawaiBiosReader
                             voltagetable.Text += position.ToString() + " -- ";
                             voltagetable.Text += get16BitValueFromPosition(position, buffer) + " mV" + System.Environment.NewLine;
                         }
+
                         // memory frequency table?
                         memfrequencytable.Text = "";
                         for (int i = 0; i < 8; i++)
@@ -169,47 +174,45 @@ namespace HawaiBiosReader
                             gpufrequencytable.Text += get24BitValueFromPosition(position, buffer, true) + " Mhz" + System.Environment.NewLine;
                         }
 
-                        // some values :D
+                        // StartVCELimitTable
                         somevalues.Text = "";
-                        for (int i = 0; i < 14; i++)
+                        for (int i = 0; i < 7; i++)
                         {
                             position = powerTablePosition + somevalueoffset + (i * 3);
                             somevalues.Text += position.ToString() + "  -- ";
-                            somevalues.Text += get24BitValueFromPosition(position, buffer) + " DUNNO" + System.Environment.NewLine;
+                            somevalues.Text += i.ToString() + "  -- ";
+                            somevalues.Text += get24BitValueFromPosition(position, buffer)  + System.Environment.NewLine;
                         }
 
-                        // some other values?
+                        // StartSAMULimitTable + StartACPLimitTable
                         somevalues2.Text = "";
+                        somevalues3.Text = "";
                         for (int i = 0; i < 16; i++)
                         {
                             if (i <= 7)
                             {
-                                if (i == 0)
-                                {
-                                    somevalues2.Text += "1  -> "; // this value is not in table but it seems to be 1 (maybe need correction)
-                                }
-                                else
-                                {
-                                    position = powerTablePosition + somevalue2offset - 2 + (i * 5);
-                                    somevalues2.Text += buffer[position] + "  -> ";
-                                }
                                 position = powerTablePosition + somevalue2offset + (i * 5);
-                                somevalues2.Text += get24BitValueFromPosition(position, buffer) + " DUNNO" + System.Environment.NewLine;
+                                somevalues2.Text += position.ToString() + "  -- ";
+                                somevalues2.Text += get16BitValueFromPosition(position - 2, buffer) + "  -- ";
+                                somevalues2.Text += get24BitValueFromPosition(position, buffer) + System.Environment.NewLine;
                             }
                             else
                             {
-                                if (i == 8)
-                                {
-                                    somevalues2.Text += "1  -> "; // this value is not in table but it seems to be 1 (maybe need correction)
-                                }
-                                else
-                                {
-                                    position = powerTablePosition + somevalue2offset + (i * 5);
-                                    somevalues2.Text += buffer[position] + "  -> ";
-                                }
                                 position = powerTablePosition + somevalue2offset + 2 + (i * 5);
-                                somevalues2.Text += get24BitValueFromPosition(position, buffer) + " DUNNO" + System.Environment.NewLine;
+                                somevalues3.Text += position.ToString() + "  -- ";
+                                somevalues3.Text += get16BitValueFromPosition(position - 2, buffer) + "  -- ";
+                                somevalues3.Text += get24BitValueFromPosition(position, buffer) + System.Environment.NewLine;
                             }
+                        }
+
+                        // StartUVDLimitTable
+                        somevalues4.Text = "";
+                        for(int i = 0;i < 8;i++)
+                        {
+                            position = powerTablePosition + somevalue4offset + (i * 3);
+                            somevalues4.Text += position.ToString() + "  -- ";
+                            somevalues4.Text += buffer[position + 1] + "  -- ";
+                            somevalues4.Text += buffer[position] + System.Environment.NewLine;
                         }
 
                     }
