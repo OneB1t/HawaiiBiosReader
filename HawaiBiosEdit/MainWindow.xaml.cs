@@ -227,31 +227,41 @@ namespace HawaiBiosReader
                             somevalues4.Text += buffer[position + 1] + "  -- ";
                             somevalues4.Text += buffer[position] + System.Environment.NewLine;
                         }
+                        if (fanTablePosition > 0)
+                        {
+                            position = fanTablePosition + 2;
+                            fantemperature1.Text = position.ToString() + " -- ";
+                            fantemperature1.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " °C";
 
-                        position = fanTablePosition + 2;
-                        fanspeed1.Text = position.ToString() + " -- ";
-                        fanspeed1.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " %";
+                            position = fanTablePosition + 4;
+                            fantemperature2.Text = position.ToString() + " -- ";
+                            fantemperature2.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " °C";
 
-                        position = fanTablePosition + 6;
-                        fanspeed2.Text = position.ToString() + " -- ";
-                        fanspeed2.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " %";
+                            position = fanTablePosition + 6;
+                            fantemperature3.Text = position.ToString() + " -- ";
+                            fantemperature3.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " °C";
 
-                        position = fanTablePosition + 10;
-                        fanspeed3.Text = position.ToString() + " -- ";
-                        fanspeed3.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " %";
+                            position = fanTablePosition + 8;
+                            fanspeed1.Text = position.ToString() + " -- ";
+                            fanspeed1.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " %";
 
-                        position = fanTablePosition + 4;
-                        fantemperature1.Text = position.ToString() + " -- ";
-                        fantemperature1.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " °C";
+                            position = fanTablePosition + 10;
+                            fanspeed2.Text = position.ToString() + " -- ";
+                            fanspeed2.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " %";
 
-                        position = fanTablePosition + 8;
-                        fantemperature2.Text = position.ToString() + " -- ";
-                        fantemperature2.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " °C";
-
-                        position = fanTablePosition + 12;
-                        fantemperature3.Text = position.ToString() + " -- ";
-                        fantemperature3.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " °C";
-
+                            position = fanTablePosition + 12;
+                            fanspeed3.Text = position.ToString() + " -- ";
+                            fanspeed3.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " %";
+                        }
+                        else
+                        {
+                            fanspeed1.Text = "NOT FOUND";
+                            fanspeed2.Text = "NOT FOUND";
+                            fanspeed3.Text = "NOT FOUND";
+                            fantemperature1.Text = "NOT FOUND";
+                            fantemperature2.Text = "NOT FOUND";
+                            fantemperature3.Text = "NOT FOUND";
+                        }
                     }
                     fileStream.Close();
                 }

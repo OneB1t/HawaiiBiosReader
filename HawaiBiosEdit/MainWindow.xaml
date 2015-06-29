@@ -121,8 +121,8 @@
             	Height="27" Width="287" Margin="854,644,0,0"
             	HorizontalAlignment="Left" VerticalAlignment="Top" 
             	Background="DarkOrange" />
-            <TextBlock Text="Fan speeds:" Margin="854,430,-38,505" FontSize="16" />
-            <TextBlock Text="Fan temperature target:" Margin="854,554,-38,381" FontSize="16" />
+            <TextBlock Text="Fan speeds:" Margin="854,554,-38,381" FontSize="16" />
+            <TextBlock Text="Fan temperature target:" Margin="854,430,-38,505" FontSize="16" />
 
         </Grid>
     </Grid>
