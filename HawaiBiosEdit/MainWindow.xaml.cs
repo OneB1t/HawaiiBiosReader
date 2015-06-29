@@ -22,7 +22,9 @@ namespace HawaiBiosReader
         Byte[] buffer; // whole rom
         Byte[] PowerTablepattern = new byte[] { 0x03, 0xe8, 0x03, 0x58 }; // pattern to search for in buffer
         int powerTablePosition; // start position of powertable in rom
-        short voltagetableoffset = 319; // 290 have different voltagetable offset than 390
+        int voltagetableoffset = 319; // 290 have different voltagetable offset than 390
+        int memoryfrequencytableoffset = 278;
+        int gpufrequencytableoffset = 231;
         
         
         public MainWindow()
@@ -77,10 +79,14 @@ namespace HawaiBiosReader
                             case 660:
                                 powerTablesize.Text = powerTablesize.Text + " - R9 390/390X";
                                 voltagetableoffset = 319;
+                                memoryfrequencytableoffset = 278;
+                                gpufrequencytableoffset = 231;
                                 break;
                             case 648:
                                 powerTablesize.Text = powerTablesize.Text + " - R9 290/290X";
                                 voltagetableoffset = 307;
+                                memoryfrequencytableoffset = 266;
+                                gpufrequencytableoffset = 219;
                                 break;
                             case 642:
                                 powerTablesize.Text = powerTablesize.Text + " - PT1/PT3 bios";
@@ -113,14 +119,14 @@ namespace HawaiBiosReader
                         memfrequencytable.Text = "";
                         for (int i = 0; i < 8; i++)
                         {
-                            memfrequencytable.Text += get24BitValueFromPosition(powerTablePosition + 278 + (i * 5), buffer, false) + " Mhz" + System.Environment.NewLine;
+                            memfrequencytable.Text += get24BitValueFromPosition(powerTablePosition + memoryfrequencytableoffset + (i * 5), buffer, false) + " Mhz" + System.Environment.NewLine;
                         }
 
                         // gpu frequency table?
                         gpufrequencytable.Text = "";
                         for (int i = 0; i < 8; i++)
                         {
-                            gpufrequencytable.Text += get24BitValueFromPosition(powerTablePosition + 231 + (i * 5), buffer, false) + " Mhz" + System.Environment.NewLine;
+                            gpufrequencytable.Text += get24BitValueFromPosition(powerTablePosition + gpufrequencytableoffset + (i * 5), buffer, false) + " Mhz" + System.Environment.NewLine;
                         }
 
                         // some values :D
