@@ -19,9 +19,12 @@ namespace HawaiBiosReader
 {
     public partial class MainWindow : Window
     {
-        byte[] buffer; // whole rom
-        byte[] PowerTablepattern = new byte[] { 0x03, 0xe8, 0x03, 0x58 }; // pattern to search for in buffer
+        Byte[] buffer; // whole rom
+        Byte[] PowerTablepattern = new byte[] { 0x03, 0xe8, 0x03, 0x58 }; // pattern to search for in buffer
         int powerTablePosition; // start position of powertable in rom
+        short voltagetablesize = 24; // 290 have different voltagetablesize than 390X (or its maybe moved by 6 bits this needs test)
+        
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -72,9 +75,11 @@ namespace HawaiBiosReader
                         {
                             case 660:
                                 powerTablesize.Text = powerTablesize.Text + " - R9 390/390X";
+                                voltagetablesize = 24;
                                 break;
                             case 648:
                                 powerTablesize.Text = powerTablesize.Text + " - R9 290/290X";
+                                voltagetablesize = 18;
                                 break;
                             case 642:
                                 powerTablesize.Text = powerTablesize.Text + " - PT1/PT3 bios";
@@ -99,7 +104,7 @@ namespace HawaiBiosReader
 
                         // read voltage table
                         voltagetable.Text = "";
-                        for (int i = 0; i < 24; i++)
+                        for (int i = 0; i < voltagetablesize; i++)
                         {
                             voltagetable.Text = voltagetable.Text + get16BitValueFromPosition(powerTablePosition + 319 + (i * 2), buffer, false) + " mV" + System.Environment.NewLine;
                         }

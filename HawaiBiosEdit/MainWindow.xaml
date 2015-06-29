@@ -8,7 +8,7 @@
                  Height="30" Width="60" Margin="10"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Click="bOpenFileDialog_Click" />
-            <TextBlock Text="PowerTable Location:" Margin="17,68,329,474" FontSize="18" />
+            <TextBlock Text="PowerTable Location:" Margin="17,68,799,874" FontSize="16" />
             <TextBox x:Name="tbResults" Text=""
                  Height="27" Width="287" Margin="193,68,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
@@ -17,23 +17,22 @@
                  Height="93" Width="287" Margin="193,100,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Background="DarkOrange" />
-            <TextBlock Text="PowerTable Content:" Margin="17,166,329,376" FontSize="18" />
+            <TextBlock Text="PowerTable Content:" Margin="17,100,799,842" FontSize="16" />
             <TextBox x:Name="powerTablesize" Text=""
-                 Height="27" Width="287" Margin="193,198,0,0"
+                 Height="35" Width="287" Margin="193,198,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Background="DarkOrange" />
-            <TextBlock Text="PowerTable Size/Type:" Margin="17,198,329,344" FontSize="18" />
-            <TextBlock Text="GPU Clock 1:" Margin="17,258,329,474" FontSize="18" />
-            <TextBlock Text="GPU Clock 2:" Margin="17,283,329,259" FontSize="18" />
-            <TextBlock Text="GPU Clock 3:" Margin="17,309,329,233" FontSize="18" />
+            <TextBlock Text="PowerTable Size/Type:" Margin="17,198,799,736" FontSize="16" />
+            <TextBlock Text="GPU Clock 1:" Margin="17,245,799,697" FontSize="16" />
+            <TextBlock Text="GPU Clock 2:" Margin="17,277,804,665" FontSize="16" />
+            <TextBlock Text="GPU Clock 3:" Margin="17,309,804,633" FontSize="16" />
 
-            <TextBlock Text="MEM Clock 1:" Margin="17,357,329,185" FontSize="18" />
-            <TextBlock Text="MEM Clock 2:" Margin="17,389,329,153" FontSize="18" />
-            <TextBlock Text="MEM Clock 3:" Margin="17,421,329,121" FontSize="18" />
-            <TextBlock Text="Voltage Table:" Margin="17,491,329,251" FontSize="18" />
-            <TextBlock Text="MEM Freq Table:" Margin="498,466,-152,276" FontSize="18" />
-            <TextBlock Text="Some values:" Margin="510,68,-164,674" FontSize="18" />
-            <TextBlock Text="Some values 2:" Margin="510,258,-164,484" FontSize="18" />
+            <TextBlock Text="MEM Clock 1:" Margin="17,357,804,585" FontSize="16" />
+            <TextBlock Text="MEM Clock 2:" Margin="17,389,804,553" FontSize="16" />
+            <TextBlock Text="MEM Clock 3:" Margin="17,421,804,521" FontSize="16" />
+            <TextBlock Text="MEM Freq Table:" Margin="498,421,360,520" FontSize="16" />
+            <TextBlock Text="Some values:" Margin="498,68,360,874" FontSize="16" />
+            <TextBlock Text="Some values 2:" Margin="498,245,360,696" FontSize="16" />
 
             <TextBox x:Name="gpuclock1" Text=""
                  Height="27" Width="287" Margin="193,245,0,0"
@@ -61,11 +60,11 @@
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Background="DarkOrange" />
             <TextBox x:Name="voltagetable" Text=""
-                 Height="438" Width="287" Margin="193,483,0,0"
+                 Height="400" Width="287" Margin="193,483,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Background="DarkOrange" />
             <TextBox x:Name="frequencytable" Text=""
-                 Height="165" Width="287" Margin="632,464,0,0"
+                 Height="165" Width="287" Margin="632,421,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Background="DarkOrange" />
             <TextBox x:Name="somevalues" Text=""
@@ -73,9 +72,10 @@
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Background="DarkOrange" />
             <TextBox x:Name="somevalues2" Text=""
-                 Height="165" Width="287" Margin="632,251,0,0"
+                 Height="165" Width="287" Margin="632,245,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Background="DarkOrange" />
+            <TextBlock Text="Voltage Table:" Margin="17,483,799,452" FontSize="16" />
 
         </Grid>
     </Grid>
