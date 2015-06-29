@@ -110,10 +110,17 @@ namespace HawaiBiosReader
                             voltagetable.Text += get16BitValueFromPosition(powerTablePosition + voltagetableoffset + (i * 2), buffer, false) + " mV" + System.Environment.NewLine;
                         }
                         // memory frequency table?
-                        frequencytable.Text = "";
+                        memfrequencytable.Text = "";
                         for (int i = 0; i < 8; i++)
                         {
-                            frequencytable.Text += get24BitValueFromPosition(powerTablePosition + 278 + (i * 5), buffer, false) + " Mhz" + System.Environment.NewLine;
+                            memfrequencytable.Text += get24BitValueFromPosition(powerTablePosition + 278 + (i * 5), buffer, false) + " Mhz" + System.Environment.NewLine;
+                        }
+
+                        // gpu frequency table?
+                        gpufrequencytable.Text = "";
+                        for (int i = 0; i < 8; i++)
+                        {
+                            gpufrequencytable.Text += get24BitValueFromPosition(powerTablePosition + 231 + (i * 5), buffer, false) + " Mhz" + System.Environment.NewLine;
                         }
 
                         // some values :D
