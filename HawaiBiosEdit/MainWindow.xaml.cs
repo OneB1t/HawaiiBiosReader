@@ -88,6 +88,12 @@ namespace HawaiBiosReader
                                 memoryfrequencytableoffset = 266;
                                 gpufrequencytableoffset = 219;
                                 break;
+                            case 658: // Slith mining bios for 290/290X
+                                powerTablesize.Text = powerTablesize.Text + " - R9 290/290X The Stilt mining bios";
+                                voltagetableoffset = 316;
+                                memoryfrequencytableoffset = 275;
+                                gpufrequencytableoffset = 228;
+                                break;
                             case 642:
                                 powerTablesize.Text = powerTablesize.Text + " - PT1/PT3 bios";
                                 break;
