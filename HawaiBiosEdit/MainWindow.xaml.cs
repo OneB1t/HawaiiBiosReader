@@ -98,6 +98,15 @@ namespace HawaiBiosReader
                                 AMUAndACPLimitTableOffset = 549;
                                 UVDLimitTableOffset = 441;
                                 break;
+                            case 662:
+                                powerTablesize.Text += " - R9 390/390X(Sapphire)";
+                                voltagetableoffset = 321;
+                                memoryfrequencytableoffset = 280;
+                                gpufrequencytableoffset = 233;
+                                VCELimitTableOffset = 398;
+                                AMUAndACPLimitTableOffset = 551;
+                                UVDLimitTableOffset = 443;
+                                break;
                             case 648:
                                 powerTablesize.Text += " - R9 290/290X";
                                 voltagetableoffset = 307;
