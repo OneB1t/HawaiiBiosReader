@@ -30,9 +30,9 @@ namespace HawaiBiosReader
         int biosNameOffset = 0xDC;
 
         // table offsets
-        int voltagetableoffset = 319; // 290 have different voltagetable offset than 390
-        int memoryfrequencytableoffset = 278;
-        int gpufrequencytableoffset = 231;
+        int voltageTableOffset = 319; // 290 have different voltagetable offset than 390
+        int memoryFrequencyTableOffset = 278;
+        int gpuFrequencyTableOffset = 231;
         int VCELimitTableOffset = 396;
         int AMUAndACPLimitTableOffset = 549;
         int UVDLimitTableOffset = 441;
@@ -91,54 +91,45 @@ namespace HawaiBiosReader
                         {
                             case 660:
                                 powerTablesize.Text += " - R9 390/390X";
-                                voltagetableoffset = 319;
-                                memoryfrequencytableoffset = 278;
-                                gpufrequencytableoffset = 231;
+                                voltageTableOffset = 319;
+                                memoryFrequencyTableOffset = 278;
+                                gpuFrequencyTableOffset = 231;
                                 VCELimitTableOffset = 396;
                                 AMUAndACPLimitTableOffset = 549;
                                 UVDLimitTableOffset = 441;
                                 break;
                             case 662:
                                 powerTablesize.Text += " - R9 390/390X(Sapphire)";
-                                voltagetableoffset = 321;
-                                memoryfrequencytableoffset = 280;
-                                gpufrequencytableoffset = 233;
+                                voltageTableOffset = 321;
+                                memoryFrequencyTableOffset = 280;
+                                gpuFrequencyTableOffset = 233;
                                 VCELimitTableOffset = 398;
                                 AMUAndACPLimitTableOffset = 551;
                                 UVDLimitTableOffset = 443;
                                 break;
                             case 648:
                                 powerTablesize.Text += " - R9 290/290X";
-                                voltagetableoffset = 307;
-                                memoryfrequencytableoffset = 266;
-                                gpufrequencytableoffset = 219;
+                                voltageTableOffset = 307;
+                                memoryFrequencyTableOffset = 266;
+                                gpuFrequencyTableOffset = 219;
                                 VCELimitTableOffset = 384;
                                 AMUAndACPLimitTableOffset = 537;
                                 UVDLimitTableOffset = 429;
                                 break;
                             case 658: // Slith mining bios for 290/290X
                                 powerTablesize.Text += " - R9 290/290X The Stilt mining bios";
-                                voltagetableoffset = 316;
-                                memoryfrequencytableoffset = 275;
-                                gpufrequencytableoffset = 228;
+                                voltageTableOffset = 316;
+                                memoryFrequencyTableOffset = 275;
+                                gpuFrequencyTableOffset = 228;
                                 VCELimitTableOffset = 394;
                                 AMUAndACPLimitTableOffset = 547;
                                 UVDLimitTableOffset = 439;
                                 break;
-                            case 662: // R9 390/390X Saphire Tri-X
-                                powerTablesize.Text += " - R9 390/390X Saphire Tri-X";
-                                voltagetableoffset = 321;
-                                memoryfrequencytableoffset = 280;
-                                gpufrequencytableoffset = 233;
-                                VCELimitTableOffset = 398;
-                                AMUAndACPLimitTableOffset = 551;
-                                UVDLimitTableOffset = 443;
-                                break;
                             case 642: // PT1/PT3
                                 powerTablesize.Text += " - PT1/PT3 bios";
-                                voltagetableoffset = 300;
-                                memoryfrequencytableoffset = 259;
-                                gpufrequencytableoffset = 212;
+                                voltageTableOffset = 300;
+                                memoryFrequencyTableOffset = 259;
+                                gpuFrequencyTableOffset = 212;
                                 VCELimitTableOffset = 378;
                                 AMUAndACPLimitTableOffset = 531;
                                 UVDLimitTableOffset = 423;
@@ -171,21 +162,21 @@ namespace HawaiBiosReader
                         voltagetable.Text = "";
                         for (int i = 0; i < 24; i++)
                         {
-                            readValueFromPosition(voltagetable, powerTablePosition + voltagetableoffset + (i * 2), 0, "mV" + System.Environment.NewLine, false,true);
+                            readValueFromPosition(voltagetable, powerTablePosition + voltageTableOffset + (i * 2), 0, "mV" + System.Environment.NewLine, false,true);
                         }
 
                         // memory frequency table
                         memfrequencytable.Text = "";
                         for (int i = 0; i < 8; i++)
                         {
-                            readValueFromPosition(memfrequencytable, powerTablePosition + memoryfrequencytableoffset + (i * 5), 1, "Mhz" + System.Environment.NewLine, true, true);
+                            readValueFromPosition(memfrequencytable, powerTablePosition + memoryFrequencyTableOffset + (i * 5), 1, "Mhz" + System.Environment.NewLine, true, true);
                         }
 
                         // gpu frequency table
                         gpufrequencytable.Text = "";
                         for (int i = 0; i < 8; i++)
                         {
-                            readValueFromPosition(gpufrequencytable, powerTablePosition + gpufrequencytableoffset + (i * 5), 1, "Mhz" + System.Environment.NewLine, true, true);
+                            readValueFromPosition(gpufrequencytable, powerTablePosition + gpuFrequencyTableOffset + (i * 5), 1, "Mhz" + System.Environment.NewLine, true, true);
                         }
 
                         // StartVCELimitTable
