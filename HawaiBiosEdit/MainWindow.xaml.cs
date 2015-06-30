@@ -23,6 +23,7 @@ namespace HawaiBiosReader
         Byte[] powerTablepattern = new byte[] { 0x02, 0x06, 0x01, 0x00 };
         int powerTablePosition; // start position of powertable in rom
         int fanTablePosition;
+        int fanTableOffset = 175;
         int voltagetableoffset = 319; // 290 have different voltagetable offset than 390
         int memoryfrequencytableoffset = 278;
         int gpufrequencytableoffset = 231;
@@ -60,7 +61,7 @@ namespace HawaiBiosReader
                 {
                     romStorageBuffer = br.ReadBytes((int)fileStream.Length);
                     powerTablePosition = PTPatternAt(romStorageBuffer, powerTablepattern);
-                    fanTablePosition = powerTablePosition + 175;
+                    fanTablePosition = powerTablePosition + fanTableOffset;
 
                     if (powerTablePosition == -1)
                     {
@@ -121,7 +122,7 @@ namespace HawaiBiosReader
 
                         }
 
-                        tbResults.Text = powerTablePosition.ToString();
+                        powerTableLocation.Text = powerTablePosition.ToString();
                         powerTable.Text = returnTextFromBinary(romStorageBuffer, powerTablePosition, powerTableSize);
 
                         int position = 0;
