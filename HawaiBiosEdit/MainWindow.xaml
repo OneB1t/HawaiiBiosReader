@@ -149,7 +149,7 @@
                     <TextBox x:Name="fantemperature3" Text="" Margin="300,30,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
                              IsReadOnly="True"/>
-                    
+
                     <TextBlock Text="Max temp.:" Margin="10,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBox x:Name="fantemperature4" Text="" Margin="100,50,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
@@ -196,7 +196,20 @@
 
                 </Grid>
             </TabItem>
-            
+            <TabItem Header="Other2...">
+                <Grid>
+                    <TextBlock Text="Limit Values 24-bit:" Margin="10,10,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBox x:Name="limitValues" Text="" Margin="10,30,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top"
+                             Height="553" Width="263" IsReadOnly="True" />
+                    <TextBlock Text="Limit Values 2 - 32bit:" Margin="288,13,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBox x:Name="limitValues2" Text="" Margin="288,30,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top"
+                             Height="553" Width="264" IsReadOnly="True" />
+                </Grid>
+            </TabItem>
             <TabItem Header="About">
                 <Grid>
                     <TextBlock Text="Source code available at: https://github.com/OneB1t/HawaiiBiosReader" Margin="30" VerticalAlignment="Top" HorizontalAlignment="Center" />

@@ -178,7 +178,20 @@ namespace HawaiBiosReader
                         {
                             readValueFromPosition(gpufrequencytable, powerTablePosition + gpuFrequencyTableOffset + (i * 5), 1, "Mhz" + System.Environment.NewLine, true, true);
                         }
+                        // search for more 24 bit
+                        limitValues.Text = "";
+                        for (int i = 0; i < 10; i++)
+                        {
+                            readValueFromPosition(limitValues, powerTablePosition + AMUAndACPLimitTableOffset + 81+ (i * 3), 1, "" + System.Environment.NewLine, false, true);
+                        }
 
+                        // search for more 16 bit
+                        limitValues2.Text = "";
+                        for (int i = 0; i < 16; i++)
+                        {
+ 
+                            readValueFromPosition(limitValues2, powerTablePosition + AMUAndACPLimitTableOffset + 79 + (i * 2), 0, "" + System.Environment.NewLine, false, true);
+                        }
                         // StartVCELimitTable
                         somevalues.Text = "";
                         for (int i = 0; i < 7; i++)
