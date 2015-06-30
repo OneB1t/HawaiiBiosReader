@@ -28,7 +28,7 @@
 
                     <TextBlock Text="PowerTable Location:" Margin="10,55,0,0" 
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="tbResults" Text="" Margin="10,75,0,0"
+                    <TextBox x:Name="powerTablePositionValue" Text="" Margin="10,75,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
 
                     <TextBlock Text="PowerTable Size/Type:" Margin="10,100,0,0" 
@@ -191,6 +191,12 @@
                 </Grid>
             </TabItem>
             <TabItem Header="About">
+                <Grid>
+                    <TextBlock Text="Source code available at: https://github.com/OneB1t/HawaiiBiosReader" Margin="30" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                    <TextBlock Text="Authors: DDSZ1337, OneB1t" Margin="45" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                    <TextBlock Text="Big Thanks to: LumPenPacK, asder00, gupsterg"  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="60" />
+                    <TextBlock x:Name="versionbox" Text="Version: "  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="75" />
+                </Grid>
             </TabItem>
 
         </TabControl>

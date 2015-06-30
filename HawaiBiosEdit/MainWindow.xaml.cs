@@ -17,23 +17,30 @@ using System.Windows.Shapes;
 
 namespace HawaiBiosReader
 {
+
     public partial class MainWindow : Window
     {
+
         Byte[] romStorageBuffer; // whole rom
         Byte[] powerTablepattern = new byte[] { 0x02, 0x06, 0x01, 0x00 };
         int powerTablePosition; // start position of powertable in rom
         int fanTablePosition;
+        int powerTableSize;
+
+        // table offsets
         int voltagetableoffset = 319; // 290 have different voltagetable offset than 390
         int memoryfrequencytableoffset = 278;
         int gpufrequencytableoffset = 231;
         int VCELimitTableOffset = 396;
         int AMUAndACPLimitTableOffset = 549;
         int UVDLimitTableOffset = 441;
+        string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
 
         public MainWindow()
         {
             InitializeComponent();
+            versionbox.Text += version;
         }
 
         private void bOpenFileDialog_Click(object sender, RoutedEventArgs e)
@@ -60,7 +67,7 @@ namespace HawaiBiosReader
                 {
                     romStorageBuffer = br.ReadBytes((int)fileStream.Length);
                     powerTablePosition = PTPatternAt(romStorageBuffer, powerTablepattern);
-                    fanTablePosition = powerTablePosition + 175;
+                    fanTablePosition = powerTablePosition + 175; // this needs improvement :)
 
                     if (powerTablePosition == -1)
                     {
@@ -68,7 +75,7 @@ namespace HawaiBiosReader
                     }
                     else
                     {
-                        int powerTableSize = 256 * romStorageBuffer[powerTablePosition + 1] + romStorageBuffer[powerTablePosition];
+                        powerTableSize = 256 * romStorageBuffer[powerTablePosition + 1] + romStorageBuffer[powerTablePosition];
                         powerTablesize.Text = powerTableSize.ToString();
 
 
@@ -121,7 +128,7 @@ namespace HawaiBiosReader
 
                         }
 
-                        tbResults.Text = powerTablePosition.ToString();
+                        powerTablePositionValue.Text = powerTablePosition.ToString();
                         powerTable.Text = returnTextFromBinary(romStorageBuffer, powerTablePosition, powerTableSize);
 
                         int position = 0;
@@ -219,6 +226,7 @@ namespace HawaiBiosReader
                             fantemperature1.Text = "NOT FOUND";
                             fantemperature2.Text = "NOT FOUND";
                             fantemperature3.Text = "NOT FOUND";
+                            fantemperature4.Text = "NOT FOUND";
                         }
                     }
                     fileStream.Close();
@@ -271,30 +279,23 @@ namespace HawaiBiosReader
             }
             return result;
         }
-
-        public Int32 get24BitValueFromPosition(int position, byte[] buffer, bool isFrequency = false) // dumb way to extract 24 bit value (can be made much more effective but this is easy to read for anyone)
+        // dumb way to extract 24 bit value (can be made much more effective but this is easy to read for anyone)
+        public Int32 get24BitValueFromPosition(int position, byte[] buffer, bool isFrequency = false)
         {
-            int a = buffer[position];
-            int b = buffer[position + 1];
-            int c = buffer[position + 2];
-            int result = 256 * 256 * c + 256 * b + a;
             if (isFrequency) // if its frequency divide by 100 to convert it into Mhz
             {
-                return result / 100;
+                return (256 * 256 * buffer[position + 2] + 256 * buffer[position + 1] + buffer[position]) / 100;
             }
-            return result;
+            return 256 * 256 * buffer[position + 2] + 256 * buffer[position + 1] + buffer[position];
         }
 
         public Int32 get16BitValueFromPosition(int position, byte[] buffer, bool isFrequency = false)
         {
-            int a = buffer[position];
-            int b = buffer[position + 1];
-            int result = 256 * b + a;
             if (isFrequency) // if its frequency divide by 100 to convert it into Mhz
             {
-                return result / 100;
+                return (256 * buffer[position + 1] + buffer[position]) / 100;
             }
-            return result;
+            return 256 * buffer[position + 1] + buffer[position];
         }
 
     }
