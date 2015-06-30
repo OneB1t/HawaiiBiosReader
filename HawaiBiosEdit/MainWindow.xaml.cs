@@ -116,6 +116,15 @@ namespace HawaiBiosReader
                                 AMUAndACPLimitTableOffset = 547;
                                 UVDLimitTableOffset = 439;
                                 break;
+                            case 662: // R9 390/390X Saphire Tri-X
+                                powerTablesize.Text += " - R9 390/390X Saphire Tri-X";
+                                voltagetableoffset = 321;
+                                memoryfrequencytableoffset = 280;
+                                gpufrequencytableoffset = 233;
+                                VCELimitTableOffset = 398;
+                                AMUAndACPLimitTableOffset = 551;
+                                UVDLimitTableOffset = 443;
+                                break;
                             case 642: // PT1/PT3
                                 powerTablesize.Text += " - PT1/PT3 bios";
                                 voltagetableoffset = 300;
