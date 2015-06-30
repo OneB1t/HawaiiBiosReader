@@ -19,16 +19,16 @@ namespace HawaiBiosReader
 {
     public partial class MainWindow : Window
     {
-        Byte[] buffer; // whole rom
-        Byte[] PowerTablepattern = new byte[] { 0x02, 0x06, 0x01, 0x00 };
+        Byte[] romStorageBuffer; // whole rom
+        Byte[] powerTablepattern = new byte[] { 0x02, 0x06, 0x01, 0x00 };
         int powerTablePosition; // start position of powertable in rom
         int fanTablePosition;
         int voltagetableoffset = 319; // 290 have different voltagetable offset than 390
         int memoryfrequencytableoffset = 278;
         int gpufrequencytableoffset = 231;
-        int somevalueoffset = 396;
-        int somevalue2offset = 549;
-        int somevalue4offset = 441;
+        int VCELimitTableOffset = 396;
+        int AMUAndACPLimitTableOffset = 549;
+        int UVDLimitTableOffset = 441;
 
 
         public MainWindow()
@@ -39,27 +39,27 @@ namespace HawaiBiosReader
         private void bOpenFileDialog_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of the open file dialog box.
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
 
             // Set filter options and filter index.
-            openFileDialog1.Filter = "Bios files (.rom)|*.rom|All Files (*.*)|*.*";
-            openFileDialog1.FilterIndex = 1;
-            openFileDialog1.Multiselect = false;
+            openFileDialog.Filter = "Bios files (.rom)|*.rom|All Files (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.Multiselect = false;
 
             // Call the ShowDialog method to show the dialog box.
-            bool? userClickedOK = openFileDialog1.ShowDialog();
+            bool? userClickedOK = openFileDialog.ShowDialog();
 
             // Process input if the user clicked OK.
             if (userClickedOK == true)
             {
                 // Open the selected file to read.
-                System.IO.Stream fileStream = openFileDialog1.OpenFile();
-                filename.Text = openFileDialog1.FileName;
+                System.IO.Stream fileStream = openFileDialog.OpenFile();
+                filename.Text = openFileDialog.FileName;
 
                 using (BinaryReader br = new BinaryReader(fileStream)) // binary reader
                 {
-                    buffer = br.ReadBytes((int)fileStream.Length);
-                    powerTablePosition = PTPatternAt(buffer, PowerTablepattern);
+                    romStorageBuffer = br.ReadBytes((int)fileStream.Length);
+                    powerTablePosition = PTPatternAt(romStorageBuffer, powerTablepattern);
                     fanTablePosition = powerTablePosition + 175;
 
                     if (powerTablePosition == -1)
@@ -68,10 +68,8 @@ namespace HawaiBiosReader
                     }
                     else
                     {
-                        int pom = buffer[powerTablePosition];
-                        int pom2 = buffer[powerTablePosition+1];
-                        int tablesize = 256 * pom2 + pom;
-                        powerTablesize.Text = tablesize.ToString();
+                        int powerTableSize = 256 * romStorageBuffer[powerTablePosition + 1] + romStorageBuffer[powerTablePosition];
+                        powerTablesize.Text = powerTableSize.ToString();
 
 
                         /*#################################################################################################
@@ -79,43 +77,43 @@ namespace HawaiBiosReader
                          *               BIOS PARSING SECTION
                          * 
                         #################################################################################################*/
-                        switch (tablesize)
+                        switch (powerTableSize)
                         {
                             case 660:
-                                powerTablesize.Text = powerTablesize.Text + " - R9 390/390X";
+                                powerTablesize.Text += " - R9 390/390X";
                                 voltagetableoffset = 319;
                                 memoryfrequencytableoffset = 278;
                                 gpufrequencytableoffset = 231;
-                                somevalueoffset = 396;
-                                somevalue2offset = 549;
-                                somevalue4offset = 441;
+                                VCELimitTableOffset = 396;
+                                AMUAndACPLimitTableOffset = 549;
+                                UVDLimitTableOffset = 441;
                                 break;
                             case 648:
-                                powerTablesize.Text = powerTablesize.Text + " - R9 290/290X";
+                                powerTablesize.Text += " - R9 290/290X";
                                 voltagetableoffset = 307;
                                 memoryfrequencytableoffset = 266;
                                 gpufrequencytableoffset = 219;
-                                somevalueoffset = 384;
-                                somevalue2offset = 537;
-                                somevalue4offset = 429;
+                                VCELimitTableOffset = 384;
+                                AMUAndACPLimitTableOffset = 537;
+                                UVDLimitTableOffset = 429;
                                 break;
                             case 658: // Slith mining bios for 290/290X
-                                powerTablesize.Text = powerTablesize.Text + " - R9 290/290X The Stilt mining bios";
+                                powerTablesize.Text += " - R9 290/290X The Stilt mining bios";
                                 voltagetableoffset = 316;
                                 memoryfrequencytableoffset = 275;
                                 gpufrequencytableoffset = 228;
-                                somevalueoffset = 394;
-                                somevalue2offset = 547;
-                                somevalue4offset = 439;
+                                VCELimitTableOffset = 394;
+                                AMUAndACPLimitTableOffset = 547;
+                                UVDLimitTableOffset = 439;
                                 break;
                             case 642: // PT1/PT3
-                                powerTablesize.Text = powerTablesize.Text + " - PT1/PT3 bios";
+                                powerTablesize.Text += " - PT1/PT3 bios";
                                 voltagetableoffset = 300;
                                 memoryfrequencytableoffset = 259;
                                 gpufrequencytableoffset = 212;
-                                somevalueoffset = 378;
-                                somevalue2offset = 531;
-                                somevalue4offset = 423;
+                                VCELimitTableOffset = 378;
+                                AMUAndACPLimitTableOffset = 531;
+                                UVDLimitTableOffset = 423;
                                 break;
                             default:
                                 powerTablesize.Text = powerTablesize.Text + " - Unknown type";
@@ -124,129 +122,94 @@ namespace HawaiBiosReader
                         }
 
                         tbResults.Text = powerTablePosition.ToString();
-                        powerTable.Text = returnTextFromBinary(buffer, powerTablePosition, tablesize);
+                        powerTable.Text = returnTextFromBinary(romStorageBuffer, powerTablePosition, powerTableSize);
 
-
+                        int position = 0;
                         // gpu clock1
-                        int position = powerTablePosition + 98; // helper for position
-                        gpuclock1.Text = position.ToString() + " -- ";
-                        gpuclock1.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
-
+                        readValueFromPosition(gpuclock1, powerTablePosition + 98, 1, "Mhz", true);
                         // gpu clock 2
-                        position = powerTablePosition + 107;
-                        gpuclock2.Text = position.ToString() + " -- ";
-                        gpuclock2.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
-
+                        readValueFromPosition(gpuclock2, powerTablePosition + 107, 1, "Mhz", true);
                         // gpu clock 3
-                        position = powerTablePosition + 116;
-                        gpuclock3.Text = position.ToString() + " -- ";
-                        gpuclock3.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
+                        readValueFromPosition(gpuclock3, powerTablePosition + 116, 1, "Mhz", true);
 
                         // mem clock 1
-                        position = powerTablePosition + 101;
-                        memclock1.Text = position.ToString() + " -- ";
-                        memclock1.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
+                        readValueFromPosition(memclock1, powerTablePosition + 101, 1, "Mhz", true);
                         // mem clock 2
-                        position = powerTablePosition + 110;
-                        memclock2.Text = position.ToString() + " -- ";
-                        memclock2.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
+                        readValueFromPosition(memclock2, powerTablePosition + 110, 1, "Mhz", true);
                         // mem clock 3
-                        position = powerTablePosition + 119;
-                        memclock3.Text = position.ToString() + " -- ";
-                        memclock3.Text += get24BitValueFromPosition(position, buffer, true).ToString() + " Mhz";
+                        readValueFromPosition(memclock3, powerTablePosition + 119, 1, "Mhz", true);
 
                         // read voltage table
                         voltagetable.Text = "";
                         for (int i = 0; i < 24; i++)
                         {
-                            position = powerTablePosition + voltagetableoffset + (i * 2);
-                            voltagetable.Text += position.ToString() + " -- ";
-                            voltagetable.Text += get16BitValueFromPosition(position, buffer) + " mV" + System.Environment.NewLine;
+                            readValueFromPosition(voltagetable, powerTablePosition + voltagetableoffset + (i * 2), 0, "mV" + System.Environment.NewLine, false,true);
                         }
 
-                        // memory frequency table?
+                        // memory frequency table
                         memfrequencytable.Text = "";
                         for (int i = 0; i < 8; i++)
                         {
-                            position = powerTablePosition + memoryfrequencytableoffset + (i * 5);
-                            memfrequencytable.Text += position.ToString() + " -- ";
-                            memfrequencytable.Text += get24BitValueFromPosition(position, buffer, true) + " Mhz" + System.Environment.NewLine;
+                            readValueFromPosition(memfrequencytable, powerTablePosition + memoryfrequencytableoffset + (i * 5), 1, "Mhz" + System.Environment.NewLine, true, true);
                         }
 
-                        // gpu frequency table?
+                        // gpu frequency table
                         gpufrequencytable.Text = "";
                         for (int i = 0; i < 8; i++)
                         {
-                            position = powerTablePosition + gpufrequencytableoffset + (i * 5);
-                            gpufrequencytable.Text += position.ToString() + " -- ";
-                            gpufrequencytable.Text += get24BitValueFromPosition(position, buffer, true) + " Mhz" + System.Environment.NewLine;
+                            readValueFromPosition(gpufrequencytable, powerTablePosition + gpufrequencytableoffset + (i * 5), 1, "Mhz" + System.Environment.NewLine, true, true);
                         }
 
                         // StartVCELimitTable
                         somevalues.Text = "";
                         for (int i = 0; i < 7; i++)
                         {
-                            position = powerTablePosition + somevalueoffset + (i * 3);
+                            position = powerTablePosition + VCELimitTableOffset + (i * 3);
                             somevalues.Text += position.ToString() + "  -- ";
                             somevalues.Text += i.ToString() + "  -- ";
-                            somevalues.Text += get24BitValueFromPosition(position, buffer) + System.Environment.NewLine;
+                            somevalues.Text += get24BitValueFromPosition(position, romStorageBuffer) + System.Environment.NewLine;
                         }
 
                         // StartSAMULimitTable + StartACPLimitTable
-                        somevalues2.Text = "";
-                        somevalues3.Text = "";
+                        AMULimitTable.Text = "";
+                        ACPLimitTable.Text = "";
                         for (int i = 0; i < 16; i++)
                         {
                             if (i <= 7)
                             {
-                                position = powerTablePosition + somevalue2offset + (i * 5);
-                                somevalues2.Text += position.ToString() + "  -- ";
-                                somevalues2.Text += get16BitValueFromPosition(position - 2, buffer) + "  -- ";
-                                somevalues2.Text += get24BitValueFromPosition(position, buffer) + System.Environment.NewLine;
+                                position = powerTablePosition + AMUAndACPLimitTableOffset + (i * 5);
+                                AMULimitTable.Text += position.ToString() + "  -- ";
+                                AMULimitTable.Text += get16BitValueFromPosition(position - 2, romStorageBuffer) + "  -- ";
+                                AMULimitTable.Text += get24BitValueFromPosition(position, romStorageBuffer) + System.Environment.NewLine;
                             }
                             else
                             {
-                                position = powerTablePosition + somevalue2offset + 2 + (i * 5);
-                                somevalues3.Text += position.ToString() + "  -- ";
-                                somevalues3.Text += get16BitValueFromPosition(position - 2, buffer) + "  -- ";
-                                somevalues3.Text += get24BitValueFromPosition(position, buffer) + System.Environment.NewLine;
+                                position = powerTablePosition + AMUAndACPLimitTableOffset + 2 + (i * 5);
+                                ACPLimitTable.Text += position.ToString() + "  -- ";
+                                ACPLimitTable.Text += get16BitValueFromPosition(position - 2, romStorageBuffer) + "  -- ";
+                                ACPLimitTable.Text += get24BitValueFromPosition(position, romStorageBuffer) + System.Environment.NewLine;
                             }
                         }
 
                         // StartUVDLimitTable
-                        somevalues4.Text = "";
+                        UVDLimitTable.Text = "";
                         for (int i = 0; i < 8; i++)
                         {
-                            position = powerTablePosition + somevalue4offset + (i * 3);
-                            somevalues4.Text += position.ToString() + "  -- ";
-                            somevalues4.Text += buffer[position + 1] + "  -- ";
-                            somevalues4.Text += buffer[position] + System.Environment.NewLine;
+                            position = powerTablePosition + UVDLimitTableOffset + (i * 3);
+                            UVDLimitTable.Text += position.ToString() + "  -- ";
+                            UVDLimitTable.Text += romStorageBuffer[position + 1] + "  -- ";
+                            UVDLimitTable.Text += romStorageBuffer[position] + System.Environment.NewLine;
                         }
                         if (fanTablePosition > 0)
                         {
-                            position = fanTablePosition + 2;
-                            fantemperature1.Text = position.ToString() + " -- ";
-                            fantemperature1.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " °C";
+                            readValueFromPosition(fantemperature1, fanTablePosition + 2, 0, "C°",true);
+                            readValueFromPosition(fantemperature2, fanTablePosition + 4, 0, "C°",true);
+                            readValueFromPosition(fantemperature3, fanTablePosition + 6, 0, "C°",true);
+                            readValueFromPosition(fantemperature4, fanTablePosition + 14, 0, "C°",true);
 
-                            position = fanTablePosition + 4;
-                            fantemperature2.Text = position.ToString() + " -- ";
-                            fantemperature2.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " °C";
-
-                            position = fanTablePosition + 6;
-                            fantemperature3.Text = position.ToString() + " -- ";
-                            fantemperature3.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " °C";
-
-                            position = fanTablePosition + 8;
-                            fanspeed1.Text = position.ToString() + " -- ";
-                            fanspeed1.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " %";
-
-                            position = fanTablePosition + 10;
-                            fanspeed2.Text = position.ToString() + " -- ";
-                            fanspeed2.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " %";
-
-                            position = fanTablePosition + 12;
-                            fanspeed3.Text = position.ToString() + " -- ";
-                            fanspeed3.Text += get16BitValueFromPosition(position, buffer, true).ToString() + " %";
+                            readValueFromPosition(fanspeed1, fanTablePosition + 8, 0, "%",true);
+                            readValueFromPosition(fanspeed2, fanTablePosition + 10, 0, "%",true);
+                            readValueFromPosition(fanspeed3, fanTablePosition + 12, 0, "%",true);
                         }
                         else
                         {
@@ -262,7 +225,30 @@ namespace HawaiBiosReader
                 }
             }
         }
+        public void readValueFromPosition(TextBox dest, int position, int type, String units = "", bool isFrequency = false, bool add = false)
+        {
+            if (add)
+            {
+                dest.Text += position.ToString() + " -- ";
+            }
+            else
+            {
+                dest.Text = position.ToString() + " -- ";
+            }
 
+            switch (type)
+            {
+                case 0:
+                    dest.Text += get16BitValueFromPosition(position, romStorageBuffer, isFrequency).ToString() + " " + units;
+                    break;
+                case 1:
+                    dest.Text += get24BitValueFromPosition(position, romStorageBuffer, isFrequency).ToString() + " " + units;
+                    break;
+                default:
+                    dest.Text += get16BitValueFromPosition(position, romStorageBuffer, isFrequency).ToString() + " " + units;
+                    break;
+            }
+        }
         private static int PTPatternAt(byte[] data, byte[] pattern)
         {
             for (int di = 0; di < data.Length; di++)
@@ -286,25 +272,25 @@ namespace HawaiBiosReader
             return result;
         }
 
-        public Int32 get24BitValueFromPosition(int position, byte[] buffer, bool isfrequency = false) // dumb way to extract 24 bit value (can be made much more effective but this is easy to read for anyone)
+        public Int32 get24BitValueFromPosition(int position, byte[] buffer, bool isFrequency = false) // dumb way to extract 24 bit value (can be made much more effective but this is easy to read for anyone)
         {
             int a = buffer[position];
             int b = buffer[position + 1];
             int c = buffer[position + 2];
             int result = 256 * 256 * c + 256 * b + a;
-            if (isfrequency) // if its frequency divide by 100 to convert it into Mhz
+            if (isFrequency) // if its frequency divide by 100 to convert it into Mhz
             {
                 return result / 100;
             }
             return result;
         }
 
-        public Int32 get16BitValueFromPosition(int position, byte[] buffer, bool isfrequency = false)
+        public Int32 get16BitValueFromPosition(int position, byte[] buffer, bool isFrequency = false)
         {
             int a = buffer[position];
             int b = buffer[position + 1];
             int result = 256 * b + a;
-            if (isfrequency) // if its frequency divide by 100 to convert it into Mhz
+            if (isFrequency) // if its frequency divide by 100 to convert it into Mhz
             {
                 return result / 100;
             }

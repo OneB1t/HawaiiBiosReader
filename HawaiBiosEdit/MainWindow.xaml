@@ -6,12 +6,12 @@
         <Button x:Name="bOpenFileDialog" Content="Open File" Width="60" Margin="10,10,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Click="bOpenFileDialog_Click" />
-        
+
         <TabControl Margin="10,40,10,10">
-            
+
             <TabItem Header="Overview">
                 <Grid>
-                    
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
@@ -42,13 +42,13 @@
                     <TextBox x:Name="powerTable" Text="" Margin="10,30,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="256" Width="357" Grid.Column="1" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
-                
+
                 </Grid>
             </TabItem>
-            
+
             <TabItem Header="PowerPlay">
                 <Grid>
-                    
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
@@ -57,7 +57,7 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <TextBlock Text="GPU Clock 1:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBox x:Name="gpuclock1" Text="" Margin="100,10,0,0"
@@ -119,10 +119,10 @@
 
                 </Grid>
             </TabItem>
-            
+
             <TabItem Header="Fan profile">
                 <Grid>
-                    
+
                     <TextBlock Text="Fan speeds:" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBox x:Name="fanspeed1" Text="" Margin="100,10,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
@@ -135,6 +135,7 @@
                              IsReadOnly="True"/>
 
                     <TextBlock Text="Temp. target:" Margin="10,30,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBlock Text="Max temp.:" Margin="10,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBox x:Name="fantemperature1" Text="" Margin="100,30,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
                              IsReadOnly="True"/>
@@ -144,50 +145,55 @@
                     <TextBox x:Name="fantemperature3" Text="" Margin="300,30,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
                              IsReadOnly="True"/>
+                    <TextBox x:Name="fantemperature4" Text="" Margin="100,50,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
+                             IsReadOnly="True"/>
 
                 </Grid>
             </TabItem>
-            
+
             <TabItem Header="Other...">
                 <Grid>
-                    
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <TextBlock Text="StartVCELimitTable:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBox x:Name="somevalues" Text="" Margin="10,30,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="256" Width="263" IsReadOnly="True" />
-                    
+
                     <TextBlock Text="StartSAMULimitTable:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" />
-                    <TextBox x:Name="somevalues2" Text="" Margin="10,30,0,0"
+                    <TextBox x:Name="AMULimitTable" Text="" Margin="10,30,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="256" Width="263" IsReadOnly="True" Grid.Row="1" />
-                    
+
                     <TextBlock Text="StartACPLimitTable:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
-                    <TextBox x:Name="somevalues3" Text="" Margin="10,30,0,0"
+                    <TextBox x:Name="ACPLimitTable" Text="" Margin="10,30,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="256" Width="263" IsReadOnly="True" Grid.Column="1" />
-                    
+
                     <TextBlock Text="StartUVDLimitTable:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
-                    <TextBox x:Name="somevalues4" Text="" Margin="10,30,0,0"
+                    <TextBox x:Name="UVDLimitTable" Text="" Margin="10,30,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="256" Width="263" IsReadOnly="True" Grid.Column="1" Grid.Row="1" />
-                    
+
                 </Grid>
             </TabItem>
-            
+            <TabItem Header="About">
+            </TabItem>
+
         </TabControl>
-        
+
     </Grid>
 </Window>
