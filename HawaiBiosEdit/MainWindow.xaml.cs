@@ -27,6 +27,7 @@ namespace HawaiBiosReader
         int fanTablePosition;
         int powerTableSize;
         int fanTableOffset = 175;
+        int biosNameOffset = 0xDC;
 
         // table offsets
         int voltagetableoffset = 319; // 290 have different voltagetable offset than 390
@@ -69,6 +70,7 @@ namespace HawaiBiosReader
                     romStorageBuffer = br.ReadBytes((int)fileStream.Length);
                     powerTablePosition = PTPatternAt(romStorageBuffer, powerTablepattern);
                     fanTablePosition = powerTablePosition + fanTableOffset;
+                    biosName.Text = getTextFromBinary(romStorageBuffer, biosNameOffset, 32); 
 
                     if (powerTablePosition == -1)
                     {
@@ -130,7 +132,7 @@ namespace HawaiBiosReader
                         }
 
                         powerTablePositionValue.Text = powerTablePosition.ToString();
-                        powerTable.Text = returnTextFromBinary(romStorageBuffer, powerTablePosition, powerTableSize);
+                        powerTable.Text = getTextFromBinary(romStorageBuffer, powerTablePosition, powerTableSize);
 
                         int position = 0;
                         // gpu clock1
@@ -271,14 +273,11 @@ namespace HawaiBiosReader
             return 0;
         }
 
-        public String returnTextFromBinary(byte[] binary, int offset, int lenght)
+        public String getTextFromBinary(byte[] binary, int offset, int lenght)
         {
-            String result = "";
-            for (int i = offset; i < offset + lenght; i++)
-            {
-                result += binary[i].ToString();
-            }
-            return result;
+            System.Text.Encoding encEncoder = System.Text.ASCIIEncoding.ASCII;
+            string str = encEncoder.GetString(binary.Skip(offset).Take(lenght).ToArray());
+            return str;
         }
         // dumb way to extract 24 bit value (can be made much more effective but this is easy to read for anyone)
         public Int32 get24BitValueFromPosition(int position, byte[] buffer, bool isFrequency = false)

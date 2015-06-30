@@ -6,6 +6,10 @@
         <Button x:Name="bOpenFileDialog" Content="Open File" Width="60" Margin="10,10,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Click="bOpenFileDialog_Click" />
+        <TextBlock Text="Bios name:" Margin="105,12,0,0" 
+                               VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <TextBox x:Name="biosName" Text="" Margin="167,10,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="306" IsReadOnly="True" Height="20" />
 
         <TabControl Margin="10,40,10,10">
 
