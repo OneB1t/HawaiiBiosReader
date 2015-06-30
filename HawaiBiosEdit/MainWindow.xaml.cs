@@ -72,7 +72,7 @@ namespace HawaiBiosReader
                         }
                     }
 
-                    if (powerTablePosition == 0)
+                    if (powerTablePosition == -1)
                     {
                         MessageBoxResult result = MessageBox.Show("PowerTable position not found in this file", "Error", MessageBoxButton.OK);
                     }
@@ -119,8 +119,14 @@ namespace HawaiBiosReader
                                 somevalue2offset = 547;
                                 somevalue4offset = 439;
                                 break;
-                            case 642:
+                            case 642: // PT1/PT3
                                 powerTablesize.Text = powerTablesize.Text + " - PT1/PT3 bios";
+                                voltagetableoffset = 300;
+                                memoryfrequencytableoffset = 259;
+                                gpufrequencytableoffset = 212;
+                                somevalueoffset = 378;
+                                somevalue2offset = 531;
+                                somevalue4offset = 423;
                                 break;
                             default:
                                 powerTablesize.Text = powerTablesize.Text + " - Unknown type";
