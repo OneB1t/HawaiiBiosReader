@@ -107,6 +107,15 @@ namespace HawaiBiosReader
                                 AMUAndACPLimitTableOffset = 551;
                                 UVDLimitTableOffset = 443;
                                 break;
+                            case 650:
+                                powerTablesize.Text += " - R9 290X MSI Lightning";
+                                voltageTableOffset = 309;
+                                memoryFrequencyTableOffset = 268;
+                                gpuFrequencyTableOffset = 221;
+                                VCELimitTableOffset = 386;
+                                AMUAndACPLimitTableOffset = 539;
+                                UVDLimitTableOffset = 431;
+                                break;
                             case 648:
                                 powerTablesize.Text += " - R9 290/290X";
                                 voltageTableOffset = 307;
