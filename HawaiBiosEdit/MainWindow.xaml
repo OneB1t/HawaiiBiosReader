@@ -100,24 +100,22 @@
                                Grid.Column="1" />
                     <TextBox x:Name="voltagetable" Text="" Margin="10,30,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="255" Width="263" Grid.Column="1"
-                             IsReadOnly="True" VerticalScrollBarVisibility="Auto" />
+                             Height="543" Width="263" Grid.Column="1"
+                             IsReadOnly="True" VerticalScrollBarVisibility="Auto" Grid.RowSpan="2" />
 
-                    <TextBlock Text="GPU Freq Table:" Margin="10,10,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left"
-                               Grid.Row="1" />
-                    <TextBox x:Name="gpufrequencytable" Text="" Margin="10,30,0,0"
+                    <TextBlock Text="GPU Freq Table:" Margin="14,192,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBox x:Name="gpufrequencytable" Text="" Margin="11,212,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="255" Width="263" Grid.Row="1"
-                             IsReadOnly="True"/>
+                             Height="171" Width="263"
+                             IsReadOnly="True" Grid.RowSpan="2"/>
 
-                    <TextBlock Text="MEM Freq Table:" Margin="10,10,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left"
-                               Grid.Row="1" Grid.Column="1" />
-                    <TextBox x:Name="memfrequencytable" Text="" Margin="10,30,0,0"
+                    <TextBlock Text="MEM Freq Table:" Margin="10,92,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" />
+                    <TextBox x:Name="memfrequencytable" Text="" Margin="10,111,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
-                              Height="255" Width="263" Grid.Row="1" Grid.Column="1"
-                             IsReadOnly="True"/>
+                              Height="171" Width="263"
+                             IsReadOnly="True" Grid.Row="1"/>
 
                     <TextBlock Text="Values in voltage/mem/gpu before -- are locations in ROM if you want to edit them by hand." Margin="10,143,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Width="263" TextWrapping="Wrap" FontWeight="SemiBold"/>
@@ -203,7 +201,7 @@
                     <TextBox x:Name="limitValues" Text="" Margin="10,30,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="553" Width="263" IsReadOnly="True" />
-                    <TextBlock Text="Limit Values 2 - 32bit:" Margin="288,13,0,0"
+                    <TextBlock Text="Limit Values 2 - 16bit:" Margin="288,13,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBox x:Name="limitValues2" Text="" Margin="288,30,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
