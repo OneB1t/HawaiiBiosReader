@@ -26,6 +26,7 @@ namespace HawaiBiosReader
         int powerTablePosition; // start position of powertable in rom
         int fanTablePosition;
         int powerTableSize;
+        int fanTableOffset = 175;
 
         // table offsets
         int voltagetableoffset = 319; // 290 have different voltagetable offset than 390
@@ -67,7 +68,7 @@ namespace HawaiBiosReader
                 {
                     romStorageBuffer = br.ReadBytes((int)fileStream.Length);
                     powerTablePosition = PTPatternAt(romStorageBuffer, powerTablepattern);
-                    fanTablePosition = powerTablePosition + 175; // this needs improvement :)
+                    fanTablePosition = powerTablePosition + fanTableOffset;
 
                     if (powerTablePosition == -1)
                     {
