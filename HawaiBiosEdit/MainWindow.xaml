@@ -42,8 +42,10 @@
                     <TextBox x:Name="powerTable" Text="" Margin="10,30,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="256" Width="357" Grid.Column="1" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                
                 </Grid>
             </TabItem>
+            
             <TabItem Header="PowerPlay">
                 <Grid>
                     

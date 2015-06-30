@@ -20,9 +20,7 @@ namespace HawaiBiosReader
     public partial class MainWindow : Window
     {
         Byte[] buffer; // whole rom
-        Byte[] PowerTablepattern = new byte[] { 0x03, 0xe8, 0x03, 0x58 }; // pattern to search for in buffer
-        Byte[] FanControlpattern = new byte[] { 0x07, 0x06, 0x7C, 0x15 }; // pattern to search for in buffer
-        Byte[] FanControl2pattern = new byte[] { 0x03, 0x06, 0x7C, 0x15 }; // pattern to search for in buffer
+        Byte[] PowerTablepattern = new byte[] { 0x02, 0x06, 0x01, 0x00 };
         int powerTablePosition; // start position of powertable in rom
         int fanTablePosition;
         int voltagetableoffset = 319; // 290 have different voltagetable offset than 390
@@ -61,16 +59,8 @@ namespace HawaiBiosReader
                 using (BinaryReader br = new BinaryReader(fileStream)) // binary reader
                 {
                     buffer = br.ReadBytes((int)fileStream.Length);
-                    powerTablePosition = PatternAt(buffer, PowerTablepattern);
-                    fanTablePosition = PatternAt(buffer, FanControlpattern);
-                    if (fanTablePosition == 0)
-                    {
-                        fanTablePosition = PatternAt(buffer, FanControl2pattern);
-                        if (fanTablePosition == 0)
-                        {
-                            // no fan table found
-                        }
-                    }
+                    powerTablePosition = PTPatternAt(buffer, PowerTablepattern);
+                    fanTablePosition = powerTablePosition + 175;
 
                     if (powerTablePosition == 0)
                     {
@@ -78,9 +68,8 @@ namespace HawaiBiosReader
                     }
                     else
                     {
-                        powerTablePosition -= 16; // start of table is 16 bits from pattern i search for
                         int pom = buffer[powerTablePosition];
-                        int pom2 = buffer[powerTablePosition + 1];
+                        int pom2 = buffer[powerTablePosition+1];
                         int tablesize = 256 * pom2 + pom;
                         powerTablesize.Text = tablesize.ToString();
 
@@ -268,32 +257,17 @@ namespace HawaiBiosReader
             }
         }
 
-
-        private static int PatternAt(byte[] data, byte[] pattern)
+        private static int PTPatternAt(byte[] data, byte[] pattern)
         {
-            if (pattern.Length > data.Length)
+            for (int di = 0; di < data.Length; di++)
             {
-                return -1;
-            }
-            for (int i = 0; i < data.Length; )
-            {
-                int j;
-                for (j = 0; j < pattern.Length; j++)
+                if (data[di] == pattern[0] && data[di + 1] == pattern[1] && data[di + 2] == pattern[2] && data[di + 3] == pattern[3])
                 {
-
-                    if (pattern[j] != data[i])
-                        break;
-                    i++;
+                    Console.WriteLine("Found PT start point: " + di);
+                    return di - 1;
                 }
-                if (j == pattern.Length)
-                {
-                    return i - pattern.Length;
-                }
-                if (j != 0) continue;
-                i++;
             }
-
-            return -1;
+            return 0;
         }
 
         public String returnTextFromBinary(byte[] binary, int offset, int lenght)
@@ -304,8 +278,8 @@ namespace HawaiBiosReader
                 result += binary[i].ToString();
             }
             return result;
-
         }
+
         public Int32 get24BitValueFromPosition(int position, byte[] buffer, bool isfrequency = false) // dumb way to extract 24 bit value (can be made much more effective but this is easy to read for anyone)
         {
             int a = buffer[position];
@@ -318,6 +292,7 @@ namespace HawaiBiosReader
             }
             return result;
         }
+
         public Int32 get16BitValueFromPosition(int position, byte[] buffer, bool isfrequency = false)
         {
             int a = buffer[position];
