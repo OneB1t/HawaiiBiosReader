@@ -140,7 +140,7 @@ namespace HawaiBiosReader
 
                         }
 
-                        powerTablePositionValue.Text = powerTablePosition.ToString();
+                        powerTablePositionValue.Text = "0x" + powerTablePosition.ToString("X");
                         powerTable.Text = getTextFromBinary(romStorageBuffer, powerTablePosition, powerTableSize);
 
                         int position = 0;
@@ -197,7 +197,7 @@ namespace HawaiBiosReader
                         for (int i = 0; i < 7; i++)
                         {
                             position = powerTablePosition + VCELimitTableOffset + (i * 3);
-                            somevalues.Text += position.ToString() + "  -- ";
+                            somevalues.Text += "0x" + position.ToString("X") + "  -- ";
                             somevalues.Text += i.ToString() + "  -- ";
                             somevalues.Text += get24BitValueFromPosition(position, romStorageBuffer) + System.Environment.NewLine;
                         }
@@ -210,14 +210,14 @@ namespace HawaiBiosReader
                             if (i <= 7)
                             {
                                 position = powerTablePosition + AMUAndACPLimitTableOffset + (i * 5);
-                                AMULimitTable.Text += position.ToString() + "  -- ";
+                                AMULimitTable.Text += "0x" + position.ToString("X") + "  -- ";
                                 AMULimitTable.Text += get16BitValueFromPosition(position - 2, romStorageBuffer) + "  -- ";
                                 AMULimitTable.Text += get24BitValueFromPosition(position, romStorageBuffer) + System.Environment.NewLine;
                             }
                             else
                             {
                                 position = powerTablePosition + AMUAndACPLimitTableOffset + 2 + (i * 5);
-                                ACPLimitTable.Text += position.ToString() + "  -- ";
+                                ACPLimitTable.Text += "0x" + position.ToString("X") + "  -- ";
                                 ACPLimitTable.Text += get16BitValueFromPosition(position - 2, romStorageBuffer) + "  -- ";
                                 ACPLimitTable.Text += get24BitValueFromPosition(position, romStorageBuffer) + System.Environment.NewLine;
                             }
@@ -228,7 +228,7 @@ namespace HawaiBiosReader
                         for (int i = 0; i < 8; i++)
                         {
                             position = powerTablePosition + UVDLimitTableOffset + (i * 3);
-                            UVDLimitTable.Text += position.ToString() + "  -- ";
+                            UVDLimitTable.Text += "0x" + position.ToString("X") + "  -- ";
                             UVDLimitTable.Text += romStorageBuffer[position + 1] + "  -- ";
                             UVDLimitTable.Text += romStorageBuffer[position] + System.Environment.NewLine;
                         }
@@ -262,11 +262,11 @@ namespace HawaiBiosReader
         {
             if (add)
             {
-                dest.Text += position.ToString() + " -- ";
+                dest.Text += "0x" + position.ToString("X") + " -- ";
             }
             else
             {
-                dest.Text = position.ToString() + " -- ";
+                dest.Text = "0x" + position.ToString("X") + " -- ";
             }
 
             switch (type)
