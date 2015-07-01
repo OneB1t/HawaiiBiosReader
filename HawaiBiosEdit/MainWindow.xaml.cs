@@ -28,6 +28,8 @@ namespace HawaiBiosReader
         int powerTableSize;
         int fanTableOffset = 175;
         int biosNameOffset = 0xDC;
+        int tdpLimitOffset = 630;
+        int powerDeliveryLimitOffset = 642;
 
         // table offsets
         int voltageTableOffset = 319; // 290 have different voltagetable offset than 390
@@ -98,6 +100,8 @@ namespace HawaiBiosReader
                                 VCELimitTableOffset = 521;
                                 AMUAndACPLimitTableOffset = 549;
                                 UVDLimitTableOffset = 439;
+                                tdpLimitOffset = 632;
+                                powerDeliveryLimitOffset = 644;
                                 break;
                             case 662:
                                 powerTablesize.Text += " - R9 390/390X(Sapphire)";
@@ -107,6 +111,8 @@ namespace HawaiBiosReader
                                 VCELimitTableOffset = 523;
                                 AMUAndACPLimitTableOffset = 551;
                                 UVDLimitTableOffset = 441;
+                                tdpLimitOffset = 634;
+                                powerDeliveryLimitOffset = 646;
                                 break;
                             case 650:
                                 powerTablesize.Text += " - R9 290X MSI Lightning";
@@ -116,6 +122,8 @@ namespace HawaiBiosReader
                                 VCELimitTableOffset = 511;
                                 AMUAndACPLimitTableOffset = 539;
                                 UVDLimitTableOffset = 429;
+                                tdpLimitOffset = 622;
+                                powerDeliveryLimitOffset = 634;
                                 break;
                             case 648:
                                 powerTablesize.Text += " - R9 290/290X";
@@ -125,6 +133,8 @@ namespace HawaiBiosReader
                                 VCELimitTableOffset = 509;
                                 AMUAndACPLimitTableOffset = 537;
                                 UVDLimitTableOffset = 427;
+                                tdpLimitOffset = 620;
+                                powerDeliveryLimitOffset = 632;
                                 break;
                             case 658: // Slith mining bios for 290/290X
                                 powerTablesize.Text += " - R9 290/290X The Stilt mining bios";
@@ -134,6 +144,8 @@ namespace HawaiBiosReader
                                 VCELimitTableOffset = 519;
                                 AMUAndACPLimitTableOffset = 547;
                                 UVDLimitTableOffset = 437;
+                                tdpLimitOffset = 630;
+                                powerDeliveryLimitOffset = 642;
                                 break;
                             case 642: // PT1/PT3
                                 powerTablesize.Text += " - PT1/PT3 bios";
@@ -143,6 +155,8 @@ namespace HawaiBiosReader
                                 VCELimitTableOffset = 503;
                                 AMUAndACPLimitTableOffset = 531;
                                 UVDLimitTableOffset = 421;
+                                tdpLimitOffset = 614;
+                                powerDeliveryLimitOffset = 626;
                                 break;
                             case 634: // FirePro W9100
                                 powerTablesize.Text += " - FirePro W9100";
@@ -152,6 +166,8 @@ namespace HawaiBiosReader
                                 VCELimitTableOffset = 495;
                                 AMUAndACPLimitTableOffset = 523;
                                 UVDLimitTableOffset = 425;
+                                tdpLimitOffset = 598;
+                                powerDeliveryLimitOffset = 610;
                                 break;
                             default:
                                 powerTablesize.Text = powerTablesize.Text + " - Unknown type";
@@ -176,6 +192,10 @@ namespace HawaiBiosReader
                         readValueFromPosition(memclock2, powerTablePosition + 110, 1, "Mhz", true);
                         // mem clock 3
                         readValueFromPosition(memclock3, powerTablePosition + 119, 1, "Mhz", true);
+
+
+                        readValueFromPosition(tdpMax, powerTablePosition + tdpLimitOffset, 2, "W", true);
+                        readValueFromPosition(powerLimit, powerTablePosition + powerDeliveryLimitOffset, 2, "W", true);
 
                         // read voltage table
                         voltagetable.Text = "";
@@ -290,11 +310,14 @@ namespace HawaiBiosReader
 
             switch (type)
             {
-                case 0:
+                case 0: // 16 bit value
                     dest.Text += get16BitValueFromPosition(position, romStorageBuffer, isFrequency).ToString() + " " + units;
                     break;
-                case 1:
+                case 1: // 24 bit value
                     dest.Text += get24BitValueFromPosition(position, romStorageBuffer, isFrequency).ToString() + " " + units;
+                    break;
+                case 2: // 8 bit value
+                    dest.Text += romStorageBuffer[position].ToString() + " " + units;
                     break;
                 default:
                     dest.Text += get16BitValueFromPosition(position, romStorageBuffer, isFrequency).ToString() + " " + units;

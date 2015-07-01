@@ -121,9 +121,16 @@
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                               Height="171" Width="263"
                              IsReadOnly="True" Grid.Row="1"/>
-
-                    <TextBlock Text="Values in voltage/mem/gpu before -- are locations in ROM if you want to edit them by hand." Margin="10,143,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" Width="263" TextWrapping="Wrap" FontWeight="SemiBold"/>
+                    <TextBlock Text="TDP Max:" Margin="11,151,0,0"
+                    	VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBlock Text="Power limit:" Margin="11,171,0,0"
+                    	VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBox x:Name="tdpMax" Text="" Margin="100,149,0,0"
+                    	HorizontalAlignment="Left" VerticalAlignment="Top" Width="173"
+                    	IsReadOnly="True"/>
+                    <TextBox x:Name="powerLimit" Text="" Margin="100,169,0,0"
+                    	HorizontalAlignment="Left" VerticalAlignment="Top" Width="173"
+                    	IsReadOnly="True"/>
 
                 </Grid>
             </TabItem>
