@@ -94,54 +94,54 @@ namespace HawaiBiosReader
                                 voltageTableOffset = 319;
                                 memoryFrequencyTableOffset = 278;
                                 gpuFrequencyTableOffset = 231;
-                                VCELimitTableOffset = 396;
+                                VCELimitTableOffset = 521;
                                 AMUAndACPLimitTableOffset = 549;
-                                UVDLimitTableOffset = 441;
+                                UVDLimitTableOffset = 439;
                                 break;
                             case 662:
                                 powerTablesize.Text += " - R9 390/390X(Sapphire)";
                                 voltageTableOffset = 321;
                                 memoryFrequencyTableOffset = 280;
                                 gpuFrequencyTableOffset = 233;
-                                VCELimitTableOffset = 398;
+                                VCELimitTableOffset = 523;
                                 AMUAndACPLimitTableOffset = 551;
-                                UVDLimitTableOffset = 443;
+                                UVDLimitTableOffset = 441;
                                 break;
                             case 650:
                                 powerTablesize.Text += " - R9 290X MSI Lightning";
                                 voltageTableOffset = 309;
                                 memoryFrequencyTableOffset = 268;
                                 gpuFrequencyTableOffset = 221;
-                                VCELimitTableOffset = 386;
+                                VCELimitTableOffset = 511;
                                 AMUAndACPLimitTableOffset = 539;
-                                UVDLimitTableOffset = 431;
+                                UVDLimitTableOffset = 429;
                                 break;
                             case 648:
                                 powerTablesize.Text += " - R9 290/290X";
                                 voltageTableOffset = 307;
                                 memoryFrequencyTableOffset = 266;
                                 gpuFrequencyTableOffset = 219;
-                                VCELimitTableOffset = 384;
+                                VCELimitTableOffset = 509;
                                 AMUAndACPLimitTableOffset = 537;
-                                UVDLimitTableOffset = 429;
+                                UVDLimitTableOffset = 427;
                                 break;
                             case 658: // Slith mining bios for 290/290X
                                 powerTablesize.Text += " - R9 290/290X The Stilt mining bios";
                                 voltageTableOffset = 316;
                                 memoryFrequencyTableOffset = 275;
                                 gpuFrequencyTableOffset = 228;
-                                VCELimitTableOffset = 394;
+                                VCELimitTableOffset = 519;
                                 AMUAndACPLimitTableOffset = 547;
-                                UVDLimitTableOffset = 439;
+                                UVDLimitTableOffset = 437;
                                 break;
                             case 642: // PT1/PT3
                                 powerTablesize.Text += " - PT1/PT3 bios";
                                 voltageTableOffset = 300;
                                 memoryFrequencyTableOffset = 259;
                                 gpuFrequencyTableOffset = 212;
-                                VCELimitTableOffset = 378;
+                                VCELimitTableOffset = 503;
                                 AMUAndACPLimitTableOffset = 531;
-                                UVDLimitTableOffset = 423;
+                                UVDLimitTableOffset = 421;
                                 break;
                             default:
                                 powerTablesize.Text = powerTablesize.Text + " - Unknown type";
@@ -202,13 +202,21 @@ namespace HawaiBiosReader
                             readValueFromPosition(limitValues2, powerTablePosition + AMUAndACPLimitTableOffset + 79 + (i * 2), 0, "" + System.Environment.NewLine, false, true);
                         }
                         // StartVCELimitTable
-                        somevalues.Text = "";
-                        for (int i = 0; i < 7; i++)
+                        VCELimitTableValues.Text = "";
+                        for (int i = 0; i < 8; i++)
                         {
                             position = powerTablePosition + VCELimitTableOffset + (i * 3);
-                            somevalues.Text += "0x" + position.ToString("X") + "  -- ";
-                            somevalues.Text += i.ToString() + "  -- ";
-                            somevalues.Text += get24BitValueFromPosition(position, romStorageBuffer) + System.Environment.NewLine;
+                            readValueFromPosition(VCELimitTableValues, position, 0, "--", false, true);
+                            VCELimitTableValues.Text += romStorageBuffer[position + 2] + System.Environment.NewLine;
+                        }
+
+                        // StartUVDLimitTable
+                        UVDLimitTable.Text = "";
+                        for (int i = 0; i < 8; i++)
+                        {
+                            position = powerTablePosition + UVDLimitTableOffset + (i * 3);
+                            readValueFromPosition(UVDLimitTable, position, 0, "--", false, true);
+                            UVDLimitTable.Text += romStorageBuffer[position + 2] + System.Environment.NewLine;
                         }
 
                         // StartSAMULimitTable + StartACPLimitTable
@@ -232,15 +240,7 @@ namespace HawaiBiosReader
                             }
                         }
 
-                        // StartUVDLimitTable
-                        UVDLimitTable.Text = "";
-                        for (int i = 0; i < 8; i++)
-                        {
-                            position = powerTablePosition + UVDLimitTableOffset + (i * 3);
-                            UVDLimitTable.Text += "0x" + position.ToString("X") + "  -- ";
-                            UVDLimitTable.Text += romStorageBuffer[position + 1] + "  -- ";
-                            UVDLimitTable.Text += romStorageBuffer[position] + System.Environment.NewLine;
-                        }
+
                         if (fanTablePosition > 0)
                         {
                             readValueFromPosition(fantemperature1, fanTablePosition + 2, 0, "C°",true);

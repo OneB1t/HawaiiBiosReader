@@ -170,7 +170,7 @@
 
                     <TextBlock Text="StartVCELimitTable:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="somevalues" Text="" Margin="10,30,0,0"
+                    <TextBox x:Name="VCELimitTableValues" Text="" Margin="10,30,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="256" Width="263" IsReadOnly="True" />
 
