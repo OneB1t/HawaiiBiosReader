@@ -22,10 +22,14 @@ namespace HawaiBiosReader
     {
 
         Byte[] romStorageBuffer; // whole rom
-        Byte[] powerTablepattern = new byte[] { 0x02, 0x06, 0x01, 0x00 };
+        Byte[] powerTablepattern = new Byte[] { 0x02, 0x06, 0x01, 0x00 };
+        Byte[] voltageObjectInfoPattern = new Byte[] { 0x08,0x96,0x60,0x00};
         int powerTablePosition; // start position of powertable in rom
+        int voltageInfoPosition;
         int fanTablePosition;
         int powerTableSize;
+        int voltageInfoSize;
+
         int fanTableOffset = 175;
         int biosNameOffset = 0xDC;
         int tdpLimitOffset = 630;
@@ -72,6 +76,7 @@ namespace HawaiBiosReader
                 {
                     romStorageBuffer = br.ReadBytes((int)fileStream.Length);
                     powerTablePosition = PTPatternAt(romStorageBuffer, powerTablepattern);
+                    voltageInfoPosition = PTPatternAt(romStorageBuffer, voltageObjectInfoPattern);
                     fanTablePosition = powerTablePosition + fanTableOffset;
                     biosName.Text = getTextFromBinary(romStorageBuffer, biosNameOffset, 32);
                     gpuID.Text = romStorageBuffer[565].ToString("X2") + romStorageBuffer[564].ToString("X2") + "-" + romStorageBuffer[567].ToString("X2") + romStorageBuffer[566].ToString("X2"); // not finished working only for few bioses :(
@@ -239,8 +244,21 @@ namespace HawaiBiosReader
                         limitValues2.Text = "";
                         for (int i = 0; i < 16; i++)
                         {
- 
+
                             readValueFromPosition(limitValues2, powerTablePosition + AMUAndACPLimitTableOffset + 79 + (i * 2), 0, "" + System.Environment.NewLine, false, true);
+                        }
+                        // search for more 24 bit
+                        voltageinfo.Text = "";
+                        for (int i = 0; i < 20; i++)
+                        {
+                            readValueFromPosition(voltageinfo, powerTablePosition + voltageInfoPosition + 1 + (i * 3), 1, "" + System.Environment.NewLine, false, true);
+                        }
+
+                        // search for more 16 bit
+                        voltageinfo2.Text = "";
+                        for (int i = 0; i < 32; i++)
+                        {
+                            readValueFromPosition(voltageinfo2, powerTablePosition + voltageInfoPosition + 1 + (i * 2), 0, "" + System.Environment.NewLine, false, true);
                         }
                         // StartVCELimitTable
                         VCELimitTableValues.Text = "";
@@ -284,6 +302,7 @@ namespace HawaiBiosReader
 
                         if (fanTablePosition > 0)
                         {
+                            readValueFromPosition(temperatureHysteresis, fanTablePosition + 1, 2, "C°");
                             readValueFromPosition(fantemperature1, fanTablePosition + 2, 0, "C°",true);
                             readValueFromPosition(fantemperature2, fanTablePosition + 4, 0, "C°",true);
                             readValueFromPosition(fantemperature3, fanTablePosition + 6, 0, "C°",true);
@@ -293,6 +312,8 @@ namespace HawaiBiosReader
                             readValueFromPosition(fanspeed2, fanTablePosition + 10, 0, "%",true);
                             readValueFromPosition(fanspeed3, fanTablePosition + 12, 0, "%",true);
                             readValueFromPosition(fanControlType, fanTablePosition + 16, 2, "", true);
+                            readValueFromPosition(pwmFanMax, fanTablePosition + 17, 2, "%");
+                            
                         }
                         else
                         {

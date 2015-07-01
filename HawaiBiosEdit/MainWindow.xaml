@@ -172,7 +172,15 @@
                     <TextBlock Text="Fan control type:" Margin="10,71,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
                     <TextBox x:Name="fanControlType" Text="" Margin="100,71,0,0"
                     	HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
-                    	IsReadOnly="True"/>
+                    	IsReadOnly="True" ToolTip="Advanced fan control ENABLED - 1 Lookup table fan control ENABLED  - 0"/>
+                    <TextBlock Text="Temp. hysteresis:" Margin="10,92,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
+                    <TextBox x:Name="temperatureHysteresis" Text="" Margin="100,92,0,0"
+                    	HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
+                    	IsReadOnly="True" />
+                    <TextBlock Text="PWM Fan max.:" Margin="10,116,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
+                    <TextBox x:Name="pwmFanMax" Text="" Margin="100,115,0,0"
+                    	HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
+                    	IsReadOnly="True" />
 
                 </Grid>
             </TabItem>
@@ -213,6 +221,20 @@
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="256" Width="263" IsReadOnly="True" Grid.Column="1" Grid.Row="1" />
 
+                </Grid>
+            </TabItem>
+            <TabItem Header="Voltage Info">
+                <Grid>
+                    <TextBlock Text="Voltage info 24-bit:" Margin="10,10,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBox x:Name="voltageinfo" Text="" Margin="10,30,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top"
+                             Height="553" Width="263" IsReadOnly="True" />
+                    <TextBlock Text="Voltage info 2 - 16bit:" Margin="288,13,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBox x:Name="voltageinfo2" Text="" Margin="288,30,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top"
+                             Height="553" Width="264" IsReadOnly="True" />
                 </Grid>
             </TabItem>
             <TabItem Header="Other2...">
