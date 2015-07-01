@@ -169,6 +169,10 @@
                     <TextBox x:Name="fantemperature4" Text="" Margin="100,50,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
                              IsReadOnly="True"/>
+                    <TextBlock Text="Fan control type:" Margin="10,71,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
+                    <TextBox x:Name="fanControlType" Text="" Margin="100,71,0,0"
+                    	HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
+                    	IsReadOnly="True"/>
 
                 </Grid>
             </TabItem>

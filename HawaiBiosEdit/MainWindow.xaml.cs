@@ -292,6 +292,7 @@ namespace HawaiBiosReader
                             readValueFromPosition(fanspeed1, fanTablePosition + 8, 0, "%",true);
                             readValueFromPosition(fanspeed2, fanTablePosition + 10, 0, "%",true);
                             readValueFromPosition(fanspeed3, fanTablePosition + 12, 0, "%",true);
+                            readValueFromPosition(fanControlType, fanTablePosition + 16, 2, "", true);
                         }
                         else
                         {
