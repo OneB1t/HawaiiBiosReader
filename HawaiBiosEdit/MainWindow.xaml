@@ -40,6 +40,11 @@
                     <TextBox x:Name="powerTablesize" Text="" Margin="10,120,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
 
+                    <TextBlock Text="GPU ID:" Margin="10,143,0,0" 
+                               VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBox x:Name="gpuID" Text="" Margin="10,159,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
+
                     <TextBlock Text="PowerTable Content:" Margin="10,10,0,0" 
                                VerticalAlignment="Top" HorizontalAlignment="Left"
                                Grid.Column="1" />
