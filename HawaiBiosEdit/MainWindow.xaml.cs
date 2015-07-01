@@ -143,6 +143,15 @@ namespace HawaiBiosReader
                                 AMUAndACPLimitTableOffset = 531;
                                 UVDLimitTableOffset = 421;
                                 break;
+                            case 634: // FirePro W9100
+                                powerTablesize.Text += " - FirePro W9100";
+                                voltageTableOffset = 317;
+                                memoryFrequencyTableOffset = 276;
+                                gpuFrequencyTableOffset = 229;
+                                VCELimitTableOffset = 495;
+                                AMUAndACPLimitTableOffset = 523;
+                                UVDLimitTableOffset = 425;
+                                break;
                             default:
                                 powerTablesize.Text = powerTablesize.Text + " - Unknown type";
                                 break;
