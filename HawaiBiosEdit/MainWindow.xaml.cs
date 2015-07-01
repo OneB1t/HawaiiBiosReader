@@ -317,6 +317,7 @@ namespace HawaiBiosReader
                             readValueFromPosition(fanspeed3, fanTablePosition + 12, 0, "%",true);
                             readValueFromPosition(fanControlType, fanTablePosition + 16, 2, "", true);
                             readValueFromPosition(pwmFanMax, fanTablePosition + 17, 2, "%");
+                            readValueFromPosition(maxAsicTemperature, fanTablePosition + 459, 2, "C°");
                             
                         }
                         else

@@ -181,6 +181,10 @@
                     <TextBox x:Name="pwmFanMax" Text="" Margin="100,115,0,0"
                     	HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
                     	IsReadOnly="True" />
+                    <TextBlock Text="Max. ASIC temp.:" Margin="10,138,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
+                    <TextBox x:Name="maxAsicTemperature" Text="" Margin="100,136,0,0"
+                    	HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
+                    	IsReadOnly="True" />
 
                 </Grid>
             </TabItem>
