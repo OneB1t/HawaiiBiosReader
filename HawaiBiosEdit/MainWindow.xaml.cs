@@ -166,8 +166,8 @@ namespace HawaiBiosReader
                                 VCELimitTableOffset = 495;
                                 AMUAndACPLimitTableOffset = 523;
                                 UVDLimitTableOffset = 425;
-                                tdpLimitOffset = 598;
-                                powerDeliveryLimitOffset = 610;
+                                tdpLimitOffset = 606;
+                                powerDeliveryLimitOffset = 618;
                                 break;
                             default:
                                 powerTablesize.Text = powerTablesize.Text + " - Unknown type";
@@ -194,8 +194,9 @@ namespace HawaiBiosReader
                         readValueFromPosition(memclock3, powerTablePosition + 119, 1, "Mhz", true);
 
 
-                        readValueFromPosition(tdpMax, powerTablePosition + tdpLimitOffset, 2, "W", true);
+                        readValueFromPosition(tdpLimit, powerTablePosition + tdpLimitOffset, 2, "W", true);
                         readValueFromPosition(powerLimit, powerTablePosition + powerDeliveryLimitOffset, 2, "W", true);
+                        readValueFromPosition(tdcLimit,powerTablePosition + tdpLimitOffset + 2,2,"A");
 
                         // read voltage table
                         voltagetable.Text = "";
@@ -360,6 +361,11 @@ namespace HawaiBiosReader
                 return (256 * buffer[position + 1] + buffer[position]) / 100;
             }
             return 256 * buffer[position + 1] + buffer[position];
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
     }
