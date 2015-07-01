@@ -24,6 +24,10 @@ namespace HawaiBiosReader
         Byte[] romStorageBuffer; // whole rom
         Byte[] powerTablepattern = new Byte[] { 0x02, 0x06, 0x01, 0x00 };
         Byte[] voltageObjectInfoPattern = new Byte[] { 0x08,0x96,0x60,0x00};
+        Byte[] FanControlpattern = new byte[] { 0x07, 0x06, 0x7C, 0x15 }; // pattern to search for in buffer
+        Byte[] FanControl2pattern = new byte[] { 0x03, 0x06, 0x7C, 0x15 }; // pattern to search for in buffer
+
+
         int powerTablePosition; // start position of powertable in rom
         int voltageInfoPosition;
         int fanTablePosition;
@@ -75,9 +79,15 @@ namespace HawaiBiosReader
                 using (BinaryReader br = new BinaryReader(fileStream)) // binary reader
                 {
                     romStorageBuffer = br.ReadBytes((int)fileStream.Length);
-                    powerTablePosition = PTPatternAt(romStorageBuffer, powerTablepattern);
-                    voltageInfoPosition = PTPatternAt(romStorageBuffer, voltageObjectInfoPattern);
-                    fanTablePosition = powerTablePosition + fanTableOffset;
+                    powerTablePosition = PatternAt(romStorageBuffer, powerTablepattern);
+                    voltageInfoPosition = PatternAt(romStorageBuffer, voltageObjectInfoPattern);
+                    fanTablePosition = PatternAt(romStorageBuffer, FanControlpattern);
+                    if (fanTablePosition == -1)
+                    {
+                        fanTablePosition = PatternAt(romStorageBuffer, FanControl2pattern);
+
+                    }
+
                     biosName.Text = getTextFromBinary(romStorageBuffer, biosNameOffset, 32);
                     gpuID.Text = romStorageBuffer[565].ToString("X2") + romStorageBuffer[564].ToString("X2") + "-" + romStorageBuffer[567].ToString("X2") + romStorageBuffer[566].ToString("X2"); // not finished working only for few bioses :(
 
@@ -362,19 +372,32 @@ namespace HawaiBiosReader
                     break;
             }
         }
-        private static int PTPatternAt(byte[] data, byte[] pattern)
+        private static int PatternAt(byte[] data, byte[] pattern)
         {
-            for (int di = 0; di < data.Length; di++)
+            if (pattern.Length > data.Length)
             {
-                if (data[di] == pattern[0] && data[di + 1] == pattern[1] && data[di + 2] == pattern[2] && data[di + 3] == pattern[3])
-                {
-                    Console.WriteLine("Found PT start point: " + di);
-                    return di - 1;
-                }
+                return -1;
             }
-            return 0;
-        }
+            for (int i = 0; i < data.Length; )
+            {
+                int j;
+                for (j = 0; j < pattern.Length; j++)
+                {
 
+                    if (pattern[j] != data[i])
+                        break;
+                    i++;
+                }
+                if (j == pattern.Length)
+                {
+                    return i - pattern.Length;
+                }
+                if (j != 0) continue;
+                i++;
+            }
+
+            return -1;
+        }
         public String getTextFromBinary(byte[] binary, int offset, int lenght)
         {
             System.Text.Encoding encEncoder = System.Text.ASCIIEncoding.ASCII;
