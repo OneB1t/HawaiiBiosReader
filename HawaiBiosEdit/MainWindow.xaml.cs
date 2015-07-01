@@ -29,6 +29,7 @@ namespace HawaiBiosReader
         int fanTableOffset = 175;
         int biosNameOffset = 0xDC;
         int tdpLimitOffset = 630;
+        int tdcLimitOffset = 632;
         int powerDeliveryLimitOffset = 642;
 
         // table offsets
@@ -101,6 +102,7 @@ namespace HawaiBiosReader
                                 AMUAndACPLimitTableOffset = 549;
                                 UVDLimitTableOffset = 439;
                                 tdpLimitOffset = 632;
+                                tdcLimitOffset = 634;
                                 powerDeliveryLimitOffset = 644;
                                 break;
                             case 662:
@@ -112,6 +114,7 @@ namespace HawaiBiosReader
                                 AMUAndACPLimitTableOffset = 551;
                                 UVDLimitTableOffset = 441;
                                 tdpLimitOffset = 634;
+                                tdcLimitOffset = 636;
                                 powerDeliveryLimitOffset = 646;
                                 break;
                             case 650:
@@ -123,6 +126,7 @@ namespace HawaiBiosReader
                                 AMUAndACPLimitTableOffset = 539;
                                 UVDLimitTableOffset = 429;
                                 tdpLimitOffset = 622;
+                                tdcLimitOffset = 624;
                                 powerDeliveryLimitOffset = 634;
                                 break;
                             case 648:
@@ -134,6 +138,7 @@ namespace HawaiBiosReader
                                 AMUAndACPLimitTableOffset = 537;
                                 UVDLimitTableOffset = 427;
                                 tdpLimitOffset = 620;
+                                tdcLimitOffset = 622;
                                 powerDeliveryLimitOffset = 632;
                                 break;
                             case 658: // Slith mining bios for 290/290X
@@ -145,6 +150,7 @@ namespace HawaiBiosReader
                                 AMUAndACPLimitTableOffset = 547;
                                 UVDLimitTableOffset = 437;
                                 tdpLimitOffset = 630;
+                                tdcLimitOffset = 632;
                                 powerDeliveryLimitOffset = 642;
                                 break;
                             case 642: // PT1/PT3
@@ -156,6 +162,7 @@ namespace HawaiBiosReader
                                 AMUAndACPLimitTableOffset = 531;
                                 UVDLimitTableOffset = 421;
                                 tdpLimitOffset = 614;
+                                tdcLimitOffset = 616;
                                 powerDeliveryLimitOffset = 626;
                                 break;
                             case 634: // FirePro W9100
@@ -167,6 +174,7 @@ namespace HawaiBiosReader
                                 AMUAndACPLimitTableOffset = 523;
                                 UVDLimitTableOffset = 425;
                                 tdpLimitOffset = 606;
+                                tdcLimitOffset = 608;
                                 powerDeliveryLimitOffset = 618;
                                 break;
                             default:
@@ -194,9 +202,11 @@ namespace HawaiBiosReader
                         readValueFromPosition(memclock3, powerTablePosition + 119, 1, "Mhz", true);
 
 
-                        readValueFromPosition(tdpLimit, powerTablePosition + tdpLimitOffset, 2, "W", true);
-                        readValueFromPosition(powerLimit, powerTablePosition + powerDeliveryLimitOffset, 2, "W", true);
-                        readValueFromPosition(tdcLimit,powerTablePosition + tdpLimitOffset + 2,2,"A");
+                        readValueFromPosition(tdpLimit, powerTablePosition + tdpLimitOffset, 0, "W");
+                        readValueFromPosition(powerLimit, powerTablePosition + powerDeliveryLimitOffset, 0, "W");
+                        readValueFromPosition(tdcLimit,powerTablePosition + tdcLimitOffset,0,"A");
+
+
 
                         // read voltage table
                         voltagetable.Text = "";

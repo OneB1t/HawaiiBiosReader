@@ -129,13 +129,13 @@
                     	VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBox x:Name="tdpLimit" Text="" Margin="100,149,0,0"
                     	HorizontalAlignment="Left" VerticalAlignment="Top" Width="173"
-                    	IsReadOnly="True"/>
+                    	IsReadOnly="True" ToolTip="Change TDP limit based on customer's thermal solution"/>
                     <TextBox x:Name="powerLimit" Text="" Margin="100,169,0,0"
                     	HorizontalAlignment="Left" VerticalAlignment="Top" Width="173"
-                    	IsReadOnly="True"/>
+                    	IsReadOnly="True" ToolTip="This power limit is the total chip power that we need to stay within in order to not violate the PCIe rail/connector power delivery"/>
                     <TextBox x:Name="tdcLimit" Text="" Margin="100,192,0,0"
                     	HorizontalAlignment="Left" VerticalAlignment="Top" Width="173"
-                    	IsReadOnly="True"/>
+                    	IsReadOnly="True" ToolTip="PowerTune limit for maximum thermally sustainable current by VDDC regulator that can be supplied"/>
 
                 </Grid>
             </TabItem>
