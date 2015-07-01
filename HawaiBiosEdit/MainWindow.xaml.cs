@@ -248,17 +248,21 @@ namespace HawaiBiosReader
                             readValueFromPosition(limitValues2, powerTablePosition + AMUAndACPLimitTableOffset + 79 + (i * 2), 0, "" + System.Environment.NewLine, false, true);
                         }
                         // search for more 24 bit
-                        voltageinfo.Text = "";
-                        for (int i = 0; i < 20; i++)
-                        {
-                            readValueFromPosition(voltageinfo, powerTablePosition + voltageInfoPosition + 1 + (i * 3), 1, "" + System.Environment.NewLine, false, true);
-                        }
 
-                        // search for more 16 bit
-                        voltageinfo2.Text = "";
-                        for (int i = 0; i < 32; i++)
+                        if (voltageInfoPosition > 0)
                         {
-                            readValueFromPosition(voltageinfo2, powerTablePosition + voltageInfoPosition + 1 + (i * 2), 0, "" + System.Environment.NewLine, false, true);
+                            voltageinfo.Text = "";
+                            for (int i = 0; i < 20; i++)
+                            {
+                                readValueFromPosition(voltageinfo, powerTablePosition + voltageInfoPosition + 1 + (i * 3), 1, "" + System.Environment.NewLine, false, true);
+                            }
+
+                            // search for more 16 bit
+                            voltageinfo2.Text = "";
+                            for (int i = 0; i < 32; i++)
+                            {
+                                readValueFromPosition(voltageinfo2, powerTablePosition + voltageInfoPosition + 1 + (i * 2), 0, "" + System.Environment.NewLine, false, true);
+                            }
                         }
                         // StartVCELimitTable
                         VCELimitTableValues.Text = "";
@@ -379,20 +383,28 @@ namespace HawaiBiosReader
         // dumb way to extract 24 bit value (can be made much more effective but this is easy to read for anyone)
         public Int32 get24BitValueFromPosition(int position, byte[] buffer, bool isFrequency = false)
         {
+            if(position < buffer.Length - 1)
+            {
             if (isFrequency) // if its frequency divide by 100 to convert it into Mhz
             {
                 return (256 * 256 * buffer[position + 2] + 256 * buffer[position + 1] + buffer[position]) / 100;
             }
             return 256 * 256 * buffer[position + 2] + 256 * buffer[position + 1] + buffer[position];
+            }
+            return -1;
         }
 
         public Int32 get16BitValueFromPosition(int position, byte[] buffer, bool isFrequency = false)
         {
-            if (isFrequency) // if its frequency divide by 100 to convert it into Mhz
+            if (position < buffer.Length - 1)
             {
-                return (256 * buffer[position + 1] + buffer[position]) / 100;
+                if (isFrequency) // if its frequency divide by 100 to convert it into Mhz
+                {
+                    return (256 * buffer[position + 1] + buffer[position]) / 100;
+                }
+                return 256 * buffer[position + 1] + buffer[position];
             }
-            return 256 * buffer[position + 1] + buffer[position];
+            return -1;
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
