@@ -79,7 +79,7 @@ namespace HawaiBiosReader
                 using (BinaryReader br = new BinaryReader(fileStream)) // binary reader
                 {
                     romStorageBuffer = br.ReadBytes((int)fileStream.Length);
-                    powerTablePosition = PatternAt(romStorageBuffer, powerTablepattern);
+                    powerTablePosition = PTPatternAt(romStorageBuffer, powerTablepattern);
                     voltageInfoPosition = PatternAt(romStorageBuffer, voltageObjectInfoPattern);
                     fanTablePosition = PatternAt(romStorageBuffer, FanControlpattern);
                     if (fanTablePosition == -1)
@@ -372,18 +372,23 @@ namespace HawaiBiosReader
                     break;
             }
         }
+        private static int PTPatternAt(byte[] data, byte[] pattern)
+        {
+            for (int di = 0; di < data.Length; di++)		
+                if(data[di] == pattern[0] && data[di + 1] == pattern[1] && data[di + 2] == pattern[2] && data[di + 3] == pattern[3])
+                {
+                    return di - 1;
+                }
+            return -1;
+        }
+
         private static int PatternAt(byte[] data, byte[] pattern)
         {
-            if (pattern.Length > data.Length)
-            {
-                return -1;
-            }
             for (int i = 0; i < data.Length; )
             {
                 int j;
                 for (j = 0; j < pattern.Length; j++)
                 {
-
                     if (pattern[j] != data[i])
                         break;
                     i++;
@@ -395,7 +400,6 @@ namespace HawaiBiosReader
                 if (j != 0) continue;
                 i++;
             }
-
             return -1;
         }
         public String getTextFromBinary(byte[] binary, int offset, int lenght)
