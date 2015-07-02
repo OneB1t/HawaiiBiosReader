@@ -26,7 +26,7 @@ namespace HawaiBiosReader
         Byte[] voltageObjectInfoPattern = new Byte[] { 0x08,0x96,0x60,0x00};
         Byte[] FanControlpattern = new byte[] { 0x07, 0x06, 0x7C, 0x15 }; // pattern to search for in buffer
         Byte[] FanControl2pattern = new byte[] { 0x03, 0x06, 0x7C, 0x15 }; // pattern to search for in buffer
-
+        Byte[] FanControl3pattern = new byte[] { 0x07, 0x06, 0x68, 0x10 }; // pattern to search for in buffer
 
         int powerTablePosition; // start position of powertable in rom
         int voltageInfoPosition;
@@ -85,6 +85,10 @@ namespace HawaiBiosReader
                     if (fanTablePosition == -1)
                     {
                         fanTablePosition = PatternAt(romStorageBuffer, FanControl2pattern);
+                        if(fanTablePosition == -1)
+                        {
+                            fanTablePosition = PatternAt(romStorageBuffer, FanControl3pattern);
+                        }
 
                     }
 
@@ -328,10 +332,16 @@ namespace HawaiBiosReader
                             readValueFromPosition(fanControlType, fanTablePosition + 16, 2, "", true);
                             readValueFromPosition(pwmFanMax, fanTablePosition + 17, 2, "%");
                             readValueFromPosition(maxAsicTemperature, fanTablePosition + 459, 2, "C°");
-                            
+                            // 
+                            readValueFromPosition(gpuMaxClock, fanTablePosition + 33, 1, "Mhz");// this offset work only for 390X need some polishing for other cards
+                            readValueFromPosition(memMaxClock, fanTablePosition + 37, 1, "Mhz");
                         }
                         else
                         {
+                            temperatureHysteresis.Text = "NOT FOUND";
+                            fanControlType.Text = "NOT FOUND";
+                            pwmFanMax.Text = "NOT FOUND";
+                            maxAsicTemperature.Text = "NOT FOUND";
                             fanspeed1.Text = "NOT FOUND";
                             fanspeed2.Text = "NOT FOUND";
                             fanspeed3.Text = "NOT FOUND";
