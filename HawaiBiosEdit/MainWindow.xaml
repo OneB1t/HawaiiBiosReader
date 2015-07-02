@@ -71,38 +71,20 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="GPU Clock 1:" Margin="10,10,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="gpuclock1" Text="" Margin="100,10,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="173" 
-                             IsReadOnly="True"/>
-                    <TextBlock Text="GPU Clock 2:" Margin="10,30,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="gpuclock2" Text="" Margin="100,30,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="173"
-                             IsReadOnly="True"/>
-                    <TextBlock Text="GPU Clock 3:" Margin="10,50,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="gpuclock3" Text="" Margin="100,50,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="173"
-                             IsReadOnly="True"/>
+                    <TextBlock Text="GPU Clock 1:" Margin="22,24,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
+                    <TextBlock Text="GPU Clock 2:" Margin="22,42,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
+                    <TextBlock Text="GPU Clock 3:" Margin="22,60,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
 
-                    <TextBlock Text="MEM Clock 1:" Margin="10,80,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="memclock1" Text="" Margin="100,80,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="173"
-                             IsReadOnly="True"/>
-                    <TextBlock Text="MEM Clock 2:" Margin="10,100,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="memclock2" Text="" Margin="100,100,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="173"
-                             IsReadOnly="True"/>
-                    <TextBlock Text="MEM Clock 3:" Margin="10,120,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="memclock3" Text="" Margin="100,120,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="173"
-                             IsReadOnly="True"/>
-
+                    <TextBlock Text="MEM Clock 1:" Margin="20,78,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
+                    <TextBlock Text="MEM Clock 2:" Margin="19,95,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
+                    <TextBlock Text="MEM Clock 3:" Margin="19,113,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
+                    <DataGrid Name="memgpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="gpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="87,0,10,152" FontSize="11" />
                     <TextBlock Text="GPU Max Clock:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
                     <TextBox x:Name="gpuMaxClock" Text="" Margin="100,10,0,0"

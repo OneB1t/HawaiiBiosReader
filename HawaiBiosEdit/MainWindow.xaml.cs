@@ -56,6 +56,7 @@ namespace HawaiBiosReader
         ObservableCollection<GridRow> voltageList = new ObservableCollection<GridRow>();
         ObservableCollection<GridRow> gpuFrequencyList = new ObservableCollection<GridRow>();
         ObservableCollection<GridRow> memFrequencyList = new ObservableCollection<GridRow>();
+        ObservableCollection<GridRow> gpumemFrequencyList = new ObservableCollection<GridRow>();
         Byte[] romStorageBuffer; // whole rom
         Byte[] powerTablepattern = new Byte[] { 0x02, 0x06, 0x01, 0x00 };
         Byte[] voltageObjectInfoPattern = new Byte[] { 0x08, 0x96, 0x60, 0x00 };
@@ -241,20 +242,14 @@ namespace HawaiBiosReader
                         powerTable.Text = getTextFromBinary(romStorageBuffer, powerTablePosition, powerTableSize);
 
                         int position = 0;
-                        // gpu clock1
-                        readValueFromPosition(gpuclock1, powerTablePosition + 98, 1, "Mhz", true);
-                        // gpu clock 2
-                        readValueFromPosition(gpuclock2, powerTablePosition + 107, 1, "Mhz", true);
-                        // gpu clock 3
-                        readValueFromPosition(gpuclock3, powerTablePosition + 116, 1, "Mhz", true);
-
-                        // mem clock 1
-                        readValueFromPosition(memclock1, powerTablePosition + 101, 1, "Mhz", true);
-                        // mem clock 2
-                        readValueFromPosition(memclock2, powerTablePosition + 110, 1, "Mhz", true);
-                        // mem clock 3
-                        readValueFromPosition(memclock3, powerTablePosition + 119, 1, "Mhz", true);
-
+                        gpumemFrequencyList.Clear();
+                        gpumemFrequencyList.Add(new GridRow("0x" + (powerTablePosition + 98).ToString("X"), get24BitValueFromPosition(powerTablePosition + 98, romStorageBuffer, true), "Mhz"));
+                        gpumemFrequencyList.Add(new GridRow("0x" + (powerTablePosition + 107).ToString("X"), get24BitValueFromPosition(powerTablePosition + 107, romStorageBuffer, true), "Mhz"));
+                        gpumemFrequencyList.Add(new GridRow("0x" + (powerTablePosition + 116).ToString("X"), get24BitValueFromPosition(powerTablePosition + 116, romStorageBuffer, true), "Mhz"));
+                        gpumemFrequencyList.Add(new GridRow("0x" + (powerTablePosition + 101).ToString("X"), get24BitValueFromPosition(powerTablePosition + 101, romStorageBuffer, true), "Mhz"));
+                        gpumemFrequencyList.Add(new GridRow("0x" + (powerTablePosition + 110).ToString("X"), get24BitValueFromPosition(powerTablePosition + 110, romStorageBuffer, true), "Mhz"));
+                        gpumemFrequencyList.Add(new GridRow("0x" + (powerTablePosition + 119).ToString("X"), get24BitValueFromPosition(powerTablePosition + 119, romStorageBuffer, true), "Mhz"));
+                        memgpuFrequencyTable.ItemsSource = gpumemFrequencyList;
 
                         readValueFromPosition(tdpLimit, powerTablePosition + tdpLimitOffset, 0, "W");
                         readValueFromPosition(powerLimit, powerTablePosition + powerDeliveryLimitOffset, 0, "W");
@@ -520,7 +515,6 @@ namespace HawaiBiosReader
            SaveFileDialog SaveFileDialog = new SaveFileDialog();
             SaveFileDialog.Title = "Save As...";
             SaveFileDialog.Filter = "Bios File (*.rom)|*.rom";
-            SaveFileDialog.InitialDirectory = @"C:\";
              bool? userClickedOK = SaveFileDialog.ShowDialog();
             if (userClickedOK == true)
             {
@@ -532,6 +526,7 @@ namespace HawaiBiosReader
                 saveList16(voltageList);
                 saveList24(memFrequencyList,true);
                 saveList24(gpuFrequencyList,true);
+                saveList24(gpumemFrequencyList, true);
 
 
                 bw.Write(romStorageBuffer);
@@ -550,7 +545,7 @@ namespace HawaiBiosReader
                 int value = row.value;
                 if (isFrequency)
                 {
-                    value /= 100;
+                    value *= 100;
                 }
                 bytes[0] = (byte)row.value;
                 bytes[1] = (byte)(row.value >> 8);
@@ -575,7 +570,7 @@ namespace HawaiBiosReader
                 int value = row.value;
                 if (isFrequency)
                 {
-                    value /= 100;
+                    value *= 100;
                 }
                 bytes[0] = (byte)value;
                 bytes[1] = (byte)(value >> 8);
@@ -615,5 +610,6 @@ namespace HawaiBiosReader
             memFrequencyTable.Columns[1].IsReadOnly = false;
             memFrequencyTable.Columns[2].IsReadOnly = true;
         }
+
         }
     }
