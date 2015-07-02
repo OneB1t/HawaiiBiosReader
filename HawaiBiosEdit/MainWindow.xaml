@@ -11,7 +11,7 @@
         <TextBox x:Name="biosName" Text="" Margin="167,10,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="306" IsReadOnly="True" Height="20" />
 
-        <TabControl Margin="10,40,10,10" SelectionChanged="TabControl_SelectionChanged">
+        <TabControl Margin="10,40,10,10">
 
             <TabItem Header="Overview">
                 <Grid>
@@ -114,6 +114,7 @@
                     <TextBlock Text="Voltage Table: (VDDCI?)" Margin="10,87,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left"
                                Grid.Column="1" />
+
                     <TextBox x:Name="voltagetable" Text="" Margin="10,107,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="466" Width="263" Grid.Column="1"
@@ -265,6 +266,11 @@
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="553" Width="264" IsReadOnly="True" />
                 </Grid>
+            </TabItem>
+            <TabItem Header="Voltage edit">
+                <Grid>
+                    <DataGrid Name="voltageEdit" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" Margin="10,10,284,94" GotFocus="voltageEdit_GotFocus" />
+            </Grid>
             </TabItem>
             <TabItem Header="About">
                 <Grid>

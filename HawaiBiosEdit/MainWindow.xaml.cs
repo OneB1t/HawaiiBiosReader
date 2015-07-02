@@ -14,13 +14,45 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace HawaiBiosReader
 {
+    public class GridRow
+    {
+        private String _position;
+        private int _value;
+        private String  _unit;
+
+        public GridRow(String pos,int val,String un)
+        {
+            _position = pos;
+            _value = val;
+            _unit = un;
+        }
+        public String position
+        {
+            get { return _position; }
+            set { _position = value; }
+        }
+
+        public int value
+        {
+            get { return _value; }
+            set { _value = value; }
+        }
+
+        public String unit 
+        {
+            get { return _unit; }
+            set { _unit = value; }
+        }
+    }
 
     public partial class MainWindow : Window
     {
-
+        public ObservableCollection<GridRow> data = new ObservableCollection<GridRow>();
+        ObservableCollection<GridRow> list = new ObservableCollection<GridRow>();
         Byte[] romStorageBuffer; // whole rom
         Byte[] powerTablepattern = new Byte[] { 0x02, 0x06, 0x01, 0x00 };
         Byte[] voltageObjectInfoPattern = new Byte[] { 0x08,0x96,0x60,0x00};
@@ -226,14 +258,16 @@ namespace HawaiBiosReader
                         readValueFromPosition(tdcLimit,powerTablePosition + tdcLimitOffset,0,"A");
 
 
-
                         // read voltage table
                         voltagetable.Text = "";
                         for (int i = 0; i < 24; i++)
                         {
                             readValueFromPosition(voltagetable, powerTablePosition + voltageTableOffset + (i * 2), 0, "mV" + System.Environment.NewLine, false,true);
+                            
+                            list.Add(new GridRow("0x" + (powerTablePosition + voltageTableOffset + (i * 2)).ToString("X"), get16BitValueFromPosition(powerTablePosition + voltageTableOffset + (i * 2),romStorageBuffer,false),"mV"));
+                            
                         }
-
+                        voltageEdit.ItemsSource = list;
                         // memory frequency table
                         memfrequencytable.Text = "";
                         for (int i = 0; i < 8; i++)
@@ -445,9 +479,11 @@ namespace HawaiBiosReader
             return -1;
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void voltageEdit_GotFocus(object sender, RoutedEventArgs e)
         {
-
+            voltageEdit.Columns[0].IsReadOnly = true;
+            voltageEdit.Columns[1].IsReadOnly = false;
+            voltageEdit.Columns[2].IsReadOnly = true;
         }
 
     }
