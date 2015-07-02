@@ -71,20 +71,20 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="GPU Clock 1:" Margin="22,24,0,0"
+                    <TextBlock Text="GPU Clock 1:" Margin="19,24,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
-                    <TextBlock Text="GPU Clock 2:" Margin="22,42,0,0"
+                    <TextBlock Text="GPU Clock 2:" Margin="19,42,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
-                    <TextBlock Text="GPU Clock 3:" Margin="22,60,0,0"
+                    <TextBlock Text="GPU Clock 3:" Margin="19,60,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
 
-                    <TextBlock Text="MEM Clock 1:" Margin="20,78,0,0"
+                    <TextBlock Text="MEM Clock 1:" Margin="19,78,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
                     <TextBlock Text="MEM Clock 2:" Margin="19,95,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
                     <TextBlock Text="MEM Clock 3:" Margin="19,113,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
-                    <DataGrid Name="memgpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="gpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="87,0,10,152" FontSize="11" />
+                    <DataGrid Name="memgpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memgpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="87,0,10,88" FontSize="11" />
                     <TextBlock Text="GPU Max Clock:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
                     <TextBox x:Name="gpuMaxClock" Text="" Margin="100,10,0,0"
@@ -107,21 +107,12 @@
                     <TextBlock Text="MEM Freq Table:" Margin="10,110,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" />
                     <DataGrid Name="memFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="10,126,11,-1" FontSize="10" Grid.Row="1" />
-                    <TextBlock Text="TDP Max:" Margin="11,151,0,0"
-                    	VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="Power limit:" Margin="11,171,0,0"
-                    	VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="TDC limit:" Margin="11,192,0,0"
-                    	VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="tdpLimit" Text="" Margin="100,149,0,0"
-                    	HorizontalAlignment="Left" VerticalAlignment="Top" Width="173"
-                    	IsReadOnly="True" ToolTip="Change TDP limit based on customer's thermal solution"/>
-                    <TextBox x:Name="powerLimit" Text="" Margin="100,169,0,0"
-                    	HorizontalAlignment="Left" VerticalAlignment="Top" Width="173"
-                    	IsReadOnly="True" ToolTip="This power limit is the total chip power that we need to stay within in order to not violate the PCIe rail/connector power delivery"/>
-                    <TextBox x:Name="tdcLimit" Text="" Margin="100,192,0,0"
-                    	HorizontalAlignment="Left" VerticalAlignment="Top" Width="173"
-                    	IsReadOnly="True" ToolTip="PowerTune limit for maximum thermally sustainable current by VDDC regulator that can be supplied"/>
+                    <TextBlock Text="TDP Max:" Margin="19,131,0,0"
+                    	VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
+                    <TextBlock Text="Power limit:" Margin="19,147,0,0"
+                    	VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
+                    <TextBlock Text="TDC limit:" Margin="19,163,0,0"
+                    	VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
 
                 </Grid>
             </TabItem>
