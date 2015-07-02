@@ -22,9 +22,9 @@ namespace HawaiBiosReader
     {
         private String _position;
         private int _value;
-        private String  _unit;
+        private String _unit;
 
-        public GridRow(String pos,int val,String un)
+        public GridRow(String pos, int val, String un)
         {
             _position = pos;
             _value = val;
@@ -42,7 +42,7 @@ namespace HawaiBiosReader
             set { _value = value; }
         }
 
-        public String unit 
+        public String unit
         {
             get { return _unit; }
             set { _unit = value; }
@@ -55,7 +55,7 @@ namespace HawaiBiosReader
         ObservableCollection<GridRow> list = new ObservableCollection<GridRow>();
         Byte[] romStorageBuffer; // whole rom
         Byte[] powerTablepattern = new Byte[] { 0x02, 0x06, 0x01, 0x00 };
-        Byte[] voltageObjectInfoPattern = new Byte[] { 0x08,0x96,0x60,0x00};
+        Byte[] voltageObjectInfoPattern = new Byte[] { 0x08, 0x96, 0x60, 0x00 };
         Byte[] FanControlpattern = new byte[] { 0x07, 0x06, 0x7C, 0x15 }; // pattern to search for in buffer
         Byte[] FanControl2pattern = new byte[] { 0x03, 0x06, 0x7C, 0x15 }; // pattern to search for in buffer
         Byte[] FanControl3pattern = new byte[] { 0x07, 0x06, 0x68, 0x10 }; // pattern to search for in buffer
@@ -117,7 +117,7 @@ namespace HawaiBiosReader
                     if (fanTablePosition == -1)
                     {
                         fanTablePosition = PatternAt(romStorageBuffer, FanControl2pattern);
-                        if(fanTablePosition == -1)
+                        if (fanTablePosition == -1)
                         {
                             fanTablePosition = PatternAt(romStorageBuffer, FanControl3pattern);
                         }
@@ -255,17 +255,13 @@ namespace HawaiBiosReader
 
                         readValueFromPosition(tdpLimit, powerTablePosition + tdpLimitOffset, 0, "W");
                         readValueFromPosition(powerLimit, powerTablePosition + powerDeliveryLimitOffset, 0, "W");
-                        readValueFromPosition(tdcLimit,powerTablePosition + tdcLimitOffset,0,"A");
+                        readValueFromPosition(tdcLimit, powerTablePosition + tdcLimitOffset, 0, "A");
 
 
                         // read voltage table
-                        voltagetable.Text = "";
                         for (int i = 0; i < 24; i++)
                         {
-                            readValueFromPosition(voltagetable, powerTablePosition + voltageTableOffset + (i * 2), 0, "mV" + System.Environment.NewLine, false,true);
-                            
-                            list.Add(new GridRow("0x" + (powerTablePosition + voltageTableOffset + (i * 2)).ToString("X"), get16BitValueFromPosition(powerTablePosition + voltageTableOffset + (i * 2),romStorageBuffer,false),"mV"));
-                            
+                            list.Add(new GridRow("0x" + (powerTablePosition + voltageTableOffset + (i * 2)).ToString("X"), get16BitValueFromPosition(powerTablePosition + voltageTableOffset + (i * 2), romStorageBuffer, false), "mV"));
                         }
                         voltageEdit.ItemsSource = list;
                         // memory frequency table
@@ -285,7 +281,7 @@ namespace HawaiBiosReader
                         limitValues.Text = "";
                         for (int i = 0; i < 10; i++)
                         {
-                            readValueFromPosition(limitValues, powerTablePosition + AMUAndACPLimitTableOffset + 81+ (i * 3), 1, "" + System.Environment.NewLine, false, true);
+                            readValueFromPosition(limitValues, powerTablePosition + AMUAndACPLimitTableOffset + 81 + (i * 3), 1, "" + System.Environment.NewLine, false, true);
                         }
 
                         // search for more 16 bit
@@ -355,14 +351,14 @@ namespace HawaiBiosReader
                         if (fanTablePosition > 0)
                         {
                             readValueFromPosition(temperatureHysteresis, fanTablePosition + 1, 2, "C°");
-                            readValueFromPosition(fantemperature1, fanTablePosition + 2, 0, "C°",true);
-                            readValueFromPosition(fantemperature2, fanTablePosition + 4, 0, "C°",true);
-                            readValueFromPosition(fantemperature3, fanTablePosition + 6, 0, "C°",true);
-                            readValueFromPosition(fantemperature4, fanTablePosition + 14, 0, "C°",true);
+                            readValueFromPosition(fantemperature1, fanTablePosition + 2, 0, "C°", true);
+                            readValueFromPosition(fantemperature2, fanTablePosition + 4, 0, "C°", true);
+                            readValueFromPosition(fantemperature3, fanTablePosition + 6, 0, "C°", true);
+                            readValueFromPosition(fantemperature4, fanTablePosition + 14, 0, "C°", true);
 
-                            readValueFromPosition(fanspeed1, fanTablePosition + 8, 0, "%",true);
-                            readValueFromPosition(fanspeed2, fanTablePosition + 10, 0, "%",true);
-                            readValueFromPosition(fanspeed3, fanTablePosition + 12, 0, "%",true);
+                            readValueFromPosition(fanspeed1, fanTablePosition + 8, 0, "%", true);
+                            readValueFromPosition(fanspeed2, fanTablePosition + 10, 0, "%", true);
+                            readValueFromPosition(fanspeed3, fanTablePosition + 12, 0, "%", true);
                             readValueFromPosition(fanControlType, fanTablePosition + 16, 2, "", true);
                             readValueFromPosition(pwmFanMax, fanTablePosition + 17, 2, "%");
                             readValueFromPosition(maxAsicTemperature, fanTablePosition + 459, 2, "C°");
@@ -418,8 +414,8 @@ namespace HawaiBiosReader
         }
         private static int PTPatternAt(byte[] data, byte[] pattern)
         {
-            for (int di = 0; di < data.Length; di++)		
-                if(data[di] == pattern[0] && data[di + 1] == pattern[1] && data[di + 2] == pattern[2] && data[di + 3] == pattern[3])
+            for (int di = 0; di < data.Length; di++)
+                if (data[di] == pattern[0] && data[di + 1] == pattern[1] && data[di + 2] == pattern[2] && data[di + 3] == pattern[3])
                 {
                     return di - 1;
                 }
@@ -455,13 +451,13 @@ namespace HawaiBiosReader
         // dumb way to extract 24 bit value (can be made much more effective but this is easy to read for anyone)
         public Int32 get24BitValueFromPosition(int position, byte[] buffer, bool isFrequency = false)
         {
-            if(position < buffer.Length - 1)
+            if (position < buffer.Length - 1)
             {
-            if (isFrequency) // if its frequency divide by 100 to convert it into Mhz
-            {
-                return (256 * 256 * buffer[position + 2] + 256 * buffer[position + 1] + buffer[position]) / 100;
-            }
-            return 256 * 256 * buffer[position + 2] + 256 * buffer[position + 1] + buffer[position];
+                if (isFrequency) // if its frequency divide by 100 to convert it into Mhz
+                {
+                    return (256 * 256 * buffer[position + 2] + 256 * buffer[position + 1] + buffer[position]) / 100;
+                }
+                return 256 * 256 * buffer[position + 2] + 256 * buffer[position + 1] + buffer[position];
             }
             return -1;
         }
@@ -486,5 +482,26 @@ namespace HawaiBiosReader
             voltageEdit.Columns[2].IsReadOnly = true;
         }
 
+        private void bSaveFileDialog_Click(object sender, RoutedEventArgs e)
+        {
+           SaveFileDialog SaveFileDialog = new SaveFileDialog();
+            SaveFileDialog.Title = "Save As...";
+            SaveFileDialog.Filter = "Bios File (*.rom)|*.rom";
+            SaveFileDialog.InitialDirectory = @"C:\";
+             bool? userClickedOK = SaveFileDialog.ShowDialog();
+            if (userClickedOK == true)
+            {
+                FileStream fs = new FileStream(SaveFileDialog.FileName, FileMode.Create);
+                // Create the writer for data.
+                BinaryWriter bw = new BinaryWriter(fs);
+
+                bw.Write(romStorageBuffer);
+
+                fs.Close();
+                bw.Close();
+            }
+         }
+
+
+        }
     }
-}

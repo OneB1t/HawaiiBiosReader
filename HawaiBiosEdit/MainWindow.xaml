@@ -6,9 +6,12 @@
         <Button x:Name="bOpenFileDialog" Content="Open File" Width="60" Margin="10,10,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Click="bOpenFileDialog_Click" />
-        <TextBlock Text="Bios name:" Margin="105,12,0,0" 
+        <Button x:Name="bSaveFileDialog" Content="Save File" Width="60" Margin="86,10,0,0"
+                 HorizontalAlignment="Left" VerticalAlignment="Top" 
+                 Click="bSaveFileDialog_Click" RenderTransformOrigin="1.517,0.5" />
+        <TextBlock Text="Bios name:" Margin="165,12,0,0" 
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-        <TextBox x:Name="biosName" Text="" Margin="167,10,0,0"
+        <TextBox x:Name="biosName" Text="" Margin="227,10,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="306" IsReadOnly="True" Height="20" />
 
         <TabControl Margin="10,40,10,10">
@@ -111,14 +114,10 @@
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="173" 
                              IsReadOnly="True" Grid.Column="1"/>
 
-                    <TextBlock Text="Voltage Table: (VDDCI?)" Margin="10,87,0,0"
+                    <TextBlock Text="Voltage Table: (VDDCI?)" Margin="10,56,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left"
                                Grid.Column="1" />
-
-                    <TextBox x:Name="voltagetable" Text="" Margin="10,107,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="466" Width="263" Grid.Column="1"
-                             IsReadOnly="True" VerticalScrollBarVisibility="Auto" Grid.RowSpan="2" />
+                    <DataGrid Name="voltageEdit" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="voltageEdit_GotFocus" CanUserReorderColumns="False" Grid.Column="1" Margin="0,77,0,15" Grid.RowSpan="2" FontSize="10" />
 
                     <TextBlock Text="GPU Freq Table:" Margin="10,222,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
@@ -269,7 +268,7 @@
             </TabItem>
             <TabItem Header="Voltage edit">
                 <Grid>
-                    <DataGrid Name="voltageEdit" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" Margin="10,10,284,94" GotFocus="voltageEdit_GotFocus" />
+                   
             </Grid>
             </TabItem>
             <TabItem Header="About">
