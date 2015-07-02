@@ -119,19 +119,12 @@
                                Grid.Column="1" />
                     <DataGrid Name="voltageEdit" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="voltageEdit_GotFocus" CanUserReorderColumns="False" Grid.Column="1" Margin="0,77,0,15" Grid.RowSpan="2" FontSize="10" />
 
-                    <TextBlock Text="GPU Freq Table:" Margin="10,222,0,0"
+                    <TextBlock Text="GPU Freq Table:" Margin="10,213,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="gpufrequencytable" Text="" Margin="10,243,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="158" Width="263"
-                             IsReadOnly="True" Grid.RowSpan="2"/>
-
+                    <DataGrid Name="gpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="gpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="10,234,11,187" Grid.RowSpan="2" FontSize="10" />
                     <TextBlock Text="MEM Freq Table:" Margin="10,110,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" />
-                    <TextBox x:Name="memfrequencytable" Text="" Margin="10,131,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top"
-                              Height="151" Width="263"
-                             IsReadOnly="True" Grid.Row="1"/>
+                    <DataGrid Name="memFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="10,126,11,-1" FontSize="10" Grid.Row="1" />
                     <TextBlock Text="TDP Max:" Margin="11,151,0,0"
                     	VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBlock Text="Power limit:" Margin="11,171,0,0"
@@ -268,8 +261,8 @@
             </TabItem>
             <TabItem Header="Voltage edit">
                 <Grid>
-                   
-            </Grid>
+
+                </Grid>
             </TabItem>
             <TabItem Header="About">
                 <Grid>
