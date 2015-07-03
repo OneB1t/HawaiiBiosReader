@@ -125,16 +125,7 @@ namespace HawaiBiosReader
                     romStorageBuffer = br.ReadBytes((int)fileStream.Length);
                     powerTablePosition = PTPatternAt(romStorageBuffer, powerTablepattern);
                     voltageInfoPosition = PatternAt(romStorageBuffer, voltageObjectInfoPattern);
-                    fanTablePosition = PatternAt(romStorageBuffer, FanControlpattern);
-                    if (fanTablePosition == -1)
-                    {
-                        fanTablePosition = PatternAt(romStorageBuffer, FanControl2pattern);
-                        if (fanTablePosition == -1)
-                        {
-                            fanTablePosition = PatternAt(romStorageBuffer, FanControl3pattern);
-                        }
-
-                    }
+                    fanTablePosition = powerTablePosition + fanTableOffset;
 
                     biosName.Text = getTextFromBinary(romStorageBuffer, biosNameOffset, 32);
                     gpuID.Text = romStorageBuffer[565].ToString("X2") + romStorageBuffer[564].ToString("X2") + "-" + romStorageBuffer[567].ToString("X2") + romStorageBuffer[566].ToString("X2"); // not finished working only for few bioses :(
