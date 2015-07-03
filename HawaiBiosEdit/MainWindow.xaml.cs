@@ -125,7 +125,7 @@ namespace HawaiBiosReader
                     romStorageBuffer = br.ReadBytes((int)fileStream.Length);
                     powerTablePosition = PTPatternAt(romStorageBuffer, powerTablepattern);
                     voltageInfoPosition = PatternAt(romStorageBuffer, voltageObjectInfoPattern);
-                    fanTablePosition = powerTablePosition + fanTableOffset;
+                    
 
                     biosName.Text = getTextFromBinary(romStorageBuffer, biosNameOffset, 32);
                     gpuID.Text = romStorageBuffer[565].ToString("X2") + romStorageBuffer[564].ToString("X2") + "-" + romStorageBuffer[567].ToString("X2") + romStorageBuffer[566].ToString("X2"); // not finished working only for few bioses :(
@@ -158,6 +158,19 @@ namespace HawaiBiosReader
                                 tdpLimitOffset = 632;
                                 tdcLimitOffset = 634;
                                 powerDeliveryLimitOffset = 644;
+                                break;
+                            case 661:
+                                powerTablesize.Text += " - R9 295X";
+                                voltageTableOffset = 320;
+                                memoryFrequencyTableOffset = 279;
+                                gpuFrequencyTableOffset = 232;
+                                VCELimitTableOffset = 522;
+                                AMUAndACPLimitTableOffset = 550;
+                                UVDLimitTableOffset = 440;
+                                tdpLimitOffset = 633;
+                                tdcLimitOffset = 635;
+                                powerDeliveryLimitOffset = 645;
+                                fanTableOffset = 173;
                                 break;
                             case 662:
                                 powerTablesize.Text += " - R9 390/390X(Sapphire)";
@@ -236,7 +249,7 @@ namespace HawaiBiosReader
                                 break;
 
                         }
-
+                        fanTablePosition = powerTablePosition + fanTableOffset;
                         powerTablePositionValue.Text = "0x" + powerTablePosition.ToString("X");
                         powerTable.Text = getTextFromBinary(romStorageBuffer, powerTablePosition, powerTableSize);
 
