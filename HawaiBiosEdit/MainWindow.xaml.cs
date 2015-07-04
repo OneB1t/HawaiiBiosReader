@@ -80,7 +80,7 @@ namespace HawaiBiosReader
         Byte[] FanControl2pattern = new byte[] { 0x03, 0x06, 0x7C, 0x15 }; // pattern to search for in buffer
         Byte[] FanControl3pattern = new byte[] { 0x07, 0x06, 0x68, 0x10 }; // pattern to search for in buffer
 
-        int powerTablePosition; // start position of powertable in rom
+        int powerTablePosition; // start searchposition of powertable in rom
         int voltageInfoPosition;
         int fanTablePosition;
         int powerTableSize;
@@ -140,7 +140,7 @@ namespace HawaiBiosReader
 
                     if (powerTablePosition == -1)
                     {
-                        MessageBoxResult result = MessageBox.Show("PowerTable position not found in this file", "Error", MessageBoxButton.OK);
+                        MessageBoxResult result = MessageBox.Show("PowerTable searchposition not found in this file", "Error", MessageBoxButton.OK);
                     }
                     else
                     {
@@ -272,6 +272,7 @@ namespace HawaiBiosReader
                         gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + tdpLimitOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + tdpLimitOffset, romStorageBuffer), "W", "16-bit",-1));
                         gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + powerDeliveryLimitOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + powerDeliveryLimitOffset, romStorageBuffer), "W", "16-bit",-1));
                         gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + tdcLimitOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + tdcLimitOffset, romStorageBuffer), "A", "16-bit",-1));
+                        
                         memgpuFrequencyTable.ItemsSource = gpumemFrequencyListAndPowerLimit;
 
 
@@ -303,12 +304,12 @@ namespace HawaiBiosReader
                         limitValues.Text = "";
                         for (int i = 0; i < 10; i++)
                         {
-                            readValueFromPosition(limitValues, powerTablePosition + AMUAndACPLimitTableOffset + 81 + (i * 3), 1, "" + System.Environment.NewLine, false, true);
+                            readValueFromPosition(limitValues, powerTablePosition + AMUAndACPLimitTableOffset + 80 + (i * 3), 1, "" + System.Environment.NewLine, false, true);
                         }
 
                         // search for more 16 bit
                         limitValues2.Text = "";
-                        for (int i = 0; i < 16; i++)
+                        for (int i = 0; i < 128; i++)
                         {
 
                             readValueFromPosition(limitValues2, powerTablePosition + AMUAndACPLimitTableOffset + 79 + (i * 2), 0, "" + System.Environment.NewLine, false, true);
@@ -317,17 +318,17 @@ namespace HawaiBiosReader
 
                         if (voltageInfoPosition > 0)
                         {
-                            voltageinfo.Text = "";
-                            for (int i = 0; i < 20; i++)
+                            developinfo24.Text = "";
+                            for (int i = 0; i < 160; i++)
                             {
-                                readValueFromPosition(voltageinfo, powerTablePosition + voltageInfoPosition + 1 + (i * 3), 1, "" + System.Environment.NewLine, false, true);
+                                readValueFromPosition(developinfo24, 35503 -1 + (i * 3), 1, "" + System.Environment.NewLine, false, true);
                             }
 
                             // search for more 16 bit
-                            voltageinfo2.Text = "";
-                            for (int i = 0; i < 32; i++)
+                            developinfo16.Text = "";
+                            for (int i = 0; i < 128; i++)
                             {
-                                readValueFromPosition(voltageinfo2, powerTablePosition + voltageInfoPosition + 1 + (i * 2), 0, "" + System.Environment.NewLine, false, true);
+                                readValueFromPosition(developinfo16, 35503 + (i* 5), 0, "" + System.Environment.NewLine, false, true);
                             }
                         }
                         // StartVCELimitTable
@@ -610,8 +611,8 @@ namespace HawaiBiosReader
         private void voltageEdit_GotFocus(object sender, RoutedEventArgs e)
         {
             voltageEdit.Columns[0].IsReadOnly = true;
-            voltageEdit.Columns[1].IsReadOnly = false;
-            voltageEdit.Columns[2].IsReadOnly = true;
+            voltageEdit.Columns[1].IsReadOnly = true;
+            voltageEdit.Columns[2].IsReadOnly = false;
             voltageEdit.Columns[3].IsReadOnly = true;
             voltageEdit.Columns[4].IsReadOnly = true;
 
@@ -619,8 +620,8 @@ namespace HawaiBiosReader
         private void gpuFrequencyTable_GotFocus(object sender, RoutedEventArgs e)
         {
             gpuFrequencyTable.Columns[0].IsReadOnly = true;
-            gpuFrequencyTable.Columns[1].IsReadOnly = false;
-            gpuFrequencyTable.Columns[2].IsReadOnly = true;
+            gpuFrequencyTable.Columns[1].IsReadOnly = true;
+            gpuFrequencyTable.Columns[2].IsReadOnly = false;
             gpuFrequencyTable.Columns[3].IsReadOnly = true;
             gpuFrequencyTable.Columns[4].IsReadOnly = true;
 
@@ -629,8 +630,8 @@ namespace HawaiBiosReader
         private void memFrequencyTable_GotFocus(object sender, RoutedEventArgs e)
         {
             memFrequencyTable.Columns[0].IsReadOnly = true;
-            memFrequencyTable.Columns[1].IsReadOnly = false;
-            memFrequencyTable.Columns[2].IsReadOnly = true;
+            memFrequencyTable.Columns[1].IsReadOnly = true;
+            memFrequencyTable.Columns[2].IsReadOnly = false;
             memFrequencyTable.Columns[3].IsReadOnly = true;
             memFrequencyTable.Columns[4].IsReadOnly = true;
         }
@@ -638,10 +639,43 @@ namespace HawaiBiosReader
         private void memgpuFrequencyTable_GotFocus(object sender, RoutedEventArgs e)
         {
             memgpuFrequencyTable.Columns[0].IsReadOnly = true;
-            memgpuFrequencyTable.Columns[1].IsReadOnly = false;
-            memgpuFrequencyTable.Columns[2].IsReadOnly = true;
+            memgpuFrequencyTable.Columns[1].IsReadOnly = true;
+            memgpuFrequencyTable.Columns[2].IsReadOnly = false;
             memgpuFrequencyTable.Columns[3].IsReadOnly = true;
             memgpuFrequencyTable.Columns[4].IsReadOnly = true;
+        }
+
+        private void search_Click(object sender, RoutedEventArgs e)
+        {
+            int positionint = 0;
+            bool found = false;
+            if (searchposition.Text.StartsWith("0x", StringComparison.CurrentCultureIgnoreCase))
+            {
+                found = Int32.TryParse(searchposition.Text.Substring(2),NumberStyles.HexNumber, CultureInfo.InvariantCulture, out positionint);
+            }
+            if(!found)
+                found = Int32.TryParse(searchposition.Text, out positionint);
+            if(found)
+            {
+                developinfo24.Text = "";
+                for (int i = 0; i < 128; i++)
+                {
+                    readValueFromPosition(developinfo24, positionint - 1 + (i * 3), 1, "" + System.Environment.NewLine, false, true);
+                }
+
+                // search for more 16 bit
+                developinfo16.Text = "";
+                for (int i = 0; i < 128; i++)
+                {
+                    readValueFromPosition(developinfo16, positionint + (i * 2), 0, "" + System.Environment.NewLine, false, true);
+                }
+                developtables.Text = "";
+                for (int i = 0; i < 128; i++)
+                {
+                    readValueFromPosition(developtables, positionint + (i * 2), 0, "" + System.Environment.NewLine, false, true);
+                    readValueFromPosition(developtables, positionint + 2 + (i * 3), 1, "" + System.Environment.NewLine, false, true);
+                }
+            }
         }
 
         }

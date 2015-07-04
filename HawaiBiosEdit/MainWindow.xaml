@@ -24,8 +24,8 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="189*"/>
+                        <ColumnDefinition Width="379*"/>
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Text="File name:" Margin="10,10,0,0" 
@@ -204,18 +204,32 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Voltage Info">
+            <TabItem Header="Develop">
                 <Grid>
-                    <TextBlock Text="Voltage info 24-bit:" Margin="10,10,0,0"
+                    <TextBlock Text="Position:" Margin="10,26,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="voltageinfo" Text="" Margin="10,30,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="553" Width="263" IsReadOnly="True" />
-                    <TextBlock Text="Voltage info 2 - 16bit:" Margin="288,13,0,0"
+                    <TextBlock Text="This tab is usefull for searching and decoding new tables:" Margin="10,5,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="voltageinfo2" Text="" Margin="288,30,0,0"
+                    <TextBox x:Name="searchposition" Text="" Margin="95,26,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169"/>
+                    <Button x:Name="search" Content="Search patterns" Width="94" Margin="438,26,0,0"
+                 HorizontalAlignment="Left" VerticalAlignment="Top" 
+                 Click="search_Click" />
+                    <TextBlock Text="24-bit:" Margin="10,49,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBox x:Name="developinfo24" Text="" Margin="10,70,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="553" Width="264" IsReadOnly="True" />
+                             Height="513" Width="153" IsReadOnly="True" />
+                    <TextBlock Text="16bit:" Margin="177,52,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBox x:Name="developinfo16" Text="" Margin="177,70,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top"
+                             Height="513" Width="141" IsReadOnly="True" />
+                    <TextBlock Text="Table search:" Margin="323,52,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBox x:Name="developtables" Text="" Margin="323,70,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top"
+                             Height="513" Width="209" IsReadOnly="True" />
                 </Grid>
             </TabItem>
             <TabItem Header="Other2...">
@@ -230,11 +244,6 @@
                     <TextBox x:Name="limitValues2" Text="" Margin="288,30,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="553" Width="264" IsReadOnly="True" />
-                </Grid>
-            </TabItem>
-            <TabItem Header="Voltage edit">
-                <Grid>
-
                 </Grid>
             </TabItem>
             <TabItem Header="About">
