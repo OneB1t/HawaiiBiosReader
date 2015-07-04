@@ -99,7 +99,7 @@
                     <TextBlock Text="Voltage Table: (VDDCI?)" Margin="10,56,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left"
                                Grid.Column="1" />
-                    <DataGrid Name="voltageEdit" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="voltageEdit_GotFocus" CanUserReorderColumns="False" Grid.Column="1" Margin="0,77,0,15" Grid.RowSpan="2" FontSize="10" />
+                    <DataGrid Name="voltageEdit" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="voltageEdit_GotFocus" CanUserReorderColumns="False" Grid.Column="1" Margin="0,77,0,15" Grid.RowSpan="2" FontSize="10"/>
 
                     <TextBlock Text="GPU Freq Table:" Margin="10,213,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
