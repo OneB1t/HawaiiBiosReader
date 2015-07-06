@@ -210,8 +210,8 @@
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBlock Text="This tab is usefull for searching and decoding new tables:" Margin="10,5,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="searchposition" Text="" Margin="95,26,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169"/>
+                    <TextBox x:Name="searchposition" Text="0xB540" Margin="95,26,0,0"
+                             HorizontalAlignment="Left"  VerticalAlignment="Top" Width="169"/>
                     <Button x:Name="search" Content="Search patterns" Width="94" Margin="438,26,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Click="search_Click" />
@@ -225,9 +225,9 @@
                     <TextBox x:Name="developinfo16" Text="" Margin="177,70,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="513" Width="141" IsReadOnly="True" />
-                    <TextBlock Text="Table search:" Margin="323,52,0,0"
+                    <TextBlock Text="Table" Margin="323,52,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="developtables" Text="" Margin="323,70,0,0"
+                    <TextBox x:Name="developinfo8" Text="" Margin="323,70,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="513" Width="209" IsReadOnly="True" />
                 </Grid>
