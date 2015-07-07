@@ -8,7 +8,7 @@
                  Click="bOpenFileDialog_Click" />
         <Button x:Name="bSaveFileDialog" Content="Save File" Width="60" Margin="86,10,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
-                 Click="bSaveFileDialog_Click" RenderTransformOrigin="1.517,0.5" />
+                 Click="SaveFileDialog_Click" RenderTransformOrigin="1.517,0.5" />
         <TextBlock Text="Bios name:" Margin="165,12,0,0" 
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
         <TextBox x:Name="biosName" Text="" Margin="227,10,0,0"

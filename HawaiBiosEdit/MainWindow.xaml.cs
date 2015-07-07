@@ -16,60 +16,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using HawaiiBiosReader;
 
 namespace HawaiBiosReader
 {
-    public class GridRow
-    {
-        private String _position;
-        private int _value;
-        private String _unit;
-        private String _type;
-        private int _dpm;
-
-        public GridRow(String pos, int val, String un, String type, int dpm)
-        {
-            _position = pos;
-            _value = val;
-            _unit = un;
-            _type = type;
-            _dpm = dpm;
-        }
-
-        public int dpm
-        {
-            get { return _dpm; }
-            set { _dpm = value; }
-        }
-
-        public String position
-        {
-            get { return _position; }
-            set { _position = value; }
-        }
-
-        public int value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
-
-        public String unit
-        {
-            get { return _unit; }
-            set { _unit = value; }
-        }
-
-        public String type
-        {
-            get { return _type; }
-            set { _type = value; }
-        }
-    }
 
     public partial class MainWindow : Window
     {
-        public ObservableCollection<GridRow> data = new ObservableCollection<GridRow>();
+        ObservableCollection<GridRow> data = new ObservableCollection<GridRow>();
         ObservableCollection<GridRow> voltageList = new ObservableCollection<GridRow>();
         ObservableCollection<GridRow> gpuFrequencyList = new ObservableCollection<GridRow>();
         ObservableCollection<GridRow> memFrequencyList = new ObservableCollection<GridRow>();
@@ -78,26 +32,26 @@ namespace HawaiBiosReader
         Byte[] powerTablepattern = new Byte[] { 0x02, 0x06, 0x01, 0x00 };
         Byte[] voltageObjectInfoPattern = new Byte[] { 0x00, 0x03, 0x01, 0x01,0x03 };
 
-        int powerTablePosition; // start searchposition of powertable in rom
+        // unknown table offsets
+        int powerTablePosition;
         int voltageInfoPosition;
         int fanTablePosition;
         int powerTableSize;
-        int voltageInfoSize;
 
+        // table offsets for default
         int fanTableOffset = 175;
-        int biosNameOffset = 0xDC;
+        int biosNameOffset = 220;
         int tdpLimitOffset = 630;
         int tdcLimitOffset = 632;
         int powerDeliveryLimitOffset = 642;
 
-        // table offsets
-        int voltageTableOffset = 319; // 290 have different voltagetable offset than 390
+        int voltageTableOffset = 319;
         int memoryFrequencyTableOffset = 278;
         int gpuFrequencyTableOffset = 231;
         int VCELimitTableOffset = 396;
         int AMUAndACPLimitTableOffset = 549;
         int UVDLimitTableOffset = 441;
-        string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(); // program version
 
 
         public MainWindow()
@@ -139,7 +93,7 @@ namespace HawaiBiosReader
 
                     if (powerTablePosition == -1)
                     {
-                        MessageBoxResult result = MessageBox.Show("PowerTable searchposition not found in this file", "Error", MessageBoxButton.OK);
+                        MessageBoxResult result = MessageBox.Show("PowerTable search position not found in this file", "Error", MessageBoxButton.OK);
                     }
                     else
                     {
@@ -271,7 +225,7 @@ namespace HawaiBiosReader
                         powerTablePositionValue.Text = "0x" + powerTablePosition.ToString("X");
                         powerTable.Text = getTextFromBinary(romStorageBuffer, powerTablePosition, powerTableSize);
 
-                        int position = 0;
+
                         gpumemFrequencyListAndPowerLimit.Clear();
                         gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + 98).ToString("X"), get24BitValueFromPosition(powerTablePosition + 98, romStorageBuffer, true), "Mhz", "24-bit", -1));
                         gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + 107).ToString("X"), get24BitValueFromPosition(powerTablePosition + 107, romStorageBuffer, true), "Mhz", "24-bit", -1));
@@ -323,6 +277,7 @@ namespace HawaiBiosReader
                             readValueFromPosition(limitValues2, powerTablePosition + AMUAndACPLimitTableOffset + 79 + (i * 2), 0, "" + System.Environment.NewLine, false, true);
                         }
 
+                        int position = 0;
                         // StartVCELimitTable
                         VCELimitTableValues.Text = "";
                         for (int i = 0; i < 8; i++)
@@ -400,6 +355,12 @@ namespace HawaiBiosReader
             }
         }
 
+
+        /*#################################################################################################
+         * 
+         *               HELPER FUNCTIONS
+         * 
+        #################################################################################################*/
         public void readValueFromPosition(TextBox dest, int position, int type, String units = "", bool isFrequency = false, bool add = false,bool voltage = false)
         {
             if (add)
@@ -521,7 +482,7 @@ namespace HawaiBiosReader
             }
             return -1;
         }
-
+        // dumb way to extract 16 bit value (can be made much more effective but this is easy to read for anyone)
         public Int32 get16BitValueFromPosition(int position, byte[] buffer, bool isFrequency = false)
         {
             if (position < buffer.Length - 1)
@@ -548,7 +509,7 @@ namespace HawaiBiosReader
             return -1;
         }
 
-        private void bSaveFileDialog_Click(object sender, RoutedEventArgs e)
+        private void SaveFileDialog_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog SaveFileDialog = new SaveFileDialog();
             SaveFileDialog.Title = "Save As...";
@@ -577,54 +538,44 @@ namespace HawaiBiosReader
         {
             foreach (GridRow row in list)
             {
-                byte[] bytes;
-                int x;
+                int savePosition;
                 int value = row.value;
                 if (row.position.StartsWith("0x", StringComparison.CurrentCultureIgnoreCase))
                 {
                     row.position = row.position.Substring(2);
                 }
-                if (isFrequency)
+                if (isFrequency) // there is hack for 16 bit need fix
                 {
                     value *= 100;
                 }
-                if (int.TryParse(row.position, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out x))
+                if (int.TryParse(row.position, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out savePosition))
                 {
                     switch (row.type)
                     {
                         case "24-bit":
                             {
-                                bytes = new byte[3];
-                                bytes[0] = (byte)value;
-                                bytes[1] = (byte)(value >> 8);
-                                bytes[2] = (byte)(value >> 16);
                                 // this is for 24 bit
-                                romStorageBuffer[x] = bytes[0];
-                                romStorageBuffer[x + 1] = bytes[1];
-                                romStorageBuffer[x + 2] = bytes[2];
+                                romStorageBuffer[savePosition] = (byte)value;
+                                romStorageBuffer[savePosition + 1] = (byte)(value >> 8);
+                                romStorageBuffer[savePosition + 2] = (byte)(value >> 16);
                                 break;
                             }
                         case "16-bit":
                             {
-                                bytes = new byte[2];
-                                bytes[0] = (byte)row.value;
-                                bytes[1] = (byte)(row.value >> 8);
-                                romStorageBuffer[x] = bytes[0];
-                                romStorageBuffer[x + 1] = bytes[1];
+                                romStorageBuffer[savePosition] = (byte)row.value;
+                                romStorageBuffer[savePosition + 1] = (byte)(row.value >> 8);
                                 break;
                             }
                         case "8-bit":
                             {
-                                bytes = new byte[1];
-                                bytes[0] = (byte)row.value;
-                                romStorageBuffer[x] = bytes[0];
+                                romStorageBuffer[savePosition] = (byte)row.value;
                                 break;
                             }
                     }
                 }
             }
         }
-
+        // this is here because of bug with tabs and grids thanks microsoft
         private void voltageEdit_GotFocus(object sender, RoutedEventArgs e)
         {
             voltageEdit.Columns[0].IsReadOnly = true;
@@ -661,20 +612,9 @@ namespace HawaiBiosReader
             memgpuFrequencyTable.Columns[3].IsReadOnly = true;
             memgpuFrequencyTable.Columns[4].IsReadOnly = true;
         }
-
+        // developer function
         private void search_Click(object sender, RoutedEventArgs e)
         {
-
-            /*
-#define ATOM_VIRTUAL_VOLTAGE_ID0             0xff01
-#define ATOM_VIRTUAL_VOLTAGE_ID1             0xff02
-#define ATOM_VIRTUAL_VOLTAGE_ID2             0xff03
-#define ATOM_VIRTUAL_VOLTAGE_ID3             0xff04
-#define ATOM_VIRTUAL_VOLTAGE_ID4             0xff05
-#define ATOM_VIRTUAL_VOLTAGE_ID5             0xff06
-#define ATOM_VIRTUAL_VOLTAGE_ID6             0xff07
-#define ATOM_VIRTUAL_VOLTAGE_ID7             0xff08*/
-
             int positionint = 0;
             bool found = false;
             if (searchposition.Text.StartsWith("0x", StringComparison.CurrentCultureIgnoreCase))
@@ -691,20 +631,20 @@ namespace HawaiBiosReader
                     readValueFromPosition(developinfo24, positionint - 1 + (i * 3), 1, "" + System.Environment.NewLine, false, true);
                 }
 
-                // search for more 16 bit
+                // search for more 8 bit
                 developinfo16.Text = "";
-                for (int i = 0; i < 32; i++)
+                for (int i = 0; i < 128; i++)
                 {
-                    readValueFromPosition(developinfo16, positionint + (i * 2), 0, "" + System.Environment.NewLine, false, true);
+                    readValueFromPosition(developinfo16, positionint + i, 2, "" + System.Environment.NewLine, false, true);
                 }
                 developinfo8.Text = "";
                 for (int i = 0; i < 205; i = i+4)
                 {
                     developinfo8.Text += "Voltage" + (i /4).ToString() + System.Environment.NewLine;
-                    readValueFromPosition(developinfo8, positionint + i, 2, "usVoltageLevel" + System.Environment.NewLine, false, true,false);
-                    if(i == 0)
-                    readValueFromPosition(developinfo8, positionint + i + 1, 2, "BaseVoltage" + System.Environment.NewLine, false, true, true);
-                    readValueFromPosition(developinfo8, positionint + i + 2, 0, "OffsetVoltage" + System.Environment.NewLine, false, true,true);
+                    readValueFromPosition(developinfo8, positionint + i, 2, System.Environment.NewLine, false, true,true);
+                   
+                    readValueFromPosition(developinfo8, positionint + i + 1, 2, System.Environment.NewLine, false, true, true);
+                    readValueFromPosition(developinfo8, positionint + i + 2, 2, System.Environment.NewLine, false, true,false);
                     developinfo8.Text += System.Environment.NewLine;
 
 
