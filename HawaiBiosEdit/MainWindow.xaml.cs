@@ -30,7 +30,7 @@ namespace HawaiBiosReader
         ObservableCollection<GridRow> gpumemFrequencyListAndPowerLimit = new ObservableCollection<GridRow>();
         Byte[] romStorageBuffer; // whole rom
         Byte[] powerTablepattern = new Byte[] { 0x02, 0x06, 0x01, 0x00 };
-        Byte[] voltageObjectInfoPattern = new Byte[] { 0x00, 0x03, 0x01, 0x01,0x03 };
+        Byte[] voltageObjectInfoPattern = new Byte[] { 0x00, 0x03, 0x01, 0x01, 0x03 };
 
         // unknown table offsets
         int powerTablePosition;
@@ -60,7 +60,7 @@ namespace HawaiBiosReader
             versionbox.Text += version;
         }
 
-        private void bOpenFileDialog_Click(object sender, RoutedEventArgs e)
+        private void OpenFileDialog_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of the open file dialog box.
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -83,6 +83,7 @@ namespace HawaiBiosReader
                 using (BinaryReader br = new BinaryReader(fileStream)) // binary reader
                 {
                     romStorageBuffer = br.ReadBytes((int)fileStream.Length);
+                    fixChecksum(false);
                     powerTablePosition = PTPatternAt(romStorageBuffer, powerTablepattern);
                     voltageInfoPosition = PatternAt(romStorageBuffer, voltageObjectInfoPattern) + 7;
                     searchposition.Text = "0x" + voltageInfoPosition.ToString("X");
@@ -236,7 +237,7 @@ namespace HawaiBiosReader
                         gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + tdpLimitOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + tdpLimitOffset, romStorageBuffer), "W", "16-bit", -1));
                         gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + powerDeliveryLimitOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + powerDeliveryLimitOffset, romStorageBuffer), "W", "16-bit", -1));
                         gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + tdcLimitOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + tdcLimitOffset, romStorageBuffer), "A", "16-bit", -1));
-                        
+
                         memgpuFrequencyTable.ItemsSource = gpumemFrequencyListAndPowerLimit;
 
                         // read voltage table
@@ -361,7 +362,7 @@ namespace HawaiBiosReader
          *               HELPER FUNCTIONS
          * 
         #################################################################################################*/
-        public void readValueFromPosition(TextBox dest, int position, int type, String units = "", bool isFrequency = false, bool add = false,bool voltage = false)
+        public void readValueFromPosition(TextBox dest, int position, int type, String units = "", bool isFrequency = false, bool add = false, bool voltage = false)
         {
             if (add)
             {
@@ -375,8 +376,8 @@ namespace HawaiBiosReader
             switch (type)
             {
                 case 0: // 16 bit value
-                    if(voltage)
-                    dest.Text += (get16BitValueFromPosition(position, romStorageBuffer, isFrequency) * 6.25).ToString() + " " + units;
+                    if (voltage)
+                        dest.Text += (get16BitValueFromPosition(position, romStorageBuffer, isFrequency) * 6.25).ToString() + " " + units;
                     else
                         dest.Text += get16BitValueFromPosition(position, romStorageBuffer, isFrequency).ToString() + " " + units;
                     break;
@@ -385,7 +386,7 @@ namespace HawaiBiosReader
                     break;
                 case 2: // 8 bit value
                     if (voltage)
-                    dest.Text += (romStorageBuffer[position] * 6.25).ToString() + " " + units;
+                        dest.Text += (romStorageBuffer[position] * 6.25).ToString() + " " + units;
                     else
                         dest.Text += romStorageBuffer[position].ToString() + " " + units;
                     break;
@@ -476,9 +477,9 @@ namespace HawaiBiosReader
             {
                 if (isFrequency) // if its frequency divide by 100 to convert it into Mhz
                 {
-                    return (256*256*256 * buffer[position + 3]) + (256 * 256 * buffer[position + 2] + 256 * buffer[position + 1] + buffer[position]) / 100;
+                    return (256 * 256 * 256 * buffer[position + 3]) + (256 * 256 * buffer[position + 2] + 256 * buffer[position + 1] + buffer[position]) / 100;
                 }
-                return (256*256*256 * buffer[position + 3]) +  (256 * 256 * buffer[position + 2]) + (256 * buffer[position + 1]) + buffer[position];
+                return (256 * 256 * 256 * buffer[position + 3]) + (256 * 256 * buffer[position + 2]) + (256 * buffer[position + 1]) + buffer[position];
             }
             return -1;
         }
@@ -526,12 +527,37 @@ namespace HawaiBiosReader
                 saveList(memFrequencyList, true);
                 saveList(gpuFrequencyList, true);
                 saveList(gpumemFrequencyListAndPowerLimit, true);
-
+                fixChecksum(true);
                 bw.Write(romStorageBuffer);
 
                 fs.Close();
                 bw.Close();
             }
+        }
+        private void fixChecksum(bool save)
+        {
+            Byte oldchecksum = romStorageBuffer[33];
+            int size = romStorageBuffer[2] * 512;
+            Byte newchecksum = 0;
+
+            for (int i = 0; i < size; i++) 
+            {
+                newchecksum += romStorageBuffer[i];
+            }
+            if(oldchecksum == (romStorageBuffer[33] - newchecksum))
+            {
+                checksumResult.Text = "OK";
+            }
+            else
+            {
+                checksumResult.Text = "WRONG - save for fix";
+            }
+            if (save)
+            {
+                romStorageBuffer[33] -= newchecksum;
+                checksumResult.Text = "OK";
+            }
+
         }
 
         private void saveList(ObservableCollection<GridRow> list, bool isFrequency = false)
@@ -619,11 +645,11 @@ namespace HawaiBiosReader
             bool found = false;
             if (searchposition.Text.StartsWith("0x", StringComparison.CurrentCultureIgnoreCase))
             {
-                found = Int32.TryParse(searchposition.Text.Substring(2),NumberStyles.HexNumber, CultureInfo.InvariantCulture, out positionint);
+                found = Int32.TryParse(searchposition.Text.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out positionint);
             }
-            if(!found)
+            if (!found)
                 found = Int32.TryParse(searchposition.Text, out positionint);
-            if(found)
+            if (found)
             {
                 developinfo24.Text = "";
                 for (int i = 0; i < 32; i++)
@@ -638,13 +664,13 @@ namespace HawaiBiosReader
                     readValueFromPosition(developinfo16, positionint + i, 2, "" + System.Environment.NewLine, false, true);
                 }
                 developinfo8.Text = "";
-                for (int i = 0; i < 205; i = i+4)
+                for (int i = 0; i < 205; i = i + 4)
                 {
-                    developinfo8.Text += "Voltage" + (i /4).ToString() + System.Environment.NewLine;
-                    readValueFromPosition(developinfo8, positionint + i, 2, System.Environment.NewLine, false, true,true);
-                   
+                    developinfo8.Text += "Voltage" + (i / 4).ToString() + System.Environment.NewLine;
+                    readValueFromPosition(developinfo8, positionint + i, 2, System.Environment.NewLine, false, true, true);
+
                     readValueFromPosition(developinfo8, positionint + i + 1, 2, System.Environment.NewLine, false, true, true);
-                    readValueFromPosition(developinfo8, positionint + i + 2, 2, System.Environment.NewLine, false, true,false);
+                    readValueFromPosition(developinfo8, positionint + i + 2, 2, System.Environment.NewLine, false, true, false);
                     developinfo8.Text += System.Environment.NewLine;
 
 
