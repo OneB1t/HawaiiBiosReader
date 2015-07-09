@@ -37,6 +37,7 @@ namespace HawaiBiosReader
         int voltageInfoPosition;
         int fanTablePosition;
         int powerTableSize;
+        int developTablePosition;
 
         // table offsets for default
         int fanTableOffset = 175;
@@ -85,7 +86,7 @@ namespace HawaiBiosReader
                     romStorageBuffer = br.ReadBytes((int)fileStream.Length);
                     fixChecksum(false);
                     powerTablePosition = PTPatternAt(romStorageBuffer, powerTablepattern);
-                    voltageInfoPosition = PatternAt(romStorageBuffer, voltageObjectInfoPattern) + 7;
+                    voltageInfoPosition = PatternAt(romStorageBuffer, voltageObjectInfoPattern) - 1;
                     searchposition.Text = "0x" + voltageInfoPosition.ToString("X");
 
 
@@ -398,6 +399,31 @@ namespace HawaiBiosReader
                     break;
             }
         }
+        public Byte readValueFromPositionDevelop(TextBox dest, int position, int type, String units = "", bool isFrequency = false, bool add = false, bool voltage = false)
+        {
+            if (add)
+            {
+                dest.Text += "0x" + position.ToString("X") + " -- ";
+            }
+            else
+            {
+                dest.Text = "0x" + position.ToString("X") + " -- ";
+            }
+
+            switch (type)
+            {
+                case 0: // 16 bit value
+                        dest.Text += get16BitValueFromPosition(position, romStorageBuffer, isFrequency).ToString() + " " + units;
+                        developTablePosition += 2;
+                        return 0;
+                case 2: // 8 bit value
+                        dest.Text += romStorageBuffer[position].ToString() + " " + units;
+                        developTablePosition++;
+                        return romStorageBuffer[position];
+                    
+            }
+            return 0;
+        }
 
         public void readValueFromPositionToList(ObservableCollection<GridRow> dest, int position, int type, String units = "", bool isFrequency = false, int dpm = -1)
         {
@@ -651,30 +677,230 @@ namespace HawaiBiosReader
                 found = Int32.TryParse(searchposition.Text, out positionint);
             if (found)
             {
-                developinfo24.Text = "";
-                for (int i = 0; i < 32; i++)
-                {
-                    readValueFromPosition(developinfo24, positionint - 1 + (i * 3), 1, "" + System.Environment.NewLine, false, true);
-                }
+                developinfoTable.Text = "";
+                 /*   developinfoTable.Text += "Voltage" + (i / 4).ToString() + System.Environment.NewLine;
+                    readValueFromPosition(developinfoTable, positionint + i, 2, System.Environment.NewLine, false, true, true);
 
-                // search for more 8 bit
-                developinfo16.Text = "";
-                for (int i = 0; i < 128; i++)
-                {
-                    readValueFromPosition(developinfo16, positionint + i, 2, "" + System.Environment.NewLine, false, true);
-                }
-                developinfo8.Text = "";
-                for (int i = 0; i < 205; i = i + 4)
-                {
-                    developinfo8.Text += "Voltage" + (i / 4).ToString() + System.Environment.NewLine;
-                    readValueFromPosition(developinfo8, positionint + i, 2, System.Environment.NewLine, false, true, true);
-
-                    readValueFromPosition(developinfo8, positionint + i + 1, 2, System.Environment.NewLine, false, true, true);
-                    readValueFromPosition(developinfo8, positionint + i + 2, 2, System.Environment.NewLine, false, true, false);
-                    developinfo8.Text += System.Environment.NewLine;
+                    readValueFromPosition(developinfoTable, positionint + i + 1, 2, System.Environment.NewLine, false, true, true);
+                    readValueFromPosition(developinfoTable, positionint + i + 2, 2, System.Environment.NewLine, false, true, false);
+                    developinfoTable.Text += System.Environment.NewLine;*/
+                    developTablePosition = positionint;
+                    developinfoTable.Text += "USHORT usStructureSize: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 0, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "USHORT usStructureRevision: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucTableContentRevision: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
 
 
-                }
+                    // _ATOM_VOLTAGE_OBJECT_HEADER_V3 -- this is regulator init sequence with i2c
+                    developinfoTable.Text += "UCHAR ucVoltageType: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucVoltageMode: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "USHORT ucSize: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 0, System.Environment.NewLine, false, true);
+
+                    developinfoTable.Text += "UCHAR ucVoltageControlId: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucVoltageControlI2cLine: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucVoltageControlAddress : ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucVoltageControlOffset: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                //    developinfoTable.Text += "ULONG usGpioPin_AIndex: ";
+                 //   readValueFromPositionDevelop(developinfoTable, developTablePosition, 0, System.Environment.NewLine, false, true);
+                    
+                    Byte result2 = 0;
+                    for (int i = 0; i < 9;i++ )
+                    {
+                        developinfoTable.Text += "UCHAR ucGpioPinBitShift: ";
+                        result2 <<= readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    }
+                    developinfoTable.Text += "result " + result2.ToString() + System.Environment.NewLine;
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += System.Environment.NewLine;
+
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 0, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 0, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+
+
+
+
+                    developinfoTable.Text += System.Environment.NewLine;
+                    developinfoTable.Text += "UCHAR ucVoltageType: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucSize: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucVoltageControlId: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucVoltageControlI2cLine: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucVoltageControlAddress : ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR ucVoltageControlOffset: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    developinfoTable.Text += "UCHAR usGpioPin_AIndex: ";
+                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    for (int i = 0; i < 9; i++)
+                    {
+                        developinfoTable.Text += "UCHAR ucGpioPinBitShift: ";
+                        readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+                    }
+
+                    developinfoTable.Text += "UCHAR ucReserved: ";
+                    readValueFromPosition(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
+
             }
         }
     }

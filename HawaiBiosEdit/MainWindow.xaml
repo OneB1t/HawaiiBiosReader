@@ -219,21 +219,18 @@
                     <Button x:Name="search" Content="Search patterns" Width="94" Margin="438,26,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Click="search_Click" />
-                    <TextBlock Text="24-bit:" Margin="10,49,0,0"
+                    <TextBlock Text="16-bit:" Margin="10,49,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="developinfo24" Text="" Margin="10,70,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="513" Width="153" IsReadOnly="True" />
-                    <TextBlock Text="16bit:" Margin="177,52,0,0"
+                    <TextBlock Text="8-bit:" Margin="177,52,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="developinfo16" Text="" Margin="177,70,0,0"
+                    <TextBox x:Name="developinfo8" Text="" Margin="10,65,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="513" Width="141" IsReadOnly="True" />
                     <TextBlock Text="Table" Margin="323,52,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="developinfo8" Text="" Margin="323,70,0,0"
+                    <TextBox x:Name="developinfoTable" Text="" Margin="194,70,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="513" Width="209" IsReadOnly="True" />
+                             Height="513" Width="338" IsReadOnly="True"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Other2...">
