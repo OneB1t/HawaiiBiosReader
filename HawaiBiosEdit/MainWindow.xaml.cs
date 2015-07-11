@@ -164,6 +164,18 @@ namespace HawaiBiosReader
                                 tdcLimitOffset = 643;
                                 powerDeliveryLimitOffset = 653;
                                 break;
+                            case 671:// The Slith edited roms
+                                powerTablesize.Text += " - R9 290X The Slith roms";
+                                voltageTableOffset = 330;
+                                memoryFrequencyTableOffset = 289;
+                                gpuFrequencyTableOffset = 242;
+                                VCELimitTableOffset = 532;
+                                AMUAndACPLimitTableOffset = 558;
+                                UVDLimitTableOffset = 450;
+                                tdpLimitOffset = 643;
+                                tdcLimitOffset = 645;
+                                powerDeliveryLimitOffset = 655;
+                                break;
                             case 650:
                                 powerTablesize.Text += " - R9 290X (MSI Lightning)";
                                 voltageTableOffset = 309;
@@ -774,6 +786,10 @@ namespace HawaiBiosReader
 
         // developer function
         private void search_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void VCELimitTable_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
         }
     }
