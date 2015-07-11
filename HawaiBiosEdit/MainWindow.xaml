@@ -103,14 +103,14 @@
                     <TextBlock Text="Voltage Table:" Margin="0,57,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left"
                                Grid.Column="1" />
-                    <DataGrid Name="voltageEdit" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="voltageEdit_GotFocus" CanUserReorderColumns="False" Grid.Column="1" Margin="0,77,0,15" Grid.RowSpan="2" FontSize="10"/>
+                    <DataGrid Name="voltageEdit" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="voltageEdit_GotFocus" CanUserReorderColumns="False" Grid.Column="1" Margin="10,77,0,15" Grid.RowSpan="2" FontSize="10"/>
 
                     <TextBlock Text="GPU Freq Table:" Margin="10,213,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <DataGrid Name="gpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="gpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="10,234,10,187" Grid.RowSpan="2" FontSize="10" />
+                    <DataGrid Name="gpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="gpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="10,234,0,187" Grid.RowSpan="2" FontSize="10" />
                     <TextBlock Text="MEM Freq Table:" Margin="10,110,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" />
-                    <DataGrid Name="memFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="10,126,10,-1" FontSize="10" Grid.Row="1" />
+                    <DataGrid Name="memFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="10,126,0,-1" FontSize="10" Grid.Row="1" />
                     <TextBlock Text="TDP Max:" Margin="19,131,0,0"
                     	VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
                     <TextBlock Text="Power limit:" Margin="19,147,0,0"
@@ -170,7 +170,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Other...">
+            <TabItem Header="Limit Tables">
                 <Grid>
 
                     <Grid.RowDefinitions>
@@ -182,29 +182,25 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="StartVCELimitTable:" Margin="10,10,0,0"
+
+                    <TextBlock Text="StartVCELimitTable:" Margin="10,9,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="VCELimitTableValues" Text="" Margin="10,30,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="256" Width="263" IsReadOnly="True" />
+                    <DataGrid Name="VCELimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,31,0,10" FontSize="11" GotFocus="VCELimitTable_GotFocus" />
 
                     <TextBlock Text="StartSAMULimitTable:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" />
-                    <TextBox x:Name="AMULimitTable" Text="" Margin="10,30,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="256" Width="263" IsReadOnly="True" Grid.Row="1" />
-
+                    <DataGrid Name="SAMULimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,26,0,15" FontSize="11" GotFocus="SAMULimitTable_GotFocus" Grid.Row="1" />
+                    <DataGrid Name="ACPLimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,31,0,9" FontSize="11" GotFocus="ACPLimitTable_GotFocus" Grid.Column="1" />
                     <TextBlock Text="StartACPLimitTable:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
-                    <TextBox x:Name="ACPLimitTable" Text="" Margin="10,30,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="256" Width="263" IsReadOnly="True" Grid.Column="1" />
+
+
+
 
                     <TextBlock Text="StartUVDLimitTable:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
-                    <TextBox x:Name="UVDLimitTable" Text="" Margin="10,30,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="256" Width="263" IsReadOnly="True" Grid.Column="1" Grid.Row="1" />
+                    <DataGrid Name="UVDLimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,26,0,15" FontSize="11" GotFocus="UVDLimitTable_GotFocus" Grid.Row="1" Grid.Column="1" />
+
 
                 </Grid>
             </TabItem>
@@ -219,9 +215,7 @@
                     <Button x:Name="search" Content="Search patterns" Width="94" Margin="438,26,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                  Click="search_Click" />
-                    <TextBlock Text="16-bit:" Margin="10,49,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="8-bit:" Margin="177,52,0,0"
+                    <TextBlock Text="8-bit:" Margin="10,52,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBox x:Name="developinfo8" Text="" Margin="10,65,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
@@ -231,20 +225,6 @@
                     <TextBox x:Name="developinfoTable" Text="" Margin="194,70,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="513" Width="338" IsReadOnly="True"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Other2...">
-                <Grid>
-                    <TextBlock Text="Limit Values 24-bit:" Margin="10,10,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="limitValues" Text="" Margin="10,30,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="553" Width="263" IsReadOnly="True" />
-                    <TextBlock Text="Limit Values 2 - 16bit:" Margin="288,13,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="limitValues2" Text="" Margin="288,30,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="553" Width="264" IsReadOnly="True" />
                 </Grid>
             </TabItem>
             <TabItem Header="About">

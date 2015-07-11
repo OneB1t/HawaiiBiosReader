@@ -13,6 +13,8 @@ namespace HawaiiBiosReader
         private String _unit;
         private String _type;
         private int _dpm;
+        private String _posvoltage;
+        private int _voltage;
 
         public GridRow(String pos, int val, String un, String type, int dpm)
         {
@@ -21,6 +23,17 @@ namespace HawaiiBiosReader
             _unit = un;
             _type = type;
             _dpm = dpm;
+        }
+
+        public GridRow(String pos, int val, String un, String type, int dpm, String pos2, int voltage)
+        {
+            _position = pos;
+            _value = val;
+            _unit = un;
+            _type = type;
+            _dpm = dpm;
+            _posvoltage = pos2;
+            _voltage = voltage;
         }
 
         public int dpm
@@ -40,7 +53,6 @@ namespace HawaiiBiosReader
             get { return _value; }
             set { _value = value; }
         }
-
         public String unit
         {
             get { return _unit; }
@@ -51,6 +63,18 @@ namespace HawaiiBiosReader
         {
             get { return _type; }
             set { _type = value; }
+        }
+
+        public String posvol
+        {
+            get { return _posvoltage; }
+            set { _posvoltage = value; }
+        }
+
+        public int vol
+        {
+            get { return _voltage; }
+            set { _voltage = value; }
         }
     }
 }

@@ -24,10 +24,16 @@ namespace HawaiBiosReader
     public partial class MainWindow : Window
     {
         ObservableCollection<GridRow> data = new ObservableCollection<GridRow>();
-        ObservableCollection<GridRow> voltageList = new ObservableCollection<GridRow>();
+        ObservableCollection<GridRowVoltage> voltageList = new ObservableCollection<GridRowVoltage>();
+        ObservableCollection<GridRowVoltage> gpumemFrequencyListAndPowerLimit = new ObservableCollection<GridRowVoltage>();
+
         ObservableCollection<GridRow> gpuFrequencyList = new ObservableCollection<GridRow>();
         ObservableCollection<GridRow> memFrequencyList = new ObservableCollection<GridRow>();
-        ObservableCollection<GridRow> gpumemFrequencyListAndPowerLimit = new ObservableCollection<GridRow>();
+        ObservableCollection<GridRow> VCELimitTableData = new ObservableCollection<GridRow>();
+        ObservableCollection<GridRow> UVDLimitTableData = new ObservableCollection<GridRow>();
+        ObservableCollection<GridRow> SAMULimitTableData = new ObservableCollection<GridRow>();
+        ObservableCollection<GridRow> ACPLimitTableData = new ObservableCollection<GridRow>();
+
         Byte[] romStorageBuffer; // whole rom
         Byte[] powerTablepattern = new Byte[] { 0x02, 0x06, 0x01, 0x00 };
         Byte[] voltageObjectInfoPattern = new Byte[] { 0x00, 0x03, 0x01, 0x01, 0x03 };
@@ -50,7 +56,7 @@ namespace HawaiBiosReader
         int memoryFrequencyTableOffset = 278;
         int gpuFrequencyTableOffset = 231;
         int VCELimitTableOffset = 396;
-        int AMUAndACPLimitTableOffset = 549;
+        int AMUAndACPLimitTableOffset = 547;
         int UVDLimitTableOffset = 441;
         string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(); // program version
 
@@ -115,7 +121,7 @@ namespace HawaiBiosReader
                                 memoryFrequencyTableOffset = 278;
                                 gpuFrequencyTableOffset = 231;
                                 VCELimitTableOffset = 521;
-                                AMUAndACPLimitTableOffset = 549;
+                                AMUAndACPLimitTableOffset = 547;
                                 UVDLimitTableOffset = 439;
                                 tdpLimitOffset = 632;
                                 tdcLimitOffset = 634;
@@ -127,7 +133,7 @@ namespace HawaiBiosReader
                                 memoryFrequencyTableOffset = 279;
                                 gpuFrequencyTableOffset = 232;
                                 VCELimitTableOffset = 522;
-                                AMUAndACPLimitTableOffset = 550;
+                                AMUAndACPLimitTableOffset = 548;
                                 UVDLimitTableOffset = 440;
                                 tdpLimitOffset = 633;
                                 tdcLimitOffset = 635;
@@ -140,7 +146,7 @@ namespace HawaiBiosReader
                                 memoryFrequencyTableOffset = 280;
                                 gpuFrequencyTableOffset = 233;
                                 VCELimitTableOffset = 523;
-                                AMUAndACPLimitTableOffset = 551;
+                                AMUAndACPLimitTableOffset = 549;
                                 UVDLimitTableOffset = 441;
                                 tdpLimitOffset = 634;
                                 tdcLimitOffset = 636;
@@ -152,7 +158,7 @@ namespace HawaiBiosReader
                                 memoryFrequencyTableOffset = 287;
                                 gpuFrequencyTableOffset = 240;
                                 VCELimitTableOffset = 530;
-                                AMUAndACPLimitTableOffset = 558;
+                                AMUAndACPLimitTableOffset = 556;
                                 UVDLimitTableOffset = 448;
                                 tdpLimitOffset = 641;
                                 tdcLimitOffset = 643;
@@ -164,7 +170,7 @@ namespace HawaiBiosReader
                                 memoryFrequencyTableOffset = 268;
                                 gpuFrequencyTableOffset = 221;
                                 VCELimitTableOffset = 511;
-                                AMUAndACPLimitTableOffset = 539;
+                                AMUAndACPLimitTableOffset = 537;
                                 UVDLimitTableOffset = 429;
                                 tdpLimitOffset = 622;
                                 tdcLimitOffset = 624;
@@ -176,7 +182,7 @@ namespace HawaiBiosReader
                                 memoryFrequencyTableOffset = 266;
                                 gpuFrequencyTableOffset = 219;
                                 VCELimitTableOffset = 509;
-                                AMUAndACPLimitTableOffset = 537;
+                                AMUAndACPLimitTableOffset = 535;
                                 UVDLimitTableOffset = 427;
                                 tdpLimitOffset = 620;
                                 tdcLimitOffset = 622;
@@ -188,7 +194,7 @@ namespace HawaiBiosReader
                                 memoryFrequencyTableOffset = 275;
                                 gpuFrequencyTableOffset = 228;
                                 VCELimitTableOffset = 519;
-                                AMUAndACPLimitTableOffset = 547;
+                                AMUAndACPLimitTableOffset = 545;
                                 UVDLimitTableOffset = 437;
                                 tdpLimitOffset = 630;
                                 tdcLimitOffset = 632;
@@ -200,7 +206,7 @@ namespace HawaiBiosReader
                                 memoryFrequencyTableOffset = 259;
                                 gpuFrequencyTableOffset = 212;
                                 VCELimitTableOffset = 503;
-                                AMUAndACPLimitTableOffset = 531;
+                                AMUAndACPLimitTableOffset = 529;
                                 UVDLimitTableOffset = 421;
                                 tdpLimitOffset = 614;
                                 tdcLimitOffset = 616;
@@ -212,7 +218,7 @@ namespace HawaiBiosReader
                                 memoryFrequencyTableOffset = 276;
                                 gpuFrequencyTableOffset = 229;
                                 VCELimitTableOffset = 495;
-                                AMUAndACPLimitTableOffset = 523;
+                                AMUAndACPLimitTableOffset = 521;
                                 UVDLimitTableOffset = 425;
                                 tdpLimitOffset = 606;
                                 tdcLimitOffset = 608;
@@ -229,15 +235,15 @@ namespace HawaiBiosReader
 
 
                         gpumemFrequencyListAndPowerLimit.Clear();
-                        gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + 98).ToString("X"), get24BitValueFromPosition(powerTablePosition + 98, romStorageBuffer, true), "Mhz", "24-bit", -1));
-                        gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + 107).ToString("X"), get24BitValueFromPosition(powerTablePosition + 107, romStorageBuffer, true), "Mhz", "24-bit", -1));
-                        gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + 116).ToString("X"), get24BitValueFromPosition(powerTablePosition + 116, romStorageBuffer, true), "Mhz", "24-bit", -1));
-                        gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + 101).ToString("X"), get24BitValueFromPosition(powerTablePosition + 101, romStorageBuffer, true), "Mhz", "24-bit", -1));
-                        gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + 110).ToString("X"), get24BitValueFromPosition(powerTablePosition + 110, romStorageBuffer, true), "Mhz", "24-bit", -1));
-                        gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + 119).ToString("X"), get24BitValueFromPosition(powerTablePosition + 119, romStorageBuffer, true), "Mhz", "24-bit", -1));
-                        gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + tdpLimitOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + tdpLimitOffset, romStorageBuffer), "W", "16-bit", -1));
-                        gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + powerDeliveryLimitOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + powerDeliveryLimitOffset, romStorageBuffer), "W", "16-bit", -1));
-                        gpumemFrequencyListAndPowerLimit.Add(new GridRow("0x" + (powerTablePosition + tdcLimitOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + tdcLimitOffset, romStorageBuffer), "A", "16-bit", -1));
+                        gpumemFrequencyListAndPowerLimit.Add(new GridRowVoltage("0x" + (powerTablePosition + 98).ToString("X"), get24BitValueFromPosition(powerTablePosition + 98, romStorageBuffer, true), "Mhz", "24-bit"));
+                        gpumemFrequencyListAndPowerLimit.Add(new GridRowVoltage("0x" + (powerTablePosition + 107).ToString("X"), get24BitValueFromPosition(powerTablePosition + 107, romStorageBuffer, true), "Mhz", "24-bit"));
+                        gpumemFrequencyListAndPowerLimit.Add(new GridRowVoltage("0x" + (powerTablePosition + 116).ToString("X"), get24BitValueFromPosition(powerTablePosition + 116, romStorageBuffer, true), "Mhz", "24-bit"));
+                        gpumemFrequencyListAndPowerLimit.Add(new GridRowVoltage("0x" + (powerTablePosition + 101).ToString("X"), get24BitValueFromPosition(powerTablePosition + 101, romStorageBuffer, true), "Mhz", "24-bit"));
+                        gpumemFrequencyListAndPowerLimit.Add(new GridRowVoltage("0x" + (powerTablePosition + 110).ToString("X"), get24BitValueFromPosition(powerTablePosition + 110, romStorageBuffer, true), "Mhz", "24-bit"));
+                        gpumemFrequencyListAndPowerLimit.Add(new GridRowVoltage("0x" + (powerTablePosition + 119).ToString("X"), get24BitValueFromPosition(powerTablePosition + 119, romStorageBuffer, true), "Mhz", "24-bit"));
+                        gpumemFrequencyListAndPowerLimit.Add(new GridRowVoltage("0x" + (powerTablePosition + tdpLimitOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + tdpLimitOffset, romStorageBuffer), "W", "16-bit"));
+                        gpumemFrequencyListAndPowerLimit.Add(new GridRowVoltage("0x" + (powerTablePosition + powerDeliveryLimitOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + powerDeliveryLimitOffset, romStorageBuffer), "W", "16-bit"));
+                        gpumemFrequencyListAndPowerLimit.Add(new GridRowVoltage("0x" + (powerTablePosition + tdcLimitOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + tdcLimitOffset, romStorageBuffer), "A", "16-bit"));
 
                         memgpuFrequencyTable.ItemsSource = gpumemFrequencyListAndPowerLimit;
 
@@ -245,7 +251,7 @@ namespace HawaiBiosReader
                         voltageList.Clear();
                         for (int i = 0; i < 24; i++)
                         {
-                            readValueFromPositionToList(voltageList, (powerTablePosition + voltageTableOffset + (i * 2)), 0, "mV", false, i / 3);
+                            readValueFromPositionToList(voltageList, (powerTablePosition + voltageTableOffset + (i * 2)), 0, "mV", false);
                         }
                         voltageEdit.ItemsSource = voltageList;
 
@@ -265,59 +271,42 @@ namespace HawaiBiosReader
                         }
                         gpuFrequencyTable.ItemsSource = gpuFrequencyList;
 
-                        // search for more 24 bit
-                        limitValues.Text = "";
-                        for (int i = 0; i < 10; i++)
-                        {
-                            readValueFromPosition(limitValues, powerTablePosition + AMUAndACPLimitTableOffset + 80 + (i * 3), 1, "" + System.Environment.NewLine, false, true);
-                        }
-
-                        // search for more 16 bit
-                        limitValues2.Text = "";
-                        for (int i = 0; i < 128; i++)
-                        {
-                            readValueFromPosition(limitValues2, powerTablePosition + AMUAndACPLimitTableOffset + 79 + (i * 2), 0, "" + System.Environment.NewLine, false, true);
-                        }
-
                         int position = 0;
                         // StartVCELimitTable
-                        VCELimitTableValues.Text = "";
+                        VCELimitTableData.Clear();
                         for (int i = 0; i < 8; i++)
                         {
                             position = powerTablePosition + VCELimitTableOffset + (i * 3);
-                            readValueFromPosition(VCELimitTableValues, position, 0, "--", false, true);
-                            VCELimitTableValues.Text += romStorageBuffer[position + 2] + System.Environment.NewLine;
+                            VCELimitTableData.Add(new GridRow("0x" + (position + 2).ToString("X"),  get8BitValueFromPosition(position + 2, romStorageBuffer), "DPM", "8-bit", i, "0x" + (position).ToString("X"),get16BitValueFromPosition(position, romStorageBuffer, false)));
                         }
+                        VCELimitTable.ItemsSource = VCELimitTableData;
 
                         // StartUVDLimitTable
-                        UVDLimitTable.Text = "";
+                        UVDLimitTableData.Clear();
                         for (int i = 0; i < 8; i++)
                         {
                             position = powerTablePosition + UVDLimitTableOffset + (i * 3);
-                            readValueFromPosition(UVDLimitTable, position, 0, "--", false, true);
-                            UVDLimitTable.Text += romStorageBuffer[position + 2] + System.Environment.NewLine;
+                            UVDLimitTableData.Add(new GridRow("0x" + (position + 2).ToString("X"), get8BitValueFromPosition(position + 2, romStorageBuffer), "DPM", "8-bit", i, "0x" + (position).ToString("X"), get16BitValueFromPosition(position, romStorageBuffer, false)));
                         }
+                        UVDLimitTable.ItemsSource = UVDLimitTableData;
 
                         // StartSAMULimitTable + StartACPLimitTable
-                        AMULimitTable.Text = "";
-                        ACPLimitTable.Text = "";
-                        for (int i = 0; i < 16; i++)
+                        SAMULimitTableData.Clear();
+                        for (int i = 0; i < 8; i++)
                         {
-                            if (i <= 7)
-                            {
-                                position = powerTablePosition + AMUAndACPLimitTableOffset + (i * 5);
-                                AMULimitTable.Text += "0x" + position.ToString("X") + "  -- ";
-                                AMULimitTable.Text += get16BitValueFromPosition(position - 2, romStorageBuffer) + "  -- ";
-                                AMULimitTable.Text += get24BitValueFromPosition(position, romStorageBuffer) + System.Environment.NewLine;
-                            }
-                            else
-                            {
-                                position = powerTablePosition + AMUAndACPLimitTableOffset + 2 + (i * 5);
-                                ACPLimitTable.Text += "0x" + position.ToString("X") + "  -- ";
-                                ACPLimitTable.Text += get16BitValueFromPosition(position - 2, romStorageBuffer) + "  -- ";
-                                ACPLimitTable.Text += get24BitValueFromPosition(position, romStorageBuffer) + System.Environment.NewLine;
-                            }
+                            position = powerTablePosition + AMUAndACPLimitTableOffset + (i * 5);
+                            SAMULimitTableData.Add(new GridRow("0x" + (position + 2).ToString("X"), get24BitValueFromPosition(position + 2, romStorageBuffer), "%", "24-bit", i, "0x" + (position).ToString("X"), get16BitValueFromPosition(position, romStorageBuffer, false)));
                         }
+                        SAMULimitTable.ItemsSource = SAMULimitTableData;
+
+
+                        ACPLimitTableData.Clear();
+                        for (int i = 0; i < 8; i++)
+                        {
+                            position = powerTablePosition + AMUAndACPLimitTableOffset + 42 + (i * 5);
+                            ACPLimitTableData.Add(new GridRow("0x" + (position + 2).ToString("X"), get24BitValueFromPosition(position + 2, romStorageBuffer), "%", "24-bit", i, "0x" + (position).ToString("X"), get16BitValueFromPosition(position, romStorageBuffer, false)));
+                        }
+                        ACPLimitTable.ItemsSource = ACPLimitTableData;
 
                         if (fanTablePosition > 0)
                         {
@@ -413,14 +402,17 @@ namespace HawaiBiosReader
             switch (type)
             {
                 case 0: // 16 bit value
-                        dest.Text += get16BitValueFromPosition(position, romStorageBuffer, isFrequency).ToString() + " " + units;
-                        developTablePosition += 2;
-                        return 0;
+                    dest.Text += get16BitValueFromPosition(position, romStorageBuffer, isFrequency).ToString() + " " + units;
+                    developTablePosition += 2;
+                    return 0;
                 case 2: // 8 bit value
-                        dest.Text += romStorageBuffer[position].ToString() + " " + units;
-                        developTablePosition++;
-                        return romStorageBuffer[position];
-                    
+                    dest.Text += romStorageBuffer[position].ToString() + " " + units;
+                    developTablePosition++;
+                    return romStorageBuffer[position];
+                case 4: // 32 bit value
+                    dest.Text += get32BitValueFromPosition(position, romStorageBuffer, isFrequency).ToString() + " " + units;
+                    developTablePosition += 4;
+                    return 0;
             }
             return 0;
         }
@@ -430,16 +422,35 @@ namespace HawaiBiosReader
             switch (type)
             {
                 case 0: // 16 bit value
-                    dest.Add(new GridRow("0x" + position.ToString("X"), get16BitValueFromPosition(position, romStorageBuffer, isFrequency), units, "16-bit", dpm));
+                    dest.Add(new GridRow("0x" + position.ToString("X"), get16BitValueFromPosition(position, romStorageBuffer, isFrequency), units, "16-bit", dpm, "0x" + (position + 2).ToString("X"), get16BitValueFromPosition(position + 2, romStorageBuffer)));
                     break;
                 case 1: // 24 bit value
-                    dest.Add(new GridRow("0x" + position.ToString("X"), get24BitValueFromPosition(position, romStorageBuffer, isFrequency), units, "24-bit", dpm));
+                    dest.Add(new GridRow("0x" + position.ToString("X"), get24BitValueFromPosition(position, romStorageBuffer, isFrequency), units, "24-bit", dpm, "0x" + (position + 3).ToString("X"), get16BitValueFromPosition(position + 3, romStorageBuffer)));
                     break;
                 case 2: // 8 bit value
-                    dest.Add(new GridRow("0x" + position.ToString("X"), get8BitValueFromPosition(position, romStorageBuffer, isFrequency), units, "8-bit", dpm));
+                    dest.Add(new GridRow("0x" + position.ToString("X"), get8BitValueFromPosition(position, romStorageBuffer, isFrequency), units, "8-bit", dpm, "0x" + (position + 1).ToString("X"), get16BitValueFromPosition(position + 1, romStorageBuffer)));
                     break;
                 default:
-                    dest.Add(new GridRow("0x" + position.ToString("X"), get8BitValueFromPosition(position, romStorageBuffer, isFrequency), units, "8-bit", dpm));
+                    dest.Add(new GridRow("0x" + position.ToString("X"), get8BitValueFromPosition(position, romStorageBuffer, isFrequency), units, "8-bit", dpm, "0x" + (position + 1).ToString("X"), get16BitValueFromPosition(position + 1, romStorageBuffer)));
+                    break;
+            }
+        }
+
+        public void readValueFromPositionToList(ObservableCollection<GridRowVoltage> dest, int position, int type, String units = "", bool isFrequency = false)
+        {
+            switch (type)
+            {
+                case 0: // 16 bit value
+                    dest.Add(new GridRowVoltage("0x" + position.ToString("X"), get16BitValueFromPosition(position, romStorageBuffer, isFrequency), units, "16-bit"));
+                    break;
+                case 1: // 24 bit value
+                    dest.Add(new GridRowVoltage("0x" + position.ToString("X"), get24BitValueFromPosition(position, romStorageBuffer, isFrequency), units, "24-bit"));
+                    break;
+                case 2: // 8 bit value
+                    dest.Add(new GridRowVoltage("0x" + position.ToString("X"), get8BitValueFromPosition(position, romStorageBuffer, isFrequency), units, "8-bit"));
+                    break;
+                default:
+                    dest.Add(new GridRowVoltage("0x" + position.ToString("X"), get8BitValueFromPosition(position, romStorageBuffer, isFrequency), units, "8-bit"));
                     break;
             }
         }
@@ -553,6 +564,10 @@ namespace HawaiBiosReader
                 saveList(memFrequencyList, true);
                 saveList(gpuFrequencyList, true);
                 saveList(gpumemFrequencyListAndPowerLimit, true);
+                saveList(VCELimitTableData, false);
+                saveList(ACPLimitTableData, false);
+                saveList(UVDLimitTableData, false);
+                saveList(SAMULimitTableData, false);
                 fixChecksum(true);
                 bw.Write(romStorageBuffer);
 
@@ -566,11 +581,11 @@ namespace HawaiBiosReader
             int size = romStorageBuffer[2] * 512;
             Byte newchecksum = 0;
 
-            for (int i = 0; i < size; i++) 
+            for (int i = 0; i < size; i++)
             {
                 newchecksum += romStorageBuffer[i];
             }
-            if(oldchecksum == (romStorageBuffer[33] - newchecksum))
+            if (oldchecksum == (romStorageBuffer[33] - newchecksum))
             {
                 checksumResult.Text = "OK";
             }
@@ -586,9 +601,9 @@ namespace HawaiBiosReader
 
         }
 
-        private void saveList(ObservableCollection<GridRow> list, bool isFrequency = false)
+        private void saveList(ObservableCollection<GridRowVoltage> list, bool isFrequency = false)
         {
-            foreach (GridRow row in list)
+            foreach (GridRowVoltage row in list)
             {
                 int savePosition;
                 int value = row.value;
@@ -627,14 +642,63 @@ namespace HawaiBiosReader
                 }
             }
         }
+        private void saveList(ObservableCollection<GridRow> list, bool isFrequency = false)
+        {
+            foreach (GridRow row in list)
+            {
+                int savePosition;
+                int savePosition2;
+                int value = row.value;
+                int voltage = row.vol;
+                if (row.position.StartsWith("0x", StringComparison.CurrentCultureIgnoreCase) && row.posvol.StartsWith("0x", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    row.position = row.position.Substring(2);
+                    row.posvol = row.posvol.Substring(2);
+                }
+
+                if (isFrequency) // there is hack for 16 bit need fix
+                {
+                    value *= 100;
+                }
+                if (int.TryParse(row.position, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out savePosition))
+                {
+                    switch (row.type)
+                    {
+                        case "24-bit":
+                            {
+                                // this is for 24 bit
+                                romStorageBuffer[savePosition] = (byte)value;
+                                romStorageBuffer[savePosition + 1] = (byte)(value >> 8);
+                                romStorageBuffer[savePosition + 2] = (byte)(value >> 16);
+                                break;
+                            }
+                        case "16-bit":
+                            {
+                                romStorageBuffer[savePosition] = (byte)row.value;
+                                romStorageBuffer[savePosition + 1] = (byte)(row.value >> 8);
+                                break;
+                            }
+                        case "8-bit":
+                            {
+                                romStorageBuffer[savePosition] = (byte)row.value;
+                                break;
+                            }
+                    }
+                }
+                if (int.TryParse(row.posvol, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out savePosition2))
+                {
+                    romStorageBuffer[savePosition2] = (byte)row.vol;
+                    romStorageBuffer[savePosition2 + 1] = (byte)(row.vol >> 8);
+                }
+            }
+        }
         // this is here because of bug with tabs and grids thanks microsoft
         private void voltageEdit_GotFocus(object sender, RoutedEventArgs e)
         {
             voltageEdit.Columns[0].IsReadOnly = true;
-            voltageEdit.Columns[1].IsReadOnly = true;
-            voltageEdit.Columns[2].IsReadOnly = false;
+            voltageEdit.Columns[1].IsReadOnly = false;
+            voltageEdit.Columns[2].IsReadOnly = true;
             voltageEdit.Columns[3].IsReadOnly = true;
-            voltageEdit.Columns[4].IsReadOnly = true;
         }
 
         private void gpuFrequencyTable_GotFocus(object sender, RoutedEventArgs e)
@@ -644,7 +708,8 @@ namespace HawaiBiosReader
             gpuFrequencyTable.Columns[2].IsReadOnly = false;
             gpuFrequencyTable.Columns[3].IsReadOnly = true;
             gpuFrequencyTable.Columns[4].IsReadOnly = true;
-
+            gpuFrequencyTable.Columns[5].IsReadOnly = true;
+            gpuFrequencyTable.Columns[6].IsReadOnly = false;
         }
 
         private void memFrequencyTable_GotFocus(object sender, RoutedEventArgs e)
@@ -654,254 +719,62 @@ namespace HawaiBiosReader
             memFrequencyTable.Columns[2].IsReadOnly = false;
             memFrequencyTable.Columns[3].IsReadOnly = true;
             memFrequencyTable.Columns[4].IsReadOnly = true;
+            gpuFrequencyTable.Columns[5].IsReadOnly = true;
+            gpuFrequencyTable.Columns[6].IsReadOnly = false;
         }
 
         private void memgpuFrequencyTable_GotFocus(object sender, RoutedEventArgs e)
         {
             memgpuFrequencyTable.Columns[0].IsReadOnly = true;
-            memgpuFrequencyTable.Columns[1].IsReadOnly = true;
-            memgpuFrequencyTable.Columns[2].IsReadOnly = false;
+            memgpuFrequencyTable.Columns[1].IsReadOnly = false;
+            memgpuFrequencyTable.Columns[2].IsReadOnly = true;
             memgpuFrequencyTable.Columns[3].IsReadOnly = true;
-            memgpuFrequencyTable.Columns[4].IsReadOnly = true;
         }
+
+        private void VCELimitTable_GotFocus(object sender, RoutedEventArgs e)
+        {
+            VCELimitTable.Columns[0].IsReadOnly = true;
+            VCELimitTable.Columns[1].IsReadOnly = true;
+            VCELimitTable.Columns[2].IsReadOnly = true;
+            VCELimitTable.Columns[3].IsReadOnly = true;
+            VCELimitTable.Columns[4].IsReadOnly = true;
+            VCELimitTable.Columns[5].IsReadOnly = true;
+            VCELimitTable.Columns[6].IsReadOnly = false;
+        }
+        private void ACPLimitTable_GotFocus(object sender, RoutedEventArgs e)
+        {
+            ACPLimitTable.Columns[0].IsReadOnly = true;
+            ACPLimitTable.Columns[1].IsReadOnly = true;
+            ACPLimitTable.Columns[2].IsReadOnly = true;
+            ACPLimitTable.Columns[3].IsReadOnly = true;
+            ACPLimitTable.Columns[4].IsReadOnly = true;
+            ACPLimitTable.Columns[5].IsReadOnly = true;
+            ACPLimitTable.Columns[6].IsReadOnly = false;
+        }
+        private void SAMULimitTable_GotFocus(object sender, RoutedEventArgs e)
+        {
+            SAMULimitTable.Columns[0].IsReadOnly = true;
+            SAMULimitTable.Columns[1].IsReadOnly = true;
+            SAMULimitTable.Columns[2].IsReadOnly = true;
+            SAMULimitTable.Columns[3].IsReadOnly = true;
+            SAMULimitTable.Columns[4].IsReadOnly = true;
+            SAMULimitTable.Columns[5].IsReadOnly = true;
+            SAMULimitTable.Columns[6].IsReadOnly = false;
+        }
+        private void UVDLimitTable_GotFocus(object sender, RoutedEventArgs e)
+        {
+            UVDLimitTable.Columns[0].IsReadOnly = true;
+            UVDLimitTable.Columns[1].IsReadOnly = true;
+            UVDLimitTable.Columns[2].IsReadOnly = true;
+            UVDLimitTable.Columns[3].IsReadOnly = true;
+            UVDLimitTable.Columns[4].IsReadOnly = true;
+            UVDLimitTable.Columns[5].IsReadOnly = true;
+            UVDLimitTable.Columns[6].IsReadOnly = false;
+        }
+
         // developer function
         private void search_Click(object sender, RoutedEventArgs e)
         {
-            int positionint = 0;
-            bool found = false;
-            if (searchposition.Text.StartsWith("0x", StringComparison.CurrentCultureIgnoreCase))
-            {
-                found = Int32.TryParse(searchposition.Text.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out positionint);
-            }
-            if (!found)
-                found = Int32.TryParse(searchposition.Text, out positionint);
-            if (found)
-            {
-                developinfoTable.Text = "";
-                 /*   developinfoTable.Text += "Voltage" + (i / 4).ToString() + System.Environment.NewLine;
-                    readValueFromPosition(developinfoTable, positionint + i, 2, System.Environment.NewLine, false, true, true);
-
-                    readValueFromPosition(developinfoTable, positionint + i + 1, 2, System.Environment.NewLine, false, true, true);
-                    readValueFromPosition(developinfoTable, positionint + i + 2, 2, System.Environment.NewLine, false, true, false);
-                    developinfoTable.Text += System.Environment.NewLine;*/
-                    developTablePosition = positionint;
-                    developinfoTable.Text += "USHORT usStructureSize: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 0, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "USHORT usStructureRevision: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucTableContentRevision: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-
-
-                    // _ATOM_VOLTAGE_OBJECT_HEADER_V3 -- this is regulator init sequence with i2c
-                    developinfoTable.Text += "UCHAR ucVoltageType: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucVoltageMode: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "USHORT ucSize: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 0, System.Environment.NewLine, false, true);
-
-                    developinfoTable.Text += "UCHAR ucVoltageControlId: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucVoltageControlI2cLine: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucVoltageControlAddress : ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucVoltageControlOffset: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                //    developinfoTable.Text += "ULONG usGpioPin_AIndex: ";
-                 //   readValueFromPositionDevelop(developinfoTable, developTablePosition, 0, System.Environment.NewLine, false, true);
-                    
-                    Byte result2 = 0;
-                    for (int i = 0; i < 9;i++ )
-                    {
-                        developinfoTable.Text += "UCHAR ucGpioPinBitShift: ";
-                        result2 <<= readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    }
-                    developinfoTable.Text += "result " + result2.ToString() + System.Environment.NewLine;
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += System.Environment.NewLine;
-
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 0, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 0, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-
-
-
-
-                    developinfoTable.Text += System.Environment.NewLine;
-                    developinfoTable.Text += "UCHAR ucVoltageType: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucSize: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucVoltageControlId: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucVoltageControlI2cLine: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucVoltageControlAddress : ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR ucVoltageControlOffset: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    developinfoTable.Text += "UCHAR usGpioPin_AIndex: ";
-                    readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    for (int i = 0; i < 9; i++)
-                    {
-                        developinfoTable.Text += "UCHAR ucGpioPinBitShift: ";
-                        readValueFromPositionDevelop(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-                    }
-
-                    developinfoTable.Text += "UCHAR ucReserved: ";
-                    readValueFromPosition(developinfoTable, developTablePosition, 2, System.Environment.NewLine, false, true);
-
-            }
         }
     }
 }
