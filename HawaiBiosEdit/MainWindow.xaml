@@ -231,7 +231,7 @@
                 <Grid>
                     <TextBlock Text="Source code available at: https://github.com/OneB1t/HawaiiBiosReader" Margin="30" VerticalAlignment="Top" HorizontalAlignment="Center" />
                     <TextBlock Text="Authors: DDSZ1337, OneB1t" Margin="45" VerticalAlignment="Top" HorizontalAlignment="Center" />
-                    <TextBlock Text="Big Thanks to: LumPenPacK, asder00, gupsterg"  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="60" />
+                    <TextBlock Text="Big Thanks to: LumPenPacK, asder00, gupsterg, The Stilt"  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="60" />
                     <TextBlock x:Name="versionbox" Text="Version: "  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="75" />
                 </Grid>
             </TabItem>
