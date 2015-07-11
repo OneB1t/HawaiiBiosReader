@@ -9,8 +9,8 @@ Please go to http://forums.guru3d.com/showthread.php?t=400050 for further inform
 Binary (exe) file is in Releasebin folder
 
 Version 2.0
-- read all important tables for voltage edit
-- fan table
+- read/write all important tables for voltage edit
+- checksum autocorrection
 
 
 
