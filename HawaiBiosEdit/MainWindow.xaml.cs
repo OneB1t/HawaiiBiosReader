@@ -65,6 +65,7 @@ namespace HawaiBiosReader
         {
             InitializeComponent();
             versionbox.Text += version;
+            MainWindow.GetWindow(this).Title += " " + version;
         }
 
         private void OpenFileDialog_Click(object sender, RoutedEventArgs e)

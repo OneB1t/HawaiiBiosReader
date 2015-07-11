@@ -28,37 +28,39 @@
                         <ColumnDefinition Width="379*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="File name:" Margin="10,10,0,0" 
+                    <TextBlock Text="File name:" Margin="10,50,0,0" 
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="filename" Text="" Margin="10,30,0,0"
+                    <TextBox x:Name="filename" Text="" Margin="10,70,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
 
-                    <TextBlock Text="PowerTable Location:" Margin="10,55,0,0" 
+                    <TextBlock Text="PowerTable Location:" Margin="10,95,0,0" 
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="powerTablePositionValue" Text="" Margin="10,75,0,0"
+                    <TextBox x:Name="powerTablePositionValue" Text="" Margin="10,115,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
 
-                    <TextBlock Text="PowerTable Size/Type:" Margin="10,100,0,0" 
+                    <TextBlock Text="PowerTable Size/Type:" Margin="10,140,0,0" 
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="powerTablesize" Text="" Margin="10,120,0,0"
+                    <TextBox x:Name="powerTablesize" Text="" Margin="10,160,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
 
-                    <TextBlock Text="GPU ID:" Margin="10,143,0,0" 
+                    <TextBlock Text="GPU ID:" Margin="10,183,0,0" 
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="gpuID" Text="" Margin="10,159,0,0"
+                    <TextBox x:Name="gpuID" Text="" Margin="10,199,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
-                    <TextBlock Text="Checksum control:" Margin="10,182,0,0" 
+                    <TextBlock Text="Checksum control:" Margin="10,222,0,0" 
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="checksumResult" Text="" Margin="10,200,0,0"
+                    <TextBox x:Name="checksumResult" Text="" Margin="10,240,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
 
-                    <TextBlock Text="PowerTable Content:" Margin="10,10,0,0" 
+                    <TextBlock Text="PowerTable Content:" Margin="10,50,0,0" 
                                VerticalAlignment="Top" HorizontalAlignment="Left"
                                Grid.Column="1" />
-                    <TextBox x:Name="powerTable" Text="" Margin="10,30,0,0"
+                    <TextBox x:Name="powerTable" Text="" Margin="10,70,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top"
                              Height="256" Width="357" Grid.Column="1" IsReadOnly="True" TextWrapping="Wrap"
-                             VerticalScrollBarVisibility="Auto" />
+                             VerticalScrollBarVisibility="Auto" Grid.RowSpan="2" />
+                    <TextBlock Text="!!!RESET MSI AFTERBURNER SETTINGS BEFORE FLASHING CAN CAUSE OVERVOLT IN SOME CASES!!!" Margin="10,10,0,0" 
+                    	VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2" Width="535" Height="30" Foreground="Red" />
 
                 </Grid>
             </TabItem>
