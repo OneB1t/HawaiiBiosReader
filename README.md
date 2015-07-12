@@ -2,6 +2,7 @@
 Hawaii Bios Reader Tool for Bios development
 
 Please go to http://forums.guru3d.com/showthread.php?t=400050 for further informations on how to use this tool
+Tool for default core voltage for your card http://1drv.ms/1Hln01F by The Stilt
 
 Binary (exe) file is in Releasebin folder
 
