@@ -204,6 +204,22 @@
 
                 </Grid>
             </TabItem>
+            <TabItem Header="Memory Timing">
+                <Grid>
+                    <DataGrid Name="memoryTimingTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memoryTimingTable_GotFocus" CanUserReorderColumns="False" Margin="99,26,219,353" FontSize="11" RenderTransformOrigin="0.5,0.5" />
+                    <TextBlock Text="Some value:" Margin="20,120,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBlock Text="Some value:" Margin="20,138,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBlock Text="Some value:" Margin="20,157,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="2.007,4.887" />
+                    <TextBlock Text="Some value:" Margin="20,67,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBlock Text="Some value:" Margin="20,85,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBlock Text="Some value:" Margin="20,103,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBlock Text="Some value:" Margin="20,175,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="1.194,0.689" />
+                    <TextBlock Text="Some value:" Margin="20,47,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
+                    <TextBlock Text="Some value:" Margin="20,211,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
+                    <TextBlock Text="Some value:" Margin="20,193,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
+
+                </Grid>
+            </TabItem>
             <TabItem Header="About" Height="22" VerticalAlignment="Bottom">
                 <Grid>
                     <TextBlock Text="Source code available at: https://github.com/OneB1t/HawaiiBiosReader" Margin="30" VerticalAlignment="Top" HorizontalAlignment="Center" />

@@ -27,6 +27,7 @@ namespace HawaiBiosReader
         ObservableCollection<GridRowVoltage> voltageList = new ObservableCollection<GridRowVoltage>();
         ObservableCollection<GridRowVoltage> gpumemFrequencyListAndPowerLimit = new ObservableCollection<GridRowVoltage>();
         ObservableCollection<GridRowVoltage> fanList = new ObservableCollection<GridRowVoltage>();
+        ObservableCollection<GridRowVoltage> memoryTimingList = new ObservableCollection<GridRowVoltage>();
 
         ObservableCollection<GridRow> gpuFrequencyList = new ObservableCollection<GridRow>();
         ObservableCollection<GridRow> memFrequencyList = new ObservableCollection<GridRow>();
@@ -38,6 +39,7 @@ namespace HawaiBiosReader
         Byte[] romStorageBuffer; // whole rom
         Byte[] powerTablepattern = new Byte[] { 0x02, 0x06, 0x01, 0x00 };
         Byte[] voltageObjectInfoPattern = new Byte[] { 0x00, 0x03, 0x01, 0x01, 0x03 };
+        Byte[] memoryTimingPattern = new Byte[] { 0xDE, 0x09, 0x84, 0xFF, 0xFF, 0x00 }; // thanks Lard
 
         // unknown table offsets
         int powerTablePosition;
@@ -45,6 +47,7 @@ namespace HawaiBiosReader
         int fanTablePosition;
         int powerTableSize;
         int developTablePosition;
+        int memoryTimingsPosition;
 
         // table offsets for default
         int fanTableOffset = 175;
@@ -93,6 +96,7 @@ namespace HawaiBiosReader
                     romStorageBuffer = br.ReadBytes((int)fileStream.Length);
                     fixChecksum(false);
                     powerTablePosition = PTPatternAt(romStorageBuffer, powerTablepattern);
+                    memoryTimingsPosition = PTPatternAt(romStorageBuffer, memoryTimingPattern);
                     voltageInfoPosition = PatternAt(romStorageBuffer, voltageObjectInfoPattern) - 1;
 
 
@@ -300,6 +304,22 @@ namespace HawaiBiosReader
                             ACPLimitTableData.Add(new GridRow("0x" + (position + 2).ToString("X"), get24BitValueFromPosition(position + 2, romStorageBuffer), "%", "24-bit", i, "0x" + (position).ToString("X"), get16BitValueFromPosition(position, romStorageBuffer, false)));
                         }
                         ACPLimitTable.ItemsSource = ACPLimitTableData;
+
+                        if(memoryTimingsPosition > 0)
+                        {
+                            memoryTimingList.Clear();
+                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 1).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 1, romStorageBuffer), "ms", "16-bit"));
+                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 3).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 3, romStorageBuffer), "ms", "16-bit"));
+                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 5).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 5, romStorageBuffer), "ms", "16-bit"));
+                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 7).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 7, romStorageBuffer), "ms", "16-bit"));
+                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 9).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 9, romStorageBuffer), "ms", "16-bit"));
+                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 11).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 11, romStorageBuffer), "ms", "16-bit"));
+                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 13).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 13, romStorageBuffer), "ms", "16-bit"));
+                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 15).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 15, romStorageBuffer), "ms", "16-bit"));
+                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 17).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 17, romStorageBuffer), "ms", "16-bit"));
+                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 19).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 19, romStorageBuffer), "ms", "16-bit"));
+                            memoryTimingTable.ItemsSource = memoryTimingList;
+                        }
 
                         if (fanTablePosition > 0)
                         {
@@ -716,10 +736,16 @@ namespace HawaiBiosReader
             fanTable.Columns[1].IsReadOnly = false;
             fanTable.Columns[2].IsReadOnly = true;
             fanTable.Columns[3].IsReadOnly = true;
-
+        }
+        private void memoryTimingTable_GotFocus(object sender, RoutedEventArgs e)
+        {
+            memoryTimingTable.Columns[0].IsReadOnly = true;
+            memoryTimingTable.Columns[1].IsReadOnly = false;
+            memoryTimingTable.Columns[2].IsReadOnly = true;
+            memoryTimingTable.Columns[3].IsReadOnly = true;
         }
 
-    private void gpuFrequencyTable_GotFocus(object sender, RoutedEventArgs e)
+        private void gpuFrequencyTable_GotFocus(object sender, RoutedEventArgs e)
         {
             gpuFrequencyTable.Columns[0].IsReadOnly = true;
             gpuFrequencyTable.Columns[1].IsReadOnly = true;
