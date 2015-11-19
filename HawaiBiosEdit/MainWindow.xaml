@@ -51,14 +51,6 @@
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBox x:Name="checksumResult" Text="" Margin="10,240,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
-
-                    <TextBlock Text="PowerTable Content:" Margin="10,50,0,0" 
-                               VerticalAlignment="Top" HorizontalAlignment="Left"
-                               Grid.Column="1" />
-                    <TextBox x:Name="powerTable" Text="" Margin="10,70,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="256" Width="357" Grid.Column="1" IsReadOnly="True" TextWrapping="Wrap"
-                             VerticalScrollBarVisibility="Auto" Grid.RowSpan="2" />
                     <TextBlock Text="!!!RESET MSI AFTERBURNER SETTINGS BEFORE FLASHING CAN CAUSE OVERVOLT IN SOME CASES!!!" Margin="10,10,0,0" 
                     	VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2" Width="535" Height="30" Foreground="Red" />
 
@@ -102,17 +94,12 @@
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="173" 
                              IsReadOnly="True" Grid.Column="1"/>
 
-                    <TextBlock Text="Voltage Table:" Margin="0,57,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left"
-                               Grid.Column="1" />
-                    <DataGrid Name="voltageEdit" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="voltageEdit_GotFocus" CanUserReorderColumns="False" Grid.Column="1" Margin="10,77,0,15" Grid.RowSpan="2" FontSize="10"/>
-
                     <TextBlock Text="GPU Freq Table:" Margin="10,213,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <DataGrid Name="gpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="gpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="10,234,0,187" Grid.RowSpan="2" FontSize="10" />
-                    <TextBlock Text="MEM Freq Table:" Margin="10,110,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" />
-                    <DataGrid Name="memFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="10,126,0,-1" FontSize="10" Grid.Row="1" />
+                    <TextBlock Text="MEM Freq Table:" Margin="7,213,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
+                    <DataGrid Name="memFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="10,234,0,187" FontSize="10" Grid.Column="1" Grid.RowSpan="2" />
                     <TextBlock Text="TDP Max:" Margin="19,131,0,0"
                     	VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
                     <TextBlock Text="Power limit:" Margin="19,147,0,0"
@@ -123,6 +110,40 @@
                 </Grid>
             </TabItem>
 
+            <TabItem Header="Limit Tables">
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <TextBlock Text="StartVCELimitTable:" Margin="10,9,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <DataGrid Name="VCELimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,31,0,10" FontSize="11" GotFocus="VCELimitTable_GotFocus" />
+
+                    <TextBlock Text="StartSAMULimitTable:" Margin="10,10,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" />
+                    <DataGrid Name="SAMULimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,26,0,15" FontSize="11" GotFocus="SAMULimitTable_GotFocus" Grid.Row="1" />
+                    <DataGrid Name="ACPLimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,31,0,9" FontSize="11" GotFocus="ACPLimitTable_GotFocus" Grid.Column="1" />
+                    <TextBlock Text="StartACPLimitTable:" Margin="10,10,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
+
+
+
+
+                    <TextBlock Text="StartUVDLimitTable:" Margin="10,10,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
+                    <DataGrid Name="UVDLimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,26,0,15" FontSize="11" GotFocus="UVDLimitTable_GotFocus" Grid.Row="1" Grid.Column="1" />
+
+
+                </Grid>
+            </TabItem>
             <TabItem Header="Fan profile">
                 <Grid>
 
@@ -169,67 +190,21 @@
                     	HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
                     	IsReadOnly="True" />
 
-                </Grid>
-            </TabItem>
-
-            <TabItem Header="Limit Tables">
-                <Grid>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-
-                    <TextBlock Text="StartVCELimitTable:" Margin="10,9,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <DataGrid Name="VCELimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,31,0,10" FontSize="11" GotFocus="VCELimitTable_GotFocus" />
-
-                    <TextBlock Text="StartSAMULimitTable:" Margin="10,10,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" />
-                    <DataGrid Name="SAMULimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,26,0,15" FontSize="11" GotFocus="SAMULimitTable_GotFocus" Grid.Row="1" />
-                    <DataGrid Name="ACPLimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,31,0,9" FontSize="11" GotFocus="ACPLimitTable_GotFocus" Grid.Column="1" />
-                    <TextBlock Text="StartACPLimitTable:" Margin="10,10,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
-
-
-
-
-                    <TextBlock Text="StartUVDLimitTable:" Margin="10,10,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
-                    <DataGrid Name="UVDLimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,26,0,15" FontSize="11" GotFocus="UVDLimitTable_GotFocus" Grid.Row="1" Grid.Column="1" />
-
+                    <DataGrid Name="fanTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="fanTable_GotFocus" CanUserReorderColumns="False" Margin="119,182,199,197" FontSize="11" RenderTransformOrigin="0.5,0.5" />
+                    <TextBlock Text="Fan speed 1:" Margin="53,276,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBlock Text="Fan speed 2:" Margin="53,294,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBlock Text="Fan speed 3:" Margin="53,313,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="2.007,4.887" />
+                    <TextBlock Text="Temp. target 1:" Margin="40,223,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBlock Text="Temp. target 2:" Margin="40,241,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBlock Text="Temp. target 3:" Margin="40,259,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBlock Text="Max temp.:" Margin="60,331,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="1.194,0.689" />
+                    <TextBlock Text="Temp. hysteresis:" Margin="30,203,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
+                    <TextBlock Text="PWM Fan max.:" Margin="38,367,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
+                    <TextBlock Text="Fan control type:" Margin="29,349,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Develop">
-                <Grid>
-                    <TextBlock Text="Position:" Margin="10,26,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="This tab is usefull for searching and decoding new tables:" Margin="10,5,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="searchposition" Text="0xB540" Margin="95,26,0,0"
-                             HorizontalAlignment="Left"  VerticalAlignment="Top" Width="169"/>
-                    <Button x:Name="search" Content="Search patterns" Width="94" Margin="438,26,0,0"
-                 HorizontalAlignment="Left" VerticalAlignment="Top" 
-                 Click="search_Click" />
-                    <TextBlock Text="8-bit:" Margin="10,52,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="developinfo8" Text="" Margin="10,65,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="513" Width="141" IsReadOnly="True" />
-                    <TextBlock Text="Table" Margin="323,52,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="developinfoTable" Text="" Margin="194,70,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top"
-                             Height="513" Width="338" IsReadOnly="True"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="About">
+            <TabItem Header="About" Height="22" VerticalAlignment="Bottom">
                 <Grid>
                     <TextBlock Text="Source code available at: https://github.com/OneB1t/HawaiiBiosReader" Margin="30" VerticalAlignment="Top" HorizontalAlignment="Center" />
                     <TextBlock Text="Authors: DDSZ1337, OneB1t" Margin="45" VerticalAlignment="Top" HorizontalAlignment="Center" />

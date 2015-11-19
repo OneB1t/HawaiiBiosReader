@@ -26,6 +26,7 @@ namespace HawaiBiosReader
         ObservableCollection<GridRow> data = new ObservableCollection<GridRow>();
         ObservableCollection<GridRowVoltage> voltageList = new ObservableCollection<GridRowVoltage>();
         ObservableCollection<GridRowVoltage> gpumemFrequencyListAndPowerLimit = new ObservableCollection<GridRowVoltage>();
+        ObservableCollection<GridRowVoltage> fanList = new ObservableCollection<GridRowVoltage>();
 
         ObservableCollection<GridRow> gpuFrequencyList = new ObservableCollection<GridRow>();
         ObservableCollection<GridRow> memFrequencyList = new ObservableCollection<GridRow>();
@@ -52,7 +53,6 @@ namespace HawaiBiosReader
         int tdcLimitOffset = 632;
         int powerDeliveryLimitOffset = 642;
 
-        int voltageTableOffset = 319;
         int memoryFrequencyTableOffset = 278;
         int gpuFrequencyTableOffset = 231;
         int VCELimitTableOffset = 396;
@@ -94,7 +94,6 @@ namespace HawaiBiosReader
                     fixChecksum(false);
                     powerTablePosition = PTPatternAt(romStorageBuffer, powerTablepattern);
                     voltageInfoPosition = PatternAt(romStorageBuffer, voltageObjectInfoPattern) - 1;
-                    searchposition.Text = "0x" + voltageInfoPosition.ToString("X");
 
 
                     biosName.Text = getTextFromBinary(romStorageBuffer, biosNameOffset, 32);
@@ -118,7 +117,6 @@ namespace HawaiBiosReader
                         {
                             case 660:
                                 powerTablesize.Text += " - R9 390/390X";
-                                voltageTableOffset = 319;
                                 memoryFrequencyTableOffset = 278;
                                 gpuFrequencyTableOffset = 231;
                                 VCELimitTableOffset = 521;
@@ -130,7 +128,6 @@ namespace HawaiBiosReader
                                 break;
                             case 661:
                                 powerTablesize.Text += " - R9 295X";
-                                voltageTableOffset = 320;
                                 memoryFrequencyTableOffset = 279;
                                 gpuFrequencyTableOffset = 232;
                                 VCELimitTableOffset = 522;
@@ -143,7 +140,6 @@ namespace HawaiBiosReader
                                 break;
                             case 662:
                                 powerTablesize.Text += " - R9 390/390X (Sapphire)";
-                                voltageTableOffset = 321;
                                 memoryFrequencyTableOffset = 280;
                                 gpuFrequencyTableOffset = 233;
                                 VCELimitTableOffset = 523;
@@ -155,7 +151,6 @@ namespace HawaiBiosReader
                                 break;
                             case 669:// XFX R9 290X Double Dissipation
                                 powerTablesize.Text += " - XFX R9 290X Double Dissipation";
-                                voltageTableOffset = 328;
                                 memoryFrequencyTableOffset = 287;
                                 gpuFrequencyTableOffset = 240;
                                 VCELimitTableOffset = 530;
@@ -167,7 +162,6 @@ namespace HawaiBiosReader
                                 break;
                             case 671:// The Slith edited roms
                                 powerTablesize.Text += " - R9 290X The Slith roms";
-                                voltageTableOffset = 330;
                                 memoryFrequencyTableOffset = 289;
                                 gpuFrequencyTableOffset = 242;
                                 VCELimitTableOffset = 532;
@@ -179,7 +173,6 @@ namespace HawaiBiosReader
                                 break;
                             case 650:
                                 powerTablesize.Text += " - R9 290X (MSI Lightning)";
-                                voltageTableOffset = 309;
                                 memoryFrequencyTableOffset = 268;
                                 gpuFrequencyTableOffset = 221;
                                 VCELimitTableOffset = 511;
@@ -191,7 +184,6 @@ namespace HawaiBiosReader
                                 break;
                             case 648:
                                 powerTablesize.Text += " - R9 290/290X";
-                                voltageTableOffset = 307;
                                 memoryFrequencyTableOffset = 266;
                                 gpuFrequencyTableOffset = 219;
                                 VCELimitTableOffset = 509;
@@ -203,7 +195,6 @@ namespace HawaiBiosReader
                                 break;
                             case 658: // The Stilt mining bios for 290/290X
                                 powerTablesize.Text += " - R9 290/290X (The Stilt)";
-                                voltageTableOffset = 316;
                                 memoryFrequencyTableOffset = 275;
                                 gpuFrequencyTableOffset = 228;
                                 VCELimitTableOffset = 519;
@@ -215,7 +206,6 @@ namespace HawaiBiosReader
                                 break;
                             case 642: // PT1/PT3
                                 powerTablesize.Text += " - R9 290/290X (PT1/PT3)";
-                                voltageTableOffset = 300;
                                 memoryFrequencyTableOffset = 259;
                                 gpuFrequencyTableOffset = 212;
                                 VCELimitTableOffset = 503;
@@ -227,7 +217,6 @@ namespace HawaiBiosReader
                                 break;
                             case 634: // FirePro W9100
                                 powerTablesize.Text += " - FirePro W9100";
-                                voltageTableOffset = 317;
                                 memoryFrequencyTableOffset = 276;
                                 gpuFrequencyTableOffset = 229;
                                 VCELimitTableOffset = 495;
@@ -244,7 +233,6 @@ namespace HawaiBiosReader
 
                         fanTablePosition = powerTablePosition + fanTableOffset;
                         powerTablePositionValue.Text = "0x" + powerTablePosition.ToString("X");
-                        powerTable.Text = getTextFromBinary(romStorageBuffer, powerTablePosition, powerTableSize);
 
 
                         gpumemFrequencyListAndPowerLimit.Clear();
@@ -259,14 +247,6 @@ namespace HawaiBiosReader
                         gpumemFrequencyListAndPowerLimit.Add(new GridRowVoltage("0x" + (powerTablePosition + tdcLimitOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + tdcLimitOffset, romStorageBuffer), "A", "16-bit"));
 
                         memgpuFrequencyTable.ItemsSource = gpumemFrequencyListAndPowerLimit;
-
-                        // read voltage table
-                        voltageList.Clear();
-                        for (int i = 0; i < 24; i++)
-                        {
-                            readValueFromPositionToList(voltageList, (powerTablePosition + voltageTableOffset + (i * 2)), 0, "mV", false);
-                        }
-                        voltageEdit.ItemsSource = voltageList;
 
                         // memory frequency table
                         memFrequencyList.Clear();
@@ -323,6 +303,20 @@ namespace HawaiBiosReader
 
                         if (fanTablePosition > 0)
                         {
+
+                            fanList.Clear();
+                            fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 1).ToString("X"), get8BitValueFromPosition(fanTablePosition + 1, romStorageBuffer), "°C", "8-bit")); //temperatureHysteresis
+                            fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 2).ToString("X"), get16BitValueFromPosition(fanTablePosition + 2, romStorageBuffer,true), "°C", "16-bit")); //fantemperature1
+                            fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 4).ToString("X"), get16BitValueFromPosition(fanTablePosition + 4, romStorageBuffer, true), "°C", "16-bit")); //fantemperature2
+                            fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 6).ToString("X"), get16BitValueFromPosition(fanTablePosition + 6, romStorageBuffer, true), "°C", "16-bit")); //fantemperature3
+                            fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 8).ToString("X"), get16BitValueFromPosition(fanTablePosition + 8, romStorageBuffer, true), "°C", "16-bit")); //fanspeed1
+                            fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 10).ToString("X"), get16BitValueFromPosition(fanTablePosition + 10, romStorageBuffer, true), "°C", "16-bit")); //fanspeed2
+                            fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 12).ToString("X"), get16BitValueFromPosition(fanTablePosition + 12, romStorageBuffer, true), "°C", "16-bit")); //fanspeed3
+                            fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 14).ToString("X"), get16BitValueFromPosition(fanTablePosition + 14, romStorageBuffer, true), "°C", "16-bit")); //fantemperature4
+                            fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 16).ToString("X"), get8BitValueFromPosition(fanTablePosition + 16, romStorageBuffer), "1/0", "8-bit")); //fanControlType
+                            fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 17).ToString("X"), get16BitValueFromPosition(fanTablePosition + 17, romStorageBuffer), "°C", "8-bit")); //pwmFanMax
+                            fanTable.ItemsSource = fanList;
+
                             readValueFromPosition(temperatureHysteresis, fanTablePosition + 1, 2, "°C");
                             readValueFromPosition(fantemperature1, fanTablePosition + 2, 0, "°C", true);
                             readValueFromPosition(fantemperature2, fanTablePosition + 4, 0, "°C", true);
@@ -534,11 +528,11 @@ namespace HawaiBiosReader
             return -1;
         }
         // dumb way to extract 16 bit value (can be made much more effective but this is easy to read for anyone)
-        public Int32 get16BitValueFromPosition(int position, byte[] buffer, bool isFrequency = false)
+        public Int32 get16BitValueFromPosition(int position, byte[] buffer, bool isFrequencyOrTemp = false)
         {
             if (position < buffer.Length - 1)
             {
-                if (isFrequency) // if its frequency divide by 100 to convert it into Mhz
+                if (isFrequencyOrTemp) // if its frequency divide by 100 to convert it into Mhz
                 {
                     return (256 * buffer[position + 1] + buffer[position]) / 100;
                 }
@@ -581,6 +575,7 @@ namespace HawaiBiosReader
                 saveList(ACPLimitTableData, false);
                 saveList(UVDLimitTableData, false);
                 saveList(SAMULimitTableData, false);
+                saveList(fanList, true);
                 fixChecksum(true);
                 bw.Write(romStorageBuffer);
 
@@ -642,8 +637,17 @@ namespace HawaiBiosReader
                             }
                         case "16-bit":
                             {
-                                romStorageBuffer[savePosition] = (byte)row.value;
-                                romStorageBuffer[savePosition + 1] = (byte)(row.value >> 8);
+                                // hack here to make it *100 for fan table should be fixed other way :D (we need to save isfrequencyortemp for each row)
+                                if (list == fanList)
+                                {
+                                    romStorageBuffer[savePosition] = (byte)value;
+                                    romStorageBuffer[savePosition + 1] = (byte)(value >> 8);
+                                }
+                                else
+                                {
+                                    romStorageBuffer[savePosition] = (byte)row.value;
+                                    romStorageBuffer[savePosition + 1] = (byte)(row.value >> 8);
+                                }
                                 break;
                             }
                         case "8-bit":
@@ -706,15 +710,16 @@ namespace HawaiBiosReader
             }
         }
         // this is here because of bug with tabs and grids thanks microsoft
-        private void voltageEdit_GotFocus(object sender, RoutedEventArgs e)
+        private void fanTable_GotFocus(object sender, RoutedEventArgs e)
         {
-            voltageEdit.Columns[0].IsReadOnly = true;
-            voltageEdit.Columns[1].IsReadOnly = false;
-            voltageEdit.Columns[2].IsReadOnly = true;
-            voltageEdit.Columns[3].IsReadOnly = true;
+            fanTable.Columns[0].IsReadOnly = true;
+            fanTable.Columns[1].IsReadOnly = false;
+            fanTable.Columns[2].IsReadOnly = true;
+            fanTable.Columns[3].IsReadOnly = true;
+
         }
 
-        private void gpuFrequencyTable_GotFocus(object sender, RoutedEventArgs e)
+    private void gpuFrequencyTable_GotFocus(object sender, RoutedEventArgs e)
         {
             gpuFrequencyTable.Columns[0].IsReadOnly = true;
             gpuFrequencyTable.Columns[1].IsReadOnly = true;
@@ -783,15 +788,6 @@ namespace HawaiBiosReader
             UVDLimitTable.Columns[4].IsReadOnly = true;
             UVDLimitTable.Columns[5].IsReadOnly = true;
             UVDLimitTable.Columns[6].IsReadOnly = false;
-        }
-
-        // developer function
-        private void search_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void VCELimitTable_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
         }
     }
 }
