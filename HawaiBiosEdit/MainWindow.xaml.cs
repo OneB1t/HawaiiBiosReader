@@ -259,7 +259,8 @@ namespace HawaiBiosReader
 
                         // memory frequency table
                         memFrequencyList.Clear();
-                        for (int i = 0; i < 8; i++)
+                        int gpuFrequencyTableCount = get8BitValueFromPosition(powerTablePosition + memoryFrequencyTableOffset - 1, romStorageBuffer);
+                        for (int i = 0; i < gpuFrequencyTableCount; i++)
                         {
                             readValueFromPositionToList(memFrequencyList, (powerTablePosition + memoryFrequencyTableOffset + (i * 5)), 1, "Mhz", true, i);
                         }
@@ -267,7 +268,8 @@ namespace HawaiBiosReader
 
                         // gpu frequency table
                         gpuFrequencyList.Clear();
-                        for (int i = 0; i < 8; i++)
+                        int memoryFrequencyTableCount = get8BitValueFromPosition(powerTablePosition + gpuFrequencyTableOffset - 1, romStorageBuffer);
+                        for (int i = 0; i < memoryFrequencyTableCount; i++)
                         {
                             readValueFromPositionToList(gpuFrequencyList, (powerTablePosition + gpuFrequencyTableOffset + (i * 5)), 1, "Mhz", true, i);
                         }
