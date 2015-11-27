@@ -119,6 +119,11 @@ namespace HawaiBiosReader
                         #################################################################################################*/
                         switch (powerTableSize)
                         {
+                            case 520: // FirePro W8100
+                                powerTablesize.Text += " - FirePro W8100 - NOT FULLY SUPPORTED";
+                                memoryFrequencyTableOffset = 261;
+                                gpuFrequencyTableOffset = 229;
+                                break;
                             case 660:
                                 powerTablesize.Text += " - R9 390/390X";
                                 memoryFrequencyTableOffset = 278;
