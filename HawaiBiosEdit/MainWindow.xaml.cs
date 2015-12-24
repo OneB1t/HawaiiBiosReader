@@ -345,35 +345,8 @@ namespace HawaiBiosReader
                             fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 17).ToString("X"), get16BitValueFromPosition(fanTablePosition + 17, romStorageBuffer), "°C", "8-bit")); //pwmFanMax
                             fanTable.ItemsSource = fanList;
 
-                            readValueFromPosition(temperatureHysteresis, fanTablePosition + 1, 2, "°C");
-                            readValueFromPosition(fantemperature1, fanTablePosition + 2, 0, "°C", true);
-                            readValueFromPosition(fantemperature2, fanTablePosition + 4, 0, "°C", true);
-                            readValueFromPosition(fantemperature3, fanTablePosition + 6, 0, "°C", true);
-                            readValueFromPosition(fantemperature4, fanTablePosition + 14, 0, "°C", true);
-
-                            readValueFromPosition(fanspeed1, fanTablePosition + 8, 0, "%", true);
-                            readValueFromPosition(fanspeed2, fanTablePosition + 10, 0, "%", true);
-                            readValueFromPosition(fanspeed3, fanTablePosition + 12, 0, "%", true);
-                            readValueFromPosition(fanControlType, fanTablePosition + 16, 2, "", true);
-                            readValueFromPosition(pwmFanMax, fanTablePosition + 17, 2, "%");
-                            readValueFromPosition(maxAsicTemperature, fanTablePosition + 459, 2, "°C");
-
                             readValueFromPosition(gpuMaxClock, fanTablePosition + 33, 1, "Mhz");  // this offset work only for 390X need some polishing for other cards
                             readValueFromPosition(memMaxClock, fanTablePosition + 37, 1, "Mhz");
-                        }
-                        else
-                        {
-                            temperatureHysteresis.Text = "NOT FOUND";
-                            fanControlType.Text = "NOT FOUND";
-                            pwmFanMax.Text = "NOT FOUND";
-                            maxAsicTemperature.Text = "NOT FOUND";
-                            fanspeed1.Text = "NOT FOUND";
-                            fanspeed2.Text = "NOT FOUND";
-                            fanspeed3.Text = "NOT FOUND";
-                            fantemperature1.Text = "NOT FOUND";
-                            fantemperature2.Text = "NOT FOUND";
-                            fantemperature3.Text = "NOT FOUND";
-                            fantemperature4.Text = "NOT FOUND";
                         }
                     }
                     fileStream.Close();

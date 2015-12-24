@@ -28,26 +28,26 @@
                         <ColumnDefinition Width="379*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="File name:" Margin="10,50,0,0" 
+                    <TextBlock Text="File name:" Margin="10,50,0,0" FontSize="10"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBox x:Name="filename" Text="" Margin="10,70,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
 
-                    <TextBlock Text="PowerTable Location:" Margin="10,95,0,0" 
+                    <TextBlock Text="PowerTable Location:" Margin="10,95,0,0" FontSize="10"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBox x:Name="powerTablePositionValue" Text="" Margin="10,115,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
 
-                    <TextBlock Text="PowerTable Size/Type:" Margin="10,140,0,0" 
+                    <TextBlock Text="PowerTable Size/Type:" Margin="10,140,0,0" FontSize="10"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBox x:Name="powerTablesize" Text="" Margin="10,160,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
 
-                    <TextBlock Text="GPU ID:" Margin="10,183,0,0" 
+                    <TextBlock Text="GPU ID:" Margin="10,183,0,0" FontSize="10"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBox x:Name="gpuID" Text="" Margin="10,199,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
-                    <TextBlock Text="Checksum control:" Margin="10,222,0,0" 
+                    <TextBlock Text="Checksum control:" Margin="10,222,0,0" FontSize="10"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBox x:Name="checksumResult" Text="" Margin="10,240,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
@@ -57,7 +57,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="PowerPlay">
+            <TabItem Header="PowerPlay" Height="27" VerticalAlignment="Top">
                 <Grid>
 
                     <Grid.RowDefinitions>
@@ -83,21 +83,21 @@
                     <TextBlock Text="MEM Clock 3:" Margin="19,113,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
                     <DataGrid Name="memgpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memgpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="87,0,10,88" FontSize="11" />
-                    <TextBlock Text="GPU Max Clock:" Margin="10,10,0,0"
+                    <TextBlock Text="GPU Max Clock:" Margin="10,10,0,0" FontSize="10"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
                     <TextBox x:Name="gpuMaxClock" Text="" Margin="101,8,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="173" 
                              IsReadOnly="True" Grid.Column="1"/>
-                    <TextBlock Text="MEM Max Clock:" Margin="10,33,0,0"
+                    <TextBlock Text="MEM Max Clock:" Margin="10,33,0,0" FontSize="10"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
                     <TextBox x:Name="memMaxClock" Text="" Margin="100,33,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="173" 
                              IsReadOnly="True" Grid.Column="1"/>
 
-                    <TextBlock Text="GPU Freq Table:" Margin="10,213,0,0"
+                    <TextBlock Text="GPU Freq Table:" Margin="10,213,0,0" FontSize="10"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <DataGrid Name="gpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="gpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="10,234,0,187" Grid.RowSpan="2" FontSize="10" />
-                    <TextBlock Text="MEM Freq Table:" Margin="7,213,0,0"
+                    <TextBlock Text="MEM Freq Table:" Margin="7,213,0,0" FontSize="10"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
                     <DataGrid Name="memFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="10,234,0,187" FontSize="10" Grid.Column="1" Grid.RowSpan="2" />
                     <TextBlock Text="TDP Max:" Margin="19,131,0,0"
@@ -146,77 +146,38 @@
             </TabItem>
             <TabItem Header="Fan profile">
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="47*"/>
+                        <ColumnDefinition Width="24*"/>
+                    </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Fan speeds:" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="fanspeed1" Text="" Margin="100,10,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
-                             IsReadOnly="True"/>
-                    <TextBox x:Name="fanspeed2" Text="" Margin="200,10,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
-                             IsReadOnly="True"/>
-                    <TextBox x:Name="fanspeed3" Text="" Margin="300,10,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
-                             IsReadOnly="True"/>
-
-                    <TextBlock Text="Temp. target:" Margin="10,30,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="fantemperature1" Text="" Margin="100,30,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
-                             IsReadOnly="True"/>
-                    <TextBox x:Name="fantemperature2" Text="" Margin="200,30,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
-                             IsReadOnly="True"/>
-                    <TextBox x:Name="fantemperature3" Text="" Margin="300,30,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
-                             IsReadOnly="True"/>
-
-                    <TextBlock Text="Max temp.:" Margin="10,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="fantemperature4" Text="" Margin="100,50,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
-                             IsReadOnly="True"/>
-                    <TextBlock Text="Fan control type:" Margin="10,71,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
-                    <TextBox x:Name="fanControlType" Text="" Margin="100,71,0,0"
-                    	HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
-                    	IsReadOnly="True" ToolTip="Advanced fan control ENABLED - 1 Lookup table fan control ENABLED  - 0"/>
-                    <TextBlock Text="Temp. hysteresis:" Margin="10,92,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
-                    <TextBox x:Name="temperatureHysteresis" Text="" Margin="100,92,0,0"
-                    	HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
-                    	IsReadOnly="True" />
-                    <TextBlock Text="PWM Fan max.:" Margin="10,116,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
-                    <TextBox x:Name="pwmFanMax" Text="" Margin="100,115,0,0"
-                    	HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
-                    	IsReadOnly="True" />
-                    <TextBlock Text="Max. ASIC temp.:" Margin="10,138,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
-                    <TextBox x:Name="maxAsicTemperature" Text="" Margin="100,136,0,0"
-                    	HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"
-                    	IsReadOnly="True" />
-
-                    <DataGrid Name="fanTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="fanTable_GotFocus" CanUserReorderColumns="False" Margin="119,182,199,197" FontSize="11" RenderTransformOrigin="0.5,0.5" />
-                    <TextBlock Text="Fan speed 1:" Margin="53,276,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="Fan speed 2:" Margin="53,294,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="Fan speed 3:" Margin="53,313,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="2.007,4.887" />
-                    <TextBlock Text="Temp. target 1:" Margin="40,223,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="Temp. target 2:" Margin="40,241,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="Temp. target 3:" Margin="40,259,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="Max temp.:" Margin="60,331,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="1.194,0.689" />
-                    <TextBlock Text="Temp. hysteresis:" Margin="30,203,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
-                    <TextBlock Text="PWM Fan max.:" Margin="38,367,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
-                    <TextBlock Text="Fan control type:" Margin="29,349,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
+                    <DataGrid Name="fanTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="fanTable_GotFocus" CanUserReorderColumns="False" Margin="108,21,18,343" FontSize="11" RenderTransformOrigin="0.5,0.5" />
+                    <TextBlock Text="Fan speed 1:" Margin="42,115,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
+                    <TextBlock Text="Fan speed 2:" Margin="42,133,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
+                    <TextBlock Text="Fan speed 3:" Margin="42,152,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="2.007,4.887" FontSize="10"/>
+                    <TextBlock Text="Temp. target 1:" Margin="29,62,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
+                    <TextBlock Text="Temp. target 2:" Margin="29,80,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
+                    <TextBlock Text="Temp. target 3:" Margin="29,98,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
+                    <TextBlock Text="Max temp.:" Margin="49,170,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="1.194,0.689" />
+                    <TextBlock Text="Temp. hysteresis:" Margin="19,42,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="0.378,-0.961" />
+                    <TextBlock Text="PWM Fan max.:" Margin="27,206,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="0.378,-0.961" />
+                    <TextBlock Text="Fan control type:" Margin="18,188,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="0.378,-0.961" />
 
                 </Grid>
             </TabItem>
             <TabItem Header="Memory Timing">
                 <Grid>
                     <DataGrid Name="memoryTimingTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memoryTimingTable_GotFocus" CanUserReorderColumns="False" Margin="99,26,219,353" FontSize="11" RenderTransformOrigin="0.5,0.5" />
-                    <TextBlock Text="Some value:" Margin="20,120,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="Some value:" Margin="20,138,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="Some value:" Margin="20,157,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="2.007,4.887" />
-                    <TextBlock Text="Some value:" Margin="20,67,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="Some value:" Margin="20,85,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="Some value:" Margin="20,103,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="Some value:" Margin="20,175,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="1.194,0.689" />
-                    <TextBlock Text="Some value:" Margin="20,47,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
-                    <TextBlock Text="Some value:" Margin="20,211,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
-                    <TextBlock Text="Some value:" Margin="20,193,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.378,-0.961" />
+                    <TextBlock Text="Some value:" Margin="20,120,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
+                    <TextBlock Text="Some value:" Margin="20,138,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
+                    <TextBlock Text="Some value:" Margin="20,157,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="2.007,4.887" />
+                    <TextBlock Text="Some value:" Margin="20,67,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
+                    <TextBlock Text="Some value:" Margin="20,85,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
+                    <TextBlock Text="Some value:" Margin="20,103,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
+                    <TextBlock Text="Some value:" Margin="20,175,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="1.194,0.689" />
+                    <TextBlock Text="Some value:" Margin="20,47,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="0.378,-0.961" />
+                    <TextBlock Text="Some value:" Margin="20,211,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="0.378,-0.961" />
+                    <TextBlock Text="Some value:" Margin="20,193,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="0.378,-0.961" />
 
                 </Grid>
             </TabItem>
