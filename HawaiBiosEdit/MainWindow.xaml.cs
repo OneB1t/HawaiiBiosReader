@@ -179,6 +179,7 @@ namespace HawaiBiosReader
                                 tdpLimitOffset = 643;
                                 tdcLimitOffset = 645;
                                 powerDeliveryLimitOffset = 655;
+                                fanTableOffset = 184;
                                 break;
                             case 650:
                                 powerTablesize.Text += " - R9 290X (MSI Lightning)";
