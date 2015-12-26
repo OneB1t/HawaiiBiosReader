@@ -168,6 +168,7 @@ namespace HawaiBiosReader
                                 tdpLimitOffset = 641;
                                 tdcLimitOffset = 643;
                                 powerDeliveryLimitOffset = 653;
+                                fanTableOffset = 184;
                                 break;
                             case 671:// The Slith edited roms
                                 powerTablesize.Text += " - R9 290X The Slith roms";
