@@ -11,10 +11,10 @@
                  Click="SaveFileDialog_Click" RenderTransformOrigin="1.517,0.5" />
         <TextBlock Text="Bios name:" Margin="165,12,0,0" 
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-        <TextBox x:Name="biosName" Text="" Margin="227,10,0,0"
+        <TextBox x:Name="biosName" Text="" Margin="246,10,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="306" IsReadOnly="True" Height="20" />
 
-        <TabControl Margin="10,40,10,10" >
+        <TabControl Margin="10,40,10,10">
 
             <TabItem Header="Overview">
                 <Grid>
@@ -43,13 +43,55 @@
                     <TextBox x:Name="powerTablesize" Text="" Margin="10,160,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
 
-                    <TextBlock Text="GPU ID:" Margin="10,183,0,0" FontSize="10"
+                    <TextBlock Text="DEVICE ID:" Margin="10,52,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
+                    <TextBox x:Name="deviceID" Text="" Margin="10,68,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" />
+                    <TextBlock Text="VENDOR ID:" Margin="10,97,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
+                    <TextBox x:Name="vendorID" Text="" Margin="10,115,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" />
+                    <TextBlock Text="Product Data:" Margin="10,147,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
+                    <TextBox x:Name="productData" Text="" Margin="10,160,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" />
+                    <TextBlock Text="Structure Lenght:" Margin="10,190,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
+                    <TextBox x:Name="structureLenght" Text="" Margin="10,206,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" />
+                    <TextBlock Text="Structure Revision:" Margin="10,229,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
+                    <TextBox x:Name="structureRevision" Text="" Margin="10,247,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" />
+                    <TextBlock Text="Class Code:" Margin="10,275,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
+                    <TextBox x:Name="classCode" Text="" Margin="10,288,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" Grid.RowSpan="2" />
+                    <TextBlock Text="Image Lenght:" Margin="10,24,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
+                    <TextBox x:Name="imageLenght" Text="" Margin="10,42,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" Grid.Row="1" />
+                    <TextBlock Text="RevisionLevel:" Margin="9,70,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
+                    <TextBox x:Name="revisionLevel" Text="" Margin="10,88,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" Grid.Row="1" />
+                    <TextBlock Text="Code Type:" Margin="9,116,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
+                    <TextBox x:Name="codeType" Text="" Margin="9,134,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" Grid.Row="1" />
+                    <TextBlock Text="Indicator:" Margin="10,162,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
+                    <TextBox x:Name="indicator" Text="" Margin="9,180,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" Grid.Row="1" />
+                    <TextBlock Text="Reserved:" Margin="9,208,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
+                    <TextBox x:Name="reserved" Text="" Margin="9,226,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" Grid.Row="1" />
+
+
+                    <TextBlock Text="Checksum control:" Margin="10,188,0,0" FontSize="10"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="gpuID" Text="" Margin="10,199,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
-                    <TextBlock Text="Checksum control:" Margin="10,222,0,0" FontSize="10"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBox x:Name="checksumResult" Text="" Margin="10,240,0,0"
+                    <TextBox x:Name="checksumResult" Text="" Margin="10,206,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
                     <TextBlock Text="!!!RESET MSI AFTERBURNER SETTINGS BEFORE FLASHING CAN CAUSE OVERVOLT IN SOME CASES!!!" Margin="10,10,0,0" 
                     	VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2" Width="535" Height="30" Foreground="Red" />
@@ -181,7 +223,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="About" Height="22" VerticalAlignment="Bottom">
+            <TabItem Header="About" VerticalAlignment="Bottom">
                 <Grid>
                     <TextBlock Text="Source code available at: https://github.com/OneB1t/HawaiiBiosReader" Margin="30" VerticalAlignment="Top" HorizontalAlignment="Center" />
                     <TextBlock Text="Authors: DDSZ1337, OneB1t, Hedzin" Margin="45" VerticalAlignment="Top" HorizontalAlignment="Center" />

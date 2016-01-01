@@ -40,6 +40,7 @@ namespace HawaiBiosReader
         Byte[] powerTablepattern = new Byte[] { 0x02, 0x06, 0x01, 0x00 };
         Byte[] voltageObjectInfoPattern = new Byte[] { 0x00, 0x03, 0x01, 0x01, 0x03 };
         Byte[] memoryTimingPattern = new Byte[] { 0xDE, 0x09, 0x84, 0xFF, 0xFF, 0x00 }; // thanks Lard
+        Byte[] pciInfo = new Byte[] { 0x50,0x43,0x49,0x52 }; // PCIR
 
         // unknown table offsets
         int powerTablePosition;
@@ -48,6 +49,7 @@ namespace HawaiBiosReader
         int powerTableSize;
         int developTablePosition;
         int memoryTimingsPosition;
+        int pciInfoPosition;
 
         // table offsets for default
         int fanTableOffset = 175;
@@ -98,11 +100,21 @@ namespace HawaiBiosReader
                     powerTablePosition = PTPatternAt(romStorageBuffer, powerTablepattern);
                     memoryTimingsPosition = PTPatternAt(romStorageBuffer, memoryTimingPattern);
                     voltageInfoPosition = PatternAt(romStorageBuffer, voltageObjectInfoPattern) - 1;
+                    pciInfoPosition = PatternAt(romStorageBuffer, pciInfo) + 4;
 
 
                     biosName.Text = getTextFromBinary(romStorageBuffer, biosNameOffset, 32);
-                    gpuID.Text = romStorageBuffer[565].ToString("X2") + romStorageBuffer[564].ToString("X2") + "-" + romStorageBuffer[567].ToString("X2") + romStorageBuffer[566].ToString("X2"); // not finished working only for few bioses :(
-
+                    deviceID.Text = "0x" + get16BitValueFromPosition(pciInfoPosition, romStorageBuffer).ToString("X");
+                    vendorID.Text = "0x" + get16BitValueFromPosition(pciInfoPosition + 2, romStorageBuffer).ToString("X");
+                    productData.Text = "0x" + get16BitValueFromPosition(pciInfoPosition + 4, romStorageBuffer).ToString("X");
+                    structureLenght.Text = "0x" + get16BitValueFromPosition(pciInfoPosition + 6, romStorageBuffer).ToString("X");
+                    structureRevision.Text = "0x" + get8BitValueFromPosition(pciInfoPosition + 8, romStorageBuffer).ToString("X");
+                    classCode.Text = "0x" + get8BitValueFromPosition(pciInfoPosition + 9, romStorageBuffer).ToString("X") + " - " + "0x" + get8BitValueFromPosition(pciInfoPosition + 10, romStorageBuffer).ToString("X") + " - " + "0x" + get8BitValueFromPosition(pciInfoPosition + 11, romStorageBuffer).ToString("X");
+                    imageLenght.Text = "0x" + get16BitValueFromPosition(pciInfoPosition + 12, romStorageBuffer).ToString("X");
+                    revisionLevel.Text = "0x" + get16BitValueFromPosition(pciInfoPosition + 14, romStorageBuffer).ToString("X");
+                    codeType.Text = "0x" + get8BitValueFromPosition(pciInfoPosition + 16, romStorageBuffer).ToString("X");
+                    indicator.Text = "0x" + get8BitValueFromPosition(pciInfoPosition + 17, romStorageBuffer).ToString("X");
+                    reserved.Text = "0x" + get16BitValueFromPosition(pciInfoPosition + 18, romStorageBuffer).ToString("X");
                     if (powerTablePosition == -1)
                     {
                         MessageBoxResult result = MessageBox.Show("PowerTable search position not found in this file", "Error", MessageBoxButton.OK);
@@ -159,7 +171,7 @@ namespace HawaiBiosReader
                                 powerDeliveryLimitOffset = 646;
                                 break;
                             case 669:// XFX R9 290X Double Dissipation
-                                powerTablesize.Text += " - XFX R9 290X Double Dissipation";
+                                powerTablesize.Text += " - XFX R9 290X Double Dissipation / 390X Black Edition";
                                 memoryFrequencyTableOffset = 287;
                                 gpuFrequencyTableOffset = 240;
                                 VCELimitTableOffset = 530;
@@ -171,7 +183,7 @@ namespace HawaiBiosReader
                                 fanTableOffset = 184;
                                 break;
                             case 671:// The Slith edited roms
-                                powerTablesize.Text += " - R9 290X The Slith roms";
+                                powerTablesize.Text += " - R9 290X The Stilt roms";
                                 memoryFrequencyTableOffset = 289;
                                 gpuFrequencyTableOffset = 242;
                                 VCELimitTableOffset = 532;
