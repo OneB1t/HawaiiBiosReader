@@ -40,7 +40,7 @@ namespace HawaiBiosReader
         Byte[] powerTablepattern = new Byte[] { 0x02, 0x06, 0x01, 0x00 };
         Byte[] voltageObjectInfoPattern = new Byte[] { 0x00, 0x03, 0x01, 0x01, 0x03 };
         Byte[] memoryTimingPattern = new Byte[] { 0xDE, 0x09, 0x84, 0xFF, 0xFF, 0x00 }; // thanks Lard
-        Byte[] pciInfo = new Byte[] { 0x50,0x43,0x49,0x52 }; // PCIR
+        Byte[] pciInfo = new Byte[] { 0x50, 0x43, 0x49, 0x52 }; // PCIR
 
         // unknown table offsets
         int powerTablePosition;
@@ -295,7 +295,7 @@ namespace HawaiBiosReader
                         for (int i = 0; i < 8; i++)
                         {
                             position = powerTablePosition + VCELimitTableOffset + (i * 3);
-                            VCELimitTableData.Add(new GridRow("0x" + (position + 2).ToString("X"),  get8BitValueFromPosition(position + 2, romStorageBuffer), "DPM", "8-bit", i, "0x" + (position).ToString("X"),get16BitValueFromPosition(position, romStorageBuffer, false)));
+                            VCELimitTableData.Add(new GridRow("0x" + (position + 2).ToString("X"), get8BitValueFromPosition(position + 2, romStorageBuffer), "DPM", "8-bit", i, "0x" + (position).ToString("X"), get16BitValueFromPosition(position, romStorageBuffer, false)));
                         }
                         VCELimitTable.ItemsSource = VCELimitTableData;
 
@@ -326,7 +326,7 @@ namespace HawaiBiosReader
                         }
                         ACPLimitTable.ItemsSource = ACPLimitTableData;
 
-                        if(memoryTimingsPosition > 0)
+                        if (memoryTimingsPosition > 0)
                         {
                             memoryTimingList.Clear();
                             memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 1).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 1, romStorageBuffer), "ms", "16-bit"));
@@ -347,7 +347,7 @@ namespace HawaiBiosReader
 
                             fanList.Clear();
                             fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 1).ToString("X"), get8BitValueFromPosition(fanTablePosition + 1, romStorageBuffer), "°C", "8-bit")); //temperatureHysteresis
-                            fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 2).ToString("X"), get16BitValueFromPosition(fanTablePosition + 2, romStorageBuffer,true), "°C", "16-bit")); //fantemperature1
+                            fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 2).ToString("X"), get16BitValueFromPosition(fanTablePosition + 2, romStorageBuffer, true), "°C", "16-bit")); //fantemperature1
                             fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 4).ToString("X"), get16BitValueFromPosition(fanTablePosition + 4, romStorageBuffer, true), "°C", "16-bit")); //fantemperature2
                             fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 6).ToString("X"), get16BitValueFromPosition(fanTablePosition + 6, romStorageBuffer, true), "°C", "16-bit")); //fantemperature3
                             fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 8).ToString("X"), get16BitValueFromPosition(fanTablePosition + 8, romStorageBuffer, true), "°C", "16-bit")); //fanspeed1
@@ -357,9 +357,16 @@ namespace HawaiBiosReader
                             fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 16).ToString("X"), get8BitValueFromPosition(fanTablePosition + 16, romStorageBuffer), "1/0", "8-bit")); //fanControlType
                             fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 17).ToString("X"), get16BitValueFromPosition(fanTablePosition + 17, romStorageBuffer), "°C", "8-bit")); //pwmFanMax
                             fanTable.ItemsSource = fanList;
-
-                            readValueFromPosition(gpuMaxClock, fanTablePosition + 33, 1, "Mhz");  // this offset work only for 390X need some polishing for other cards
-                            readValueFromPosition(memMaxClock, fanTablePosition + 37, 1, "Mhz");
+                            if (powerTableSize == 648)
+                            {
+                                gpuMaxClock.Text = "UNKNOWN";
+                                memMaxClock.Text = "UNKNOWN";
+                            }
+                            else
+                            {
+                                readValueFromPosition(gpuMaxClock, fanTablePosition + 33, 1, "Mhz");  // this offset work only for 390X need some polishing for other cards
+                                readValueFromPosition(memMaxClock, fanTablePosition + 37, 1, "Mhz");
+                            }
                         }
                     }
                     fileStream.Close();
@@ -489,7 +496,7 @@ namespace HawaiBiosReader
 
         private static int PatternAt(byte[] data, byte[] pattern)
         {
-            for (int i = 0; i < data.Length; )
+            for (int i = 0; i < data.Length;)
             {
                 int j;
                 for (j = 0; j < pattern.Length; j++)
