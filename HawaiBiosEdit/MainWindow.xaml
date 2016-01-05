@@ -124,7 +124,7 @@
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBlock Text="MEM Clock 3:" Margin="19,124,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <DataGrid Name="memgpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memgpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="102,8,279,104" FontSize="12" Grid.ColumnSpan="2" />
+                    <DataGrid Name="memgpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" ColumnWidth="*" GotFocus="memgpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="102,8,279,104" FontSize="12" Grid.ColumnSpan="2" />
                     <TextBlock Text="GPU Max Clock:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
                     <TextBox x:Name="gpuMaxClock" Text="" Margin="101,8,0,0"
@@ -169,12 +169,12 @@
 
                     <TextBlock Text="StartVCELimitTable:" Margin="10,9,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <DataGrid Name="VCELimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,31,0,10" FontSize="11" GotFocus="VCELimitTable_GotFocus" />
+                    <DataGrid Name="VCELimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,31,0,10" FontSize="11" GotFocus="VCELimitTable_GotFocus" ColumnWidth="*"/>
 
                     <TextBlock Text="StartSAMULimitTable:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" />
-                    <DataGrid Name="SAMULimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,26,0,15" FontSize="11" GotFocus="SAMULimitTable_GotFocus" Grid.Row="1" />
-                    <DataGrid Name="ACPLimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,31,0,9" FontSize="11" GotFocus="ACPLimitTable_GotFocus" Grid.Column="1" />
+                    <DataGrid Name="SAMULimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,26,0,15" FontSize="11" GotFocus="SAMULimitTable_GotFocus" Grid.Row="1" ColumnWidth="*"/>
+                    <DataGrid Name="ACPLimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,31,0,9" FontSize="11" GotFocus="ACPLimitTable_GotFocus" Grid.Column="1" ColumnWidth="*" />
                     <TextBlock Text="StartACPLimitTable:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
 
@@ -183,7 +183,7 @@
 
                     <TextBlock Text="StartUVDLimitTable:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
-                    <DataGrid Name="UVDLimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,26,0,15" FontSize="11" GotFocus="UVDLimitTable_GotFocus" Grid.Row="1" Grid.Column="1" />
+                    <DataGrid Name="UVDLimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,26,0,15" FontSize="11" GotFocus="UVDLimitTable_GotFocus" Grid.Row="1" Grid.Column="1" ColumnWidth="*"/>
 
 
                 </Grid>
@@ -195,7 +195,7 @@
                         <ColumnDefinition Width="24*"/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Name="fanTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="fanTable_GotFocus" CanUserReorderColumns="False" Margin="108,21,18,343" FontSize="11" RenderTransformOrigin="0.5,0.5" />
+                    <DataGrid Name="fanTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="fanTable_GotFocus" CanUserReorderColumns="False" Margin="108,21,18,343" FontSize="11" RenderTransformOrigin="0.5,0.5" ColumnWidth="*"/>
                     <TextBlock Text="Fan speed 1:" Margin="42,115,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
                     <TextBlock Text="Fan speed 2:" Margin="42,133,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
                     <TextBlock Text="Fan speed 3:" Margin="42,152,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="2.007,4.887" FontSize="10"/>
@@ -211,17 +211,9 @@
             </TabItem>
             <TabItem Header="Memory Timing">
                 <Grid>
-                    <DataGrid Name="memoryTimingTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memoryTimingTable_GotFocus" CanUserReorderColumns="False" Margin="99,26,219,353" FontSize="11" RenderTransformOrigin="0.5,0.5" />
-                    <TextBlock Text="Some value:" Margin="20,120,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
-                    <TextBlock Text="Some value:" Margin="20,138,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
-                    <TextBlock Text="Some value:" Margin="20,157,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="2.007,4.887" />
-                    <TextBlock Text="Some value:" Margin="20,67,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
-                    <TextBlock Text="Some value:" Margin="20,85,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
-                    <TextBlock Text="Some value:" Margin="20,103,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
-                    <TextBlock Text="Some value:" Margin="20,175,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="1.194,0.689" />
-                    <TextBlock Text="Some value:" Margin="20,47,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="0.378,-0.961" />
-                    <TextBlock Text="Some value:" Margin="20,211,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="0.378,-0.961" />
-                    <TextBlock Text="Some value:" Margin="20,193,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="0.378,-0.961" />
+                    <DataGrid Name="memoryTimingTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memoryTimingTable_GotFocus" CanUserReorderColumns="False" Margin="147,0,171,10" ColumnWidth="*" RenderTransformOrigin="0.5,0.5" FontSize="10"/>
+                    <TextBlock Margin="17,28,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="0.378,-0.961" Height="17" ><Run Text="Frequency strap selector"/><LineBreak/><Run/></TextBlock>
+                    <ComboBox x:Name="memStrapSelector" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="17,50,0,0" FontSize="12" Loaded="memStrapSelector_Loaded" SelectionChanged="memStrapSelector_SelectionChanged"/>
 
                 </Grid>
             </TabItem>

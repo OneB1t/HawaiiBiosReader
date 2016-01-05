@@ -99,10 +99,10 @@ namespace HawaiBiosReader
                     romStorageBuffer = br.ReadBytes((int)fileStream.Length);
                     fixChecksum(false);
                     powerTablePosition = PTPatternAt(romStorageBuffer, powerTablepattern);
-                    memoryTimingsPosition = PTPatternAt(romStorageBuffer, memoryTimingPattern);
+                    memoryTimingsPosition = PTPatternAt(romStorageBuffer, memoryTimingPattern) + 7;
                     voltageInfoPosition = PatternAt(romStorageBuffer, voltageObjectInfoPattern) - 1;
                     pciInfoPosition = PatternAt(romStorageBuffer, pciInfo) + 4;
-
+                    memStrapSelector.SelectedIndex = 0;
 
                     biosName.Text = getTextFromBinary(romStorageBuffer, biosNameOffset, 32);
                     deviceID.Text = "0x" + get16BitValueFromPosition(pciInfoPosition, romStorageBuffer).ToString("X");
@@ -116,6 +116,7 @@ namespace HawaiBiosReader
                     codeType.Text = "0x" + get8BitValueFromPosition(pciInfoPosition + 16, romStorageBuffer).ToString("X");
                     indicator.Text = "0x" + get8BitValueFromPosition(pciInfoPosition + 17, romStorageBuffer).ToString("X");
                     reserved.Text = "0x" + get16BitValueFromPosition(pciInfoPosition + 18, romStorageBuffer).ToString("X");
+
                     if (powerTablePosition == -1)
                     {
                         MessageBoxResult result = MessageBox.Show("PowerTable search position not found in this file", "Error", MessageBoxButton.OK);
@@ -342,21 +343,7 @@ namespace HawaiBiosReader
                         }
                         ACPLimitTable.ItemsSource = ACPLimitTableData;
 
-                        if (memoryTimingsPosition > 0)
-                        {
-                            memoryTimingList.Clear();
-                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 1).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 1, romStorageBuffer), "ms", "16-bit"));
-                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 3).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 3, romStorageBuffer), "ms", "16-bit"));
-                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 5).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 5, romStorageBuffer), "ms", "16-bit"));
-                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 7).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 7, romStorageBuffer), "ms", "16-bit"));
-                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 9).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 9, romStorageBuffer), "ms", "16-bit"));
-                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 11).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 11, romStorageBuffer), "ms", "16-bit"));
-                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 13).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 13, romStorageBuffer), "ms", "16-bit"));
-                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 15).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 15, romStorageBuffer), "ms", "16-bit"));
-                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 17).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 17, romStorageBuffer), "ms", "16-bit"));
-                            memoryTimingList.Add(new GridRowVoltage("0x" + (memoryTimingsPosition + 19).ToString("X"), get16BitValueFromPosition(memoryTimingsPosition + 19, romStorageBuffer), "ms", "16-bit"));
-                            memoryTimingTable.ItemsSource = memoryTimingList;
-                        }
+                        populateMemoryTimings(0);
 
                         if (fanTablePosition > 0)
                         {
@@ -613,6 +600,7 @@ namespace HawaiBiosReader
                 saveList(UVDLimitTableData, false);
                 saveList(SAMULimitTableData, false);
                 saveList(fanList, true);
+                saveList(memoryTimingList);
                 fixChecksum(true);
                 bw.Write(romStorageBuffer);
 
@@ -836,10 +824,49 @@ namespace HawaiBiosReader
             UVDLimitTable.Columns[5].IsReadOnly = true;
             UVDLimitTable.Columns[6].IsReadOnly = false;
         }
+        private void memStrapSelector_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<String> strap = new List<string>();
+            strap.Add("150-400Mhz");
+            strap.Add("401-800Mhz");
+            strap.Add("801-900Mhz");
+            strap.Add("901-1000Mhz");
+            strap.Add("1001-1125Mhz");
+            strap.Add("1126-1250Mhz");
+            strap.Add("1251-1375Mhz");
+            strap.Add("1376-1500Mhz");
+            strap.Add("1501-1625Mhz");
+            strap.Add("1626-1750Mhz");
+            this.memStrapSelector.ItemsSource = strap;
+            memStrapSelector.SelectedIndex = 0;
+        }
+
+        void populateMemoryTimings(int index)
+        {
+            int currentmemoryTimingsPosition = memoryTimingsPosition + index * 52;
+            if (memoryTimingsPosition > 0)
+            {
+                memoryTimingList.Clear();
+                memoryTimingList.Add(new GridRowVoltage("0x" + (currentmemoryTimingsPosition).ToString("X"), get24BitValueFromPosition(currentmemoryTimingsPosition, romStorageBuffer, true), "Mhz", "24-bit"));
+                memoryTimingList.Add(new GridRowVoltage("0x" + (currentmemoryTimingsPosition + 3).ToString("X"), get8BitValueFromPosition(currentmemoryTimingsPosition + 3, romStorageBuffer), "ms", "8-bit"));
+                for (int i = 0; i < 48; i++)
+                {
+                    memoryTimingList.Add(new GridRowVoltage("0x" + (currentmemoryTimingsPosition + i).ToString("X"), get8BitValueFromPosition(currentmemoryTimingsPosition + i, romStorageBuffer), "ms", "8-bit"));
+                }
+                memoryTimingTable.ItemsSource = memoryTimingList;
+            }
+        }
+        private void memStrapSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            saveList(memoryTimingList);
+            populateMemoryTimings(memStrapSelector.SelectedIndex);
+        }
 
         private void gpuFrequencyTable_CurrentCellChanged(object sender, EventArgs e)
         {
-            
+
         }
+
+
     }
 }
