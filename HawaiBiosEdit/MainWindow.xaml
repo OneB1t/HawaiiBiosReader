@@ -111,20 +111,20 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="GPU Clock 1:" Margin="19,26,0,0"
+                    <TextBlock Text="GPU Clock 1:" Margin="19,29,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="GPU Clock 2:" Margin="19,45,0,0"
+                    <TextBlock Text="GPU Clock 2:" Margin="19,48,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="GPU Clock 3:" Margin="19,64,0,0"
+                    <TextBlock Text="GPU Clock 3:" Margin="19,67,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
 
-                    <TextBlock Text="MEM Clock 1:" Margin="19,83,0,0"
+                    <TextBlock Text="MEM Clock 1:" Margin="19,86,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left"  />
-                    <TextBlock Text="MEM Clock 2:" Margin="19,102,0,0"
+                    <TextBlock Text="MEM Clock 2:" Margin="19,105,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="MEM Clock 3:" Margin="19,121,0,0"
+                    <TextBlock Text="MEM Clock 3:" Margin="19,124,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <DataGrid Name="memgpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memgpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="102,8,279,123" FontSize="12" Grid.ColumnSpan="2" />
+                    <DataGrid Name="memgpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memgpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="102,8,279,104" FontSize="12" Grid.ColumnSpan="2" />
                     <TextBlock Text="GPU Max Clock:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
                     <TextBox x:Name="gpuMaxClock" Text="" Margin="101,8,0,0"
@@ -142,12 +142,14 @@
                     <TextBlock Text="MEM Freq Table:" Margin="250,115,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Grid.ColumnSpan="2" />
                     <DataGrid Name="memFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="-1,0,0,34" FontSize="10" ColumnWidth="*" Grid.Row="1" Height="176" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-                    <TextBlock Text="TDP Max:" Margin="19,140,0,0"
+                    <TextBlock Text="TDP Max:" Margin="19,143,0,0"
                     	VerticalAlignment="Top" HorizontalAlignment="Left"  />
-                    <TextBlock Text="Power limit:" Margin="19,160,0,0"
+                    <TextBlock Text="Power limit:" Margin="19,163,0,0"
                     	VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="TDC limit:" Margin="19,180,0,0"
+                    <TextBlock Text="TDC limit:" Margin="19,183,0,0"
                     	VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <TextBlock Text="AUX voltage:" Margin="19,200,0,0"
+        	VerticalAlignment="Top" HorizontalAlignment="Left"/>
 
                 </Grid>
             </TabItem>

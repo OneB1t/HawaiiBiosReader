@@ -57,6 +57,7 @@ namespace HawaiBiosReader
         int tdpLimitOffset = 630;
         int tdcLimitOffset = 632;
         int powerDeliveryLimitOffset = 642;
+        int AUXvoltageOffset = 263;
 
         int memoryFrequencyTableOffset = 278;
         int gpuFrequencyTableOffset = 231;
@@ -135,6 +136,10 @@ namespace HawaiBiosReader
                                 powerTablesize.Text += " - FirePro W8100 - NOT FULLY SUPPORTED";
                                 memoryFrequencyTableOffset = 261;
                                 gpuFrequencyTableOffset = 229;
+                                tdpLimitOffset = 490;
+                                tdcLimitOffset = 492;
+                                powerDeliveryLimitOffset = 494;
+                                AUXvoltageOffset = 258;
                                 break;
                             case 660:
                                 powerTablesize.Text += " - R9 390/390X";
@@ -146,6 +151,7 @@ namespace HawaiBiosReader
                                 tdpLimitOffset = 632;
                                 tdcLimitOffset = 634;
                                 powerDeliveryLimitOffset = 644;
+                                AUXvoltageOffset = 275;
                                 break;
                             case 661:
                                 powerTablesize.Text += " - R9 295X";
@@ -158,6 +164,7 @@ namespace HawaiBiosReader
                                 tdcLimitOffset = 635;
                                 powerDeliveryLimitOffset = 645;
                                 fanTableOffset = 14632 + 6;
+                                AUXvoltageOffset = 276;
                                 break;
                             case 662:
                                 powerTablesize.Text += " - R9 390/390X (Sapphire)";
@@ -169,6 +176,7 @@ namespace HawaiBiosReader
                                 tdpLimitOffset = 634;
                                 tdcLimitOffset = 636;
                                 powerDeliveryLimitOffset = 646;
+                                AUXvoltageOffset = 277;
                                 break;
                             case 669:// XFX R9 290X Double Dissipation
                                 powerTablesize.Text += " - XFX R9 290X Double Dissipation / 390X Black Edition";
@@ -181,6 +189,7 @@ namespace HawaiBiosReader
                                 tdcLimitOffset = 643;
                                 powerDeliveryLimitOffset = 653;
                                 fanTableOffset = 184;
+                                AUXvoltageOffset = 284;
                                 break;
                             case 671:// The Slith edited roms
                                 powerTablesize.Text += " - R9 290X The Stilt roms";
@@ -193,6 +202,7 @@ namespace HawaiBiosReader
                                 tdcLimitOffset = 645;
                                 powerDeliveryLimitOffset = 655;
                                 fanTableOffset = 184;
+                                AUXvoltageOffset = 286;
                                 break;
                             case 650:
                                 powerTablesize.Text += " - R9 290X (MSI Lightning)";
@@ -204,6 +214,7 @@ namespace HawaiBiosReader
                                 tdpLimitOffset = 622;
                                 tdcLimitOffset = 624;
                                 powerDeliveryLimitOffset = 634;
+                                AUXvoltageOffset = 265;
                                 break;
                             case 648:
                                 powerTablesize.Text += " - R9 290/290X";
@@ -215,6 +226,7 @@ namespace HawaiBiosReader
                                 tdpLimitOffset = 620;
                                 tdcLimitOffset = 622;
                                 powerDeliveryLimitOffset = 632;
+                                AUXvoltageOffset = 263;
                                 break;
                             case 658: // The Stilt mining bios for 290/290X
                                 powerTablesize.Text += " - R9 290/290X (The Stilt)";
@@ -226,6 +238,7 @@ namespace HawaiBiosReader
                                 tdpLimitOffset = 630;
                                 tdcLimitOffset = 632;
                                 powerDeliveryLimitOffset = 642;
+                                AUXvoltageOffset = 272;
                                 break;
                             case 642: // PT1/PT3
                                 powerTablesize.Text += " - R9 290/290X (PT1/PT3)";
@@ -237,6 +250,7 @@ namespace HawaiBiosReader
                                 tdpLimitOffset = 614;
                                 tdcLimitOffset = 616;
                                 powerDeliveryLimitOffset = 626;
+                                AUXvoltageOffset = 256;
                                 break;
                             case 634: // FirePro W9100
                                 powerTablesize.Text += " - FirePro W9100";
@@ -248,6 +262,7 @@ namespace HawaiBiosReader
                                 tdpLimitOffset = 606;
                                 tdcLimitOffset = 608;
                                 powerDeliveryLimitOffset = 618;
+                                AUXvoltageOffset = 273;
                                 break;
                             default:
                                 powerTablesize.Text += " - Unknown type";
@@ -268,6 +283,7 @@ namespace HawaiBiosReader
                         gpumemFrequencyListAndPowerLimit.Add(new GridRowVoltage("0x" + (powerTablePosition + tdpLimitOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + tdpLimitOffset, romStorageBuffer), "W", "16-bit"));
                         gpumemFrequencyListAndPowerLimit.Add(new GridRowVoltage("0x" + (powerTablePosition + powerDeliveryLimitOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + powerDeliveryLimitOffset, romStorageBuffer), "W", "16-bit"));
                         gpumemFrequencyListAndPowerLimit.Add(new GridRowVoltage("0x" + (powerTablePosition + tdcLimitOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + tdcLimitOffset, romStorageBuffer), "A", "16-bit"));
+                        gpumemFrequencyListAndPowerLimit.Add(new GridRowVoltage("0x" + (powerTablePosition + AUXvoltageOffset).ToString("X"), get16BitValueFromPosition(powerTablePosition + AUXvoltageOffset, romStorageBuffer), "mV", "16-bit"));
 
                         memgpuFrequencyTable.ItemsSource = gpumemFrequencyListAndPowerLimit;
 
