@@ -1,7 +1,7 @@
 ﻿<Window x:Class="HawaiBiosReader.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Hawaii Bios Reader" Height="700" Width="600" ResizeMode="CanMinimize">
+        Title="Hawaii Bios Reader" Height="800" Width="600" ResizeMode="CanMinimize">
     <Grid x:Name="LayoutRoot" Background="White">
         <Button x:Name="bOpenFileDialog" Content="Open File" Width="60" Margin="10,10,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Top" 
@@ -99,7 +99,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="PowerPlay" Height="27" VerticalAlignment="Top">
+            <TabItem Header="PowerPlay" Height="27" VerticalAlignment="Top" FontSize="12">
                 <Grid>
 
                     <Grid.RowDefinitions>
@@ -111,43 +111,43 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="GPU Clock 1:" Margin="19,24,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
-                    <TextBlock Text="GPU Clock 2:" Margin="19,42,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
-                    <TextBlock Text="GPU Clock 3:" Margin="19,60,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
+                    <TextBlock Text="GPU Clock 1:" Margin="19,26,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBlock Text="GPU Clock 2:" Margin="19,45,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBlock Text="GPU Clock 3:" Margin="19,64,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" />
 
-                    <TextBlock Text="MEM Clock 1:" Margin="19,78,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
-                    <TextBlock Text="MEM Clock 2:" Margin="19,95,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
-                    <TextBlock Text="MEM Clock 3:" Margin="19,113,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
-                    <DataGrid Name="memgpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memgpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="87,0,10,88" FontSize="11" />
-                    <TextBlock Text="GPU Max Clock:" Margin="10,10,0,0" FontSize="10"
+                    <TextBlock Text="MEM Clock 1:" Margin="19,83,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left"  />
+                    <TextBlock Text="MEM Clock 2:" Margin="19,102,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBlock Text="MEM Clock 3:" Margin="19,121,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <DataGrid Name="memgpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memgpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="102,8,279,123" FontSize="12" Grid.ColumnSpan="2" />
+                    <TextBlock Text="GPU Max Clock:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
                     <TextBox x:Name="gpuMaxClock" Text="" Margin="101,8,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="173" 
                              IsReadOnly="True" Grid.Column="1"/>
-                    <TextBlock Text="MEM Max Clock:" Margin="10,33,0,0" FontSize="10"
+                    <TextBlock Text="MEM Max Clock:" Margin="10,33,0,0" 
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
                     <TextBox x:Name="memMaxClock" Text="" Margin="100,33,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="173" 
                              IsReadOnly="True" Grid.Column="1"/>
 
-                    <TextBlock Text="GPU Freq Table:" Margin="10,213,0,0" FontSize="10"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <DataGrid Name="gpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="gpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="10,234,0,187" Grid.RowSpan="2" FontSize="10" />
-                    <TextBlock Text="MEM Freq Table:" Margin="7,213,0,0" FontSize="10"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
-                    <DataGrid Name="memFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="10,234,0,187" FontSize="10" Grid.Column="1" Grid.RowSpan="2" />
-                    <TextBlock Text="TDP Max:" Margin="19,131,0,0"
-                    	VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
-                    <TextBlock Text="Power limit:" Margin="19,147,0,0"
-                    	VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
-                    <TextBlock Text="TDC limit:" Margin="19,163,0,0"
-                    	VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
+                    <TextBlock Text="GPU Freq Table:" Margin="250,260,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2" />
+                    <DataGrid Name="gpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="gpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="0,278,0,233" Grid.RowSpan="2" FontSize="10" ColumnWidth="*" Grid.ColumnSpan="2" CurrentCellChanged="gpuFrequencyTable_CurrentCellChanged" />
+                    <TextBlock Text="MEM Freq Table:" Margin="250,115,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Grid.ColumnSpan="2" />
+                    <DataGrid Name="memFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="-1,0,0,34" FontSize="10" ColumnWidth="*" Grid.Row="1" Height="176" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                    <TextBlock Text="TDP Max:" Margin="19,140,0,0"
+                    	VerticalAlignment="Top" HorizontalAlignment="Left"  />
+                    <TextBlock Text="Power limit:" Margin="19,160,0,0"
+                    	VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBlock Text="TDC limit:" Margin="19,180,0,0"
+                    	VerticalAlignment="Top" HorizontalAlignment="Left"/>
 
                 </Grid>
             </TabItem>
@@ -223,7 +223,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="About" VerticalAlignment="Bottom">
+            <TabItem Header="About">
                 <Grid>
                     <TextBlock Text="Source code available at: https://github.com/OneB1t/HawaiiBiosReader" Margin="30" VerticalAlignment="Top" HorizontalAlignment="Center" />
                     <TextBlock Text="Authors: DDSZ1337, OneB1t, Hedzin" Margin="45" VerticalAlignment="Top" HorizontalAlignment="Center" />

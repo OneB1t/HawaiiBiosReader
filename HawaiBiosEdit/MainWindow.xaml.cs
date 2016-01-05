@@ -616,16 +616,20 @@ namespace HawaiBiosReader
             }
             if (oldchecksum == (romStorageBuffer[33] - newchecksum))
             {
+                checksumResult.Foreground = Brushes.Green;
                 checksumResult.Text = "OK";
             }
             else
             {
+                checksumResult.Foreground = Brushes.Red;
                 checksumResult.Text = "WRONG - save for fix";
             }
             if (save)
             {
                 romStorageBuffer[33] -= newchecksum;
-                checksumResult.Text = "OK";
+                checksumResult.Foreground = Brushes.Green;
+                checksumResult.Text = "OK - Saved";
+
             }
 
         }
@@ -764,8 +768,8 @@ namespace HawaiBiosReader
             memFrequencyTable.Columns[2].IsReadOnly = false;
             memFrequencyTable.Columns[3].IsReadOnly = true;
             memFrequencyTable.Columns[4].IsReadOnly = true;
-            gpuFrequencyTable.Columns[5].IsReadOnly = true;
-            gpuFrequencyTable.Columns[6].IsReadOnly = false;
+            memFrequencyTable.Columns[5].IsReadOnly = true;
+            memFrequencyTable.Columns[6].IsReadOnly = false;
         }
 
         private void memgpuFrequencyTable_GotFocus(object sender, RoutedEventArgs e)
@@ -815,6 +819,11 @@ namespace HawaiBiosReader
             UVDLimitTable.Columns[4].IsReadOnly = true;
             UVDLimitTable.Columns[5].IsReadOnly = true;
             UVDLimitTable.Columns[6].IsReadOnly = false;
+        }
+
+        private void gpuFrequencyTable_CurrentCellChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }
