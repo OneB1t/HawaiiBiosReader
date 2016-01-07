@@ -600,7 +600,7 @@ namespace HawaiBiosReader
                 saveList(UVDLimitTableData, false);
                 saveList(SAMULimitTableData, false);
                 saveList(fanList, true);
-                saveList(memoryTimingList);
+                saveList(memoryTimingList,false);
                 fixChecksum(true);
                 bw.Write(romStorageBuffer);
 
@@ -658,10 +658,22 @@ namespace HawaiBiosReader
                     {
                         case "24-bit":
                             {
-                                // this is for 24 bit
-                                romStorageBuffer[savePosition] = (byte)value;
-                                romStorageBuffer[savePosition + 1] = (byte)(value >> 8);
-                                romStorageBuffer[savePosition + 2] = (byte)(value >> 16);
+                                // hack here :D
+                                if (list == memoryTimingList)
+                                {
+                                    value *= 100;
+                                    // this is for 24 bit
+                                    romStorageBuffer[savePosition] = (byte)value;
+                                    romStorageBuffer[savePosition + 1] = (byte)(value >> 8);
+                                    romStorageBuffer[savePosition + 2] = (byte)(value >> 16);
+                                }
+                                else
+                                {
+                                    // this is for 24 bit
+                                    romStorageBuffer[savePosition] = (byte)value;
+                                    romStorageBuffer[savePosition + 1] = (byte)(value >> 8);
+                                    romStorageBuffer[savePosition + 2] = (byte)(value >> 16);
+                                }
                                 break;
                             }
                         case "16-bit":
@@ -851,7 +863,7 @@ namespace HawaiBiosReader
                 memoryTimingList.Add(new GridRowVoltage("0x" + (currentmemoryTimingsPosition + 3).ToString("X"), get8BitValueFromPosition(currentmemoryTimingsPosition + 3, romStorageBuffer), "ms", "8-bit"));
                 for (int i = 0; i < 48; i++)
                 {
-                    memoryTimingList.Add(new GridRowVoltage("0x" + (currentmemoryTimingsPosition + i).ToString("X"), get8BitValueFromPosition(currentmemoryTimingsPosition + i, romStorageBuffer), "ms", "8-bit"));
+                    memoryTimingList.Add(new GridRowVoltage("0x" + (currentmemoryTimingsPosition + i + 4).ToString("X"), get8BitValueFromPosition(currentmemoryTimingsPosition + i + 4, romStorageBuffer), "ms", "8-bit"));
                 }
                 memoryTimingTable.ItemsSource = memoryTimingList;
             }
