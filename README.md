@@ -26,6 +26,7 @@ Binary (exe) file is in Releasebin folder
 * R9 290/R9 290X reference 4GB/8GB
 * R9 295X2 reference (no fantable yet)
 * FirePro W9100
+* FirePro W8100 - partial support
 
 If your card's ROM is not supported, then send me PM or write here on github and I will try to fix it :)
 
