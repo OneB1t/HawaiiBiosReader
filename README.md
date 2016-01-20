@@ -15,12 +15,6 @@ Binary (exe) file is in Releasebin folder
 
 <hr/>
 
-#### Version 2.0
-- read/write all important tables for voltage edit
-- checksum autocorrection
-
-<hr/>
-
 #### Supported cards:
 * R9 390/R9 390X 8GB
 * R9 290/R9 290X reference 4GB/8GB
@@ -43,4 +37,4 @@ If your card's ROM is not supported, then send me PM or write here on github and
 * DPM6 = 977MHz - 1.18750V
 * DPM7 = 1000MHz - 1.21250V
 
-To find your DPM7, please use this tool (by The Stilt): http://1drv.ms/1Hln01F
+To find your DPM7, please use this tool (by The Stilt): http://1drv.ms/1Hln01F or AIDA64
