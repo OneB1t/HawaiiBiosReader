@@ -144,7 +144,7 @@
                         <TextBlock Text="VDDCI States:" Margin="5,10,5,0" Grid.Column="2"
         	               VerticalAlignment="Top" Height="16" />
                         <DataGrid x:Name="vddciTable" Margin="5,30,5,0" Grid.Column="2"
-            	            CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" FontSize="12"/>
+            	            CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="vddciTable_GotFocus" FontSize="12"/>
 
                     </Grid>
 

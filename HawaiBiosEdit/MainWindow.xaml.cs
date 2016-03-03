@@ -183,7 +183,7 @@ namespace HawaiBiosReader
                             readValueFromPositionToList(vddciList, (powerTablePosition + AUXvoltageOffset + 1 + (i * 5)), 1, "Mhz", true, i);
                         }
                         vddciTable.ItemsSource = vddciList;
-
+                        
                         // MEMFreqTable
                         int gpuFrequencyTableCount = getNBitValueFromPosition(8, powerTablePosition + memoryFrequencyTableOffset, romStorageBuffer);
                         for (int i = 0; i < gpuFrequencyTableCount; i++)
@@ -535,6 +535,17 @@ namespace HawaiBiosReader
             fanTable.Columns[1].IsReadOnly = false;
             fanTable.Columns[2].IsReadOnly = true;
             fanTable.Columns[3].IsReadOnly = true;
+        }
+
+        private void vddciTable_GotFocus(object sender, RoutedEventArgs e)
+        {
+            vddciTable.Columns[0].IsReadOnly = true;
+            vddciTable.Columns[1].IsReadOnly = true;
+            vddciTable.Columns[2].IsReadOnly = false;
+            vddciTable.Columns[3].IsReadOnly = true;
+            vddciTable.Columns[4].IsReadOnly = true;
+            vddciTable.Columns[5].IsReadOnly = true;
+            vddciTable.Columns[6].IsReadOnly = false;
         }
 
         private void gpuFrequencyTable_GotFocus(object sender, RoutedEventArgs e)
