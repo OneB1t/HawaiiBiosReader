@@ -93,8 +93,8 @@
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBox x:Name="checksumResult" Text="" Margin="10,206,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
-                    <TextBlock Text="!!!RESET MSI AFTERBURNER SETTINGS BEFORE FLASHING CAN CAUSE OVERVOLT IN SOME CASES!!!" Margin="10,10,0,0" 
-                    	VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2" Width="535" Height="30" Foreground="Red" />
+                    <TextBlock Text="!!!RESET OVERCLOCKING SOFTWARE SETTINGS BEFORE FLASHING OR IT CAN CAUSE OVERVOLT!!!" Margin="0" 
+                    	VerticalAlignment="Top" Grid.ColumnSpan="2" Width="535" Height="30" Foreground="Red" HorizontalAlignment="Center" Padding="0,10,0,0" />
 
                 </Grid>
             </TabItem>
@@ -105,51 +105,66 @@
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="GPU Clock 1:" Margin="19,29,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="GPU Clock 2:" Margin="19,48,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="GPU Clock 3:" Margin="19,67,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="GPU Clock 1:" Margin="0,29,0,0"
+                               VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                        <TextBlock Text="GPU Clock 2:" Margin="0,48,0,0"
+                               VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                        <TextBlock Text="GPU Clock 3:" Margin="0,67,0,0"
+                               VerticalAlignment="Top" TextAlignment="Right" Height="16" />
 
-                    <TextBlock Text="MEM Clock 1:" Margin="19,86,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left"  />
-                    <TextBlock Text="MEM Clock 2:" Margin="19,105,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="MEM Clock 3:" Margin="19,124,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <DataGrid Name="memgpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" ColumnWidth="*" GotFocus="memgpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="102,8,279,104" FontSize="12" Grid.ColumnSpan="2" />
-                    <TextBlock Text="GPU Max Clock:" Margin="10,10,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
-                    <TextBox x:Name="gpuMaxClock" Text="" Margin="101,8,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="173" 
-                             IsReadOnly="True" Grid.Column="1"/>
-                    <TextBlock Text="MEM Max Clock:" Margin="10,33,0,0" 
-                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
-                    <TextBox x:Name="memMaxClock" Text="" Margin="100,33,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="173" 
-                             IsReadOnly="True" Grid.Column="1"/>
+                        <TextBlock Text="MEM Clock 1:" Margin="0,86,0,0"
+                               VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                        <TextBlock Text="MEM Clock 2:" Margin="0,105,0,0"
+                               VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                        <TextBlock Text="MEM Clock 3:" Margin="0,124,0,0"
+                               VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                        <TextBlock Text="TDP Max:" Margin="0,143,0,0"
+                    	    VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                        <TextBlock Text="Power limit:" Margin="0,162,0,0"
+                    	    VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                        <TextBlock Text="TDC limit:" Margin="0,181,0,0"
+                    	    VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                        <TextBlock Text="Max. ASIC Temp.:" Margin="0,200,0,0"
+        	               VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                        <DataGrid Name="memgpuFrequencyTable" Margin="5,2,5,0" Grid.Column="1"
+                                  CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="memgpuFrequencyTable_GotFocus" FontSize="12"/>
 
-                    <TextBlock Text="GPU Freq Table:" Margin="250,260,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2" />
-                    <DataGrid Name="gpuFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="gpuFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="0,278,0,233" Grid.RowSpan="2" FontSize="10" ColumnWidth="*" Grid.ColumnSpan="2" CurrentCellChanged="gpuFrequencyTable_CurrentCellChanged" />
-                    <TextBlock Text="MEM Freq Table:" Margin="250,115,0,0"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Grid.ColumnSpan="2" />
-                    <DataGrid Name="memFrequencyTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memFrequencyTable_GotFocus" CanUserReorderColumns="False" Margin="-1,0,0,34" FontSize="10" ColumnWidth="*" Grid.Row="1" Height="176" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-                    <TextBlock Text="TDP Max:" Margin="19,143,0,0"
-                    	VerticalAlignment="Top" HorizontalAlignment="Left"  />
-                    <TextBlock Text="Power limit:" Margin="19,163,0,0"
-                    	VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock Text="TDC limit:" Margin="19,183,0,0"
-                    	VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                    <TextBlock Text="AUX voltage:" Margin="19,200,0,0"
-        	VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                        <TextBlock Text="VDDCI States:" Margin="5,10,5,0" Grid.Column="2"
+        	               VerticalAlignment="Top" Height="16" />
+                        <DataGrid x:Name="vddciTable" Margin="5,30,5,0" Grid.Column="2"
+            	            CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" FontSize="12"/>
+
+                    </Grid>
+
+                    <TextBlock Text="GPU Freq Table:" Margin="10,10,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" />
+                    <DataGrid Name="gpuFrequencyTable" Margin="10,35,10,10" Grid.Row="1"
+                              CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="gpuFrequencyTable_GotFocus" FontSize="11"/>
+                    <TextBlock Text="GPU Max Clock:" Margin="300,10,0,0" Grid.Row="1"
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Height="16" Width="91" />
+                    <TextBox x:Name="gpuMaxClock" Text="" Margin="396,10,10,0" Grid.Row="1"
+                             VerticalAlignment="Top" IsReadOnly="True" Height="18"/>
+
+                    <TextBlock Text="MEM Freq Table:" Margin="10,10,0,0"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="2" />
+                    <DataGrid Name="memFrequencyTable" Margin="10,35,10,10" Grid.Row="2"
+                              CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="memFrequencyTable_GotFocus" FontSize="11"/>
+                    <TextBlock Text="MEM Max Clock:" Margin="300,10,0,0" Grid.Row="2"
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Height="16" Width="91" />
+                    <TextBox x:Name="memMaxClock" Text="" Margin="396,10,10,0" Grid.Row="2"
+                             VerticalAlignment="Top" IsReadOnly="True" Height="18"/>
 
                 </Grid>
             </TabItem>
@@ -167,56 +182,61 @@
                     </Grid.ColumnDefinitions>
 
 
-                    <TextBlock Text="StartVCELimitTable:" Margin="10,9,0,0"
+                    <TextBlock Text="StartVCELimitTable:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <DataGrid Name="VCELimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,31,0,10" FontSize="11" GotFocus="VCELimitTable_GotFocus" ColumnWidth="*"/>
+                    <DataGrid Name="VCELimitTable" Margin="10,30,0,0"
+                              CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="VCELimitTable_GotFocus" FontSize="10"/>
 
                     <TextBlock Text="StartSAMULimitTable:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" />
-                    <DataGrid Name="SAMULimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,26,0,15" FontSize="11" GotFocus="SAMULimitTable_GotFocus" Grid.Row="1" ColumnWidth="*"/>
-                    <DataGrid Name="ACPLimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,31,0,9" FontSize="11" GotFocus="ACPLimitTable_GotFocus" Grid.Column="1" ColumnWidth="*" />
+                    <DataGrid Name="SAMULimitTable" Margin="10,30,0,0" Grid.Row="1"
+                              CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="SAMULimitTable_GotFocus" FontSize="10"/>
+
                     <TextBlock Text="StartACPLimitTable:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
-
-
-
+                    <DataGrid Name="ACPLimitTable" Margin="10,30,0,0" Grid.Column="1"
+                              CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="ACPLimitTable_GotFocus" FontSize="10"/>
 
                     <TextBlock Text="StartUVDLimitTable:" Margin="10,10,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
-                    <DataGrid Name="UVDLimitTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" CanUserReorderColumns="False" Margin="0,26,0,15" FontSize="11" GotFocus="UVDLimitTable_GotFocus" Grid.Row="1" Grid.Column="1" ColumnWidth="*"/>
-
+                    <DataGrid Name="UVDLimitTable" Margin="10,30,0,0" Grid.Column="1" Grid.Row="1"
+                             CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="UVDLimitTable_GotFocus" FontSize="10"/>
 
                 </Grid>
             </TabItem>
+
             <TabItem Header="Fan profile">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="47*"/>
-                        <ColumnDefinition Width="24*"/>
+                        <ColumnDefinition Width="99*"/>
+                        <ColumnDefinition Width="185*"/>
                     </Grid.ColumnDefinitions>
-
-                    <DataGrid Name="fanTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="fanTable_GotFocus" CanUserReorderColumns="False" Margin="108,21,18,343" FontSize="11" RenderTransformOrigin="0.5,0.5" ColumnWidth="*"/>
-                    <TextBlock Text="Fan speed 1:" Margin="42,115,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" />
-                    <TextBlock Text="Fan speed 2:" Margin="42,133,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
-                    <TextBlock Text="Fan speed 3:" Margin="42,152,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="2.007,4.887" FontSize="10"/>
-                    <TextBlock Text="Temp. target 1:" Margin="29,62,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
-                    <TextBlock Text="Temp. target 2:" Margin="29,80,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
-                    <TextBlock Text="Temp. target 3:" Margin="29,98,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10"/>
-                    <TextBlock Text="Max temp.:" Margin="49,170,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="1.194,0.689" />
-                    <TextBlock Text="Temp. hysteresis:" Margin="19,42,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="0.378,-0.961" />
-                    <TextBlock Text="PWM Fan max.:" Margin="27,206,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="0.378,-0.961" />
-                    <TextBlock Text="Fan control type:" Margin="18,188,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="0.378,-0.961" />
+                    <TextBlock Text="Temp. hysteresis:" Margin="0,29,0,0"
+                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                    <TextBlock Text="Temp. target 1:" Margin="0,48,0,0"
+                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                    <TextBlock Text="Temp. target 2:" Margin="0,67,0,0"
+                                  VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                    <TextBlock Text="Temp. target 3:" Margin="0,86,0,0"
+                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                    <TextBlock Text="Fan speed 1:" Margin="0,105,0,0"
+                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                    <TextBlock Text="Fan speed 2:" Margin="0,124,0,0"
+                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                    <TextBlock Text="Fan speed 3:" Margin="0,143,0,0"
+                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                    <TextBlock Text="Max temp.:" Margin="0,162,0,0"
+                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                    <TextBlock Text="Fan control type:" Margin="0,181,0,0"
+                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                    <TextBlock Text="PWM Fan max.:" Margin="0,200,0,0"
+                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
+                    <DataGrid Name="fanTable" Margin="5,2,5,441" Grid.Column="1"
+                              CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="fanTable_GotFocus" FontSize="12"/>
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Memory Timing">
-                <Grid>
-                    <DataGrid Name="memoryTimingTable" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Azure" GotFocus="memoryTimingTable_GotFocus" CanUserReorderColumns="False" Margin="147,0,171,10" ColumnWidth="*" RenderTransformOrigin="0.5,0.5" FontSize="10"/>
-                    <TextBlock Margin="17,28,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" RenderTransformOrigin="0.378,-0.961" Height="17" ><Run Text="Frequency strap selector"/><LineBreak/><Run/></TextBlock>
-                    <ComboBox x:Name="memStrapSelector" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="17,50,0,0" FontSize="12" Loaded="memStrapSelector_Loaded" SelectionChanged="memStrapSelector_SelectionChanged"/>
 
-                </Grid>
-            </TabItem>
             <TabItem Header="About">
                 <Grid>
                     <TextBlock Text="Source code available at: https://github.com/OneB1t/HawaiiBiosReader" Margin="30" VerticalAlignment="Top" HorizontalAlignment="Center" />
@@ -225,7 +245,6 @@
                     <TextBlock x:Name="versionbox" Text="Version: "  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="75" />
                 </Grid>
             </TabItem>
-
         </TabControl>
 
     </Grid>
