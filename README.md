@@ -1,5 +1,6 @@
 # HawaiiBiosReader
 Hawaii Bios Reader Tool for Bios development
+![myimage-alt-tag](http://s14.postimg.org/bvr6rl18x/Bez_n_zvu.png)
 
 Please go to http://forums.guru3d.com/showthread.php?t=400050 for further informations on how to use this tool
 
@@ -15,17 +16,12 @@ Binary (exe) file is in Releasebin folder
 
 <hr/>
 
-#### Version 2.0
-- read/write all important tables for voltage edit
-- checksum autocorrection
-
-<hr/>
-
 #### Supported cards:
 * R9 390/R9 390X 8GB
 * R9 290/R9 290X reference 4GB/8GB
 * R9 295X2 reference (no fantable yet)
 * FirePro W9100
+* FirePro W8100 - partial support
 
 If your card's ROM is not supported, then send me PM or write here on github and I will try to fix it :)
 
@@ -42,4 +38,4 @@ If your card's ROM is not supported, then send me PM or write here on github and
 * DPM6 = 977MHz - 1.18750V
 * DPM7 = 1000MHz - 1.21250V
 
-To find your DPM7, please use this tool (by The Stilt): http://1drv.ms/1Hln01F
+To find your DPM7, please use this tool (by The Stilt): http://1drv.ms/1Hln01F or AIDA64
