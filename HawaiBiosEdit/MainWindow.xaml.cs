@@ -164,7 +164,7 @@ namespace HawaiBiosReader
                                 tdpLimitOffset = 633;
                                 tdcLimitOffset = 635;
                                 powerDeliveryLimitOffset = 645;
-                                fanTableOffset = 14632 + 6;
+                                fanTableOffset = -1;
                                 AUXvoltageOffset = 276;
                                 break;
                             case 662:
@@ -345,7 +345,7 @@ namespace HawaiBiosReader
 
                         populateMemoryTimings(0);
 
-                        if (fanTablePosition > 0)
+                        if (fanTablePosition > 0 && fanTableOffset != -1) // hack
                         {
 
                             fanList.Clear();
@@ -360,6 +360,7 @@ namespace HawaiBiosReader
                             fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 16).ToString("X"), get8BitValueFromPosition(fanTablePosition + 16, romStorageBuffer), "1/0", "8-bit")); //fanControlType
                             fanList.Add(new GridRowVoltage("0x" + (fanTablePosition + 17).ToString("X"), get16BitValueFromPosition(fanTablePosition + 17, romStorageBuffer), "°C", "8-bit")); //pwmFanMax
                             fanTable.ItemsSource = fanList;
+                        }
                             if (powerTableSize == 648)
                             {
                                 gpuMaxClock.Text = "UNKNOWN";
@@ -370,7 +371,6 @@ namespace HawaiBiosReader
                                 readValueFromPosition(gpuMaxClock, fanTablePosition + 33, 1, "Mhz");  // this offset work only for 390X need some polishing for other cards
                                 readValueFromPosition(memMaxClock, fanTablePosition + 37, 1, "Mhz");
                             }
-                        }
                     }
                     fileStream.Close();
                 }
