@@ -4,7 +4,7 @@ Hawaii Bios Reader Tool for Bios development
 
 Please go to http://forums.guru3d.com/showthread.php?t=400050 for further informations on how to use this tool
 
-Binary (exe) file is in Releasebin folder
+Binary (exe) files is in Releasebin folder, [latest realease here](https://github.com/OneB1t/HawaiiBiosReader/raw/master/ReleaseBin/HawaiiBiosReader.exe)
 
 **!!! WARNING !!!**
 
