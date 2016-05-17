@@ -36,42 +36,42 @@ namespace HawaiiBiosReader
             _voltage = voltage;
         }
 
-        public int dpm
+        public int DPM
         {
             get { return _dpm; }
             set { _dpm = value; }
         }
 
-        public String position
+        public String Address
         {
             get { return _position; }
             set { _position = value; }
         }
 
-        public int value
+        public int Value
         {
             get { return _value; }
             set { _value = value; }
         }
-        public String unit
+        public String Units
         {
             get { return _unit; }
             set { _unit = value; }
         }
 
-        public String type
+        public String Lenght
         {
             get { return _type; }
             set { _type = value; }
         }
 
-        public String posvol
+        public String AdrVoltage
         {
             get { return _posvoltage; }
             set { _posvoltage = value; }
         }
 
-        public int vol
+        public int Voltage
         {
             get { return _voltage; }
             set { _voltage = value; }

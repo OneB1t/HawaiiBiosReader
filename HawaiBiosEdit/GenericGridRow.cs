@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HawaiiBiosReader
 {
-    public class GridRowVoltage
+    public class GenericGridRow
     {
         private String _position;
         private int _value;
@@ -14,31 +14,31 @@ namespace HawaiiBiosReader
         private String _type;
 
 
-        public GridRowVoltage(String pos, int val, String un, String type)
+        public GenericGridRow(String pos, int val, String un, String type)
         {
             _position = pos;
             _value = val;
             _unit = un;
             _type = type;
         }
-        public String position
+        public String Address
         {
             get { return _position; }
             set { _position = value; }
         }
 
-        public int value
+        public int Value
         {
             get { return _value; }
             set { _value = value; }
         }
-        public String unit
+        public String Units
         {
             get { return _unit; }
             set { _unit = value; }
         }
 
-        public String type
+        public String Lenght
         {
             get { return _type; }
             set { _type = value; }
