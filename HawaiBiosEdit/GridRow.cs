@@ -59,7 +59,7 @@ namespace HawaiiBiosReader
             set { _unit = value; }
         }
 
-        public String Lenght
+        public String Length
         {
             get { return _type; }
             set { _type = value; }

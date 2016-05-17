@@ -150,7 +150,7 @@
                     <TextBlock Text="GPU Freq Table (voltage edit):" Margin="10,51,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" />
                     <DataGrid Name="gpuFrequencyTable" Margin="10,69,10,205" Grid.Row="1"
-                              CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="gpuFrequencyTable_GotFocus"  FontSize="11" ToolTip="For 3D voltage change edit DPM7 state from EVV (65xxx) to hardcoded value (1300 for 1.3v)" Grid.RowSpan="2"/>
+                              CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="gpuFrequencyTable_GotFocus" RowEditEnding="gpuFrequencyTable_RowEditEnding"  FontSize="11" ToolTip="For 3D voltage change edit DPM7 state from EVV (65xxx) to hardcoded value (1300 for 1.3v)" Grid.RowSpan="2"/>
                     <TextBlock Text="GPU Max Clock:" Margin="426,70,0,0"
                                    VerticalAlignment="Top" HorizontalAlignment="Left" Height="16" Width="91" />
                     <TextBox x:Name="gpuMaxClock" Text="" Margin="396,90,10,0"
@@ -159,7 +159,7 @@
                     <TextBlock Text="MEM Freq Table (voltage edit):" Margin="10,24,0,0"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="2" />
                     <DataGrid Name="memFrequencyTable" Margin="10,44,10,1" Grid.Row="2"
-                              CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="memFrequencyTable_GotFocus" FontSize="11" ToolTip="For 3D voltage change edit DPM7 state from EVV (65xxx) to hardcoded value (1300 for 1.3v)"/>
+                              CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="memFrequencyTable_GotFocus" RowEditEnding="memFrequencyTable_RowEditEnding" FontSize="11" ToolTip="For 3D voltage change edit DPM7 state from EVV (65xxx) to hardcoded value (1300 for 1.3v)"/>
                     <TextBlock Text="MEM Max Clock:" Margin="426,10,0,0"
                                    VerticalAlignment="Top" HorizontalAlignment="Left" Height="16" Width="91" />
                     <TextBox x:Name="memMaxClock" Text="" Margin="396,30,10,0"

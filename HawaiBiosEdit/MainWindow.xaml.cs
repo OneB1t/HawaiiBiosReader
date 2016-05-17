@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using HawaiiBiosReader;
+using System.Data;
 
 namespace HawaiBiosReader
 {
@@ -19,6 +20,7 @@ namespace HawaiBiosReader
 
         ObservableCollection<GenericGridRow> gpumemFrequencyListAndPowerLimit = new ObservableCollection<GenericGridRow>();
         ObservableCollection<GenericGridRow> fanList = new ObservableCollection<GenericGridRow>();
+        ObservableCollection<GenericGridRow> vrmList = new ObservableCollection<GenericGridRow>();
 
         ObservableCollection<GridRow> vddciList = new ObservableCollection<GridRow>();
         ObservableCollection<GridRow> gpuFrequencyList = new ObservableCollection<GridRow>();
@@ -251,6 +253,9 @@ namespace HawaiBiosReader
                         fanList.Add(new GenericGridRow("0x" + (fanTablePosition + 16).ToString("X"), getNBitValueFromPosition(8, fanTablePosition + 16, romStorageBuffer), "1/0", "8-bit")); //fanControlType
                         fanList.Add(new GenericGridRow("0x" + (fanTablePosition + 17).ToString("X"), getNBitValueFromPosition(16, fanTablePosition + 17, romStorageBuffer), "%", "8-bit")); //pwmFanMax
                         fanTable.ItemsSource = fanList;
+                        
+                        // VRM list
+                        
 
                         // this is here as hackfix to show which columns can be edited...
                         switch(tabControl1.SelectedIndex)
@@ -475,7 +480,7 @@ namespace HawaiBiosReader
                 }
                 if (int.TryParse(row.Address, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out savePosition))
                 {
-                    switch (row.Lenght)
+                    switch (row.Length)
                     {
                         case "24-bit":
                             {
@@ -529,7 +534,7 @@ namespace HawaiBiosReader
                 }
                 if (int.TryParse(row.Address, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out savePosition))
                 {
-                    switch (row.Lenght)
+                    switch (row.Length)
                     {
                         case "24-bit":
                             {
@@ -570,6 +575,24 @@ namespace HawaiBiosReader
                     entireColumn.Background = Brushes.LightGreen;
                 }
             }
+        }
+        void synchronizeValue(DataGridRowEditEndingEventArgs e, DataGrid grid)
+        {
+            Action action = delegate
+            {
+                int voltage = (e.Row.Item as GridRow).Voltage;
+                foreach (GridRow row in grid.Items)
+                {
+                    if (row.DPM == (e.Row.DataContext as GridRow).DPM)
+                    {
+                        row.Voltage = voltage;
+                        grid.Items.Refresh();
+                        break;
+                    }
+                }                
+            };
+            Dispatcher.BeginInvoke(action, System.Windows.Threading.DispatcherPriority.Background);
+
         }
         // this is here because of bug with tabs and grids thanks microsoft
         private void fanTable_GotFocus(object sender, RoutedEventArgs e)
@@ -687,6 +710,15 @@ namespace HawaiBiosReader
             UVDLimitTable.Columns[5].IsReadOnly = true;
             UVDLimitTable.Columns[6].IsReadOnly = false;
             colorColumn(UVDLimitTable, 6);
+        }
+        private void gpuFrequencyTable_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            synchronizeValue(e,memFrequencyTable);
+        }
+
+        private void memFrequencyTable_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            synchronizeValue(e, gpuFrequencyTable);
         }
     }
 }
