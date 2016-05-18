@@ -242,31 +242,14 @@
                         <ColumnDefinition Width="99*"/>
                         <ColumnDefinition Width="185*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Smth:" Margin="0,29,0,0"
-                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
-                    <TextBlock Text="Smth 2:" Margin="0,48,0,0"
-                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
-                    <TextBlock Text="Smth 3" Margin="0,67,0,0"
-                                  VerticalAlignment="Top" TextAlignment="Right" Height="16" />
-                    <TextBlock Text="Smth 4:" Margin="0,86,0,0"
-                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
-                    <TextBlock Text="Smth 5:" Margin="0,105,0,0"
-                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
-                    <TextBlock Text="Smth 6:" Margin="0,124,0,0"
-                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
-                    <TextBlock Text="Smth 7:" Margin="0,143,0,0"
-                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
-                    <TextBlock Text="Smth 8:" Margin="0,162,0,0"
-                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
-                    <TextBlock Text="Smth 9:" Margin="0,181,0,0"
-                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
-                    <TextBlock Text="Smth 10:" Margin="0,200,0,0"
-                                   VerticalAlignment="Top" TextAlignment="Right" Height="16" />
-                    <DataGrid Name="VRMSettingTable" Margin="5,2,5,441" Grid.Column="1"
-                              CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="vrmSettingsTable_GotFocus" FontSize="12"/>
+                    <TextBlock Text="!!!MESSING WITH THIS CAN DESTROY YOUR CARD !!!" Margin="109,10,150,0" 
+            	VerticalAlignment="Top" Width="309" Height="30" Foreground="Red" HorizontalAlignment="Center" Padding="0,10,0,0" Grid.ColumnSpan="2" />
+                    <DataGrid Name="VRMSettingTable" Margin="10,64,10,379"
+                              CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="vrmSettingsTable_GotFocus" FontSize="12" Grid.ColumnSpan="2"/>
+                    <TextBlock Margin="21,327,42,0" 
+                    	VerticalAlignment="Top" Width="505" Height="338" Foreground="Black" HorizontalAlignment="Center" Padding="5,0,0,0" Grid.ColumnSpan="2" ><Run Text="If value is not in table above your BIOS does not use this value."/><LineBreak/><Run Text="All values are decimal"/><Run Text="."/><LineBreak/><Run/><LineBreak/><Run Text="fSW (VRM switching frequency)"/><Run Text=" values"/><Run Text=":"/><LineBreak/><Run Text="240 = 200kHz"/><LineBreak/><Run Text="160"/><Run Text=" "/><Run Text="= 300kHz"/><LineBreak/><Run Text="120"/><Run Text=" "/><Run Text="= 400kHz"/><LineBreak/><Run Text="96"/><Run Text="   "/><Run Text="= 500kHz (default value)"/><LineBreak/><Run Text="80 "/><Run Text="  "/><Run Text="= 600kHz"/><LineBreak/><Run Text="60"/><Run Text="   "/><Run Text="= 800kHz"/><LineBreak/><Run Text="48"/><Run Text="   "/><Run Text="= 1000"/><Run Text="kHz"/><LineBreak/><Run/><LineBreak/><Run Text="Also on cards which have doubled VRM phases the fSW must be doubled. So in case you"/><LineBreak/><Run Text="want a doubled VRM to run at 400kHz you must set the fSW to 800kHz. Same applies for"/><LineBreak/><Run Text="quadrupled phases, the effective fSW is the controller fSW divider by four. Before tampering"/><LineBreak/><Run Text="with any of these settings, you should check what kind of configuration does your card use. "/><LineBreak/><Run Text="All MBA (reference) boards use native phases."/></TextBlock>
+                </Grid>
 
-                </Grid>        
-                              
             </TabItem>
 
             <TabItem Header="About">
@@ -277,6 +260,7 @@
                     <TextBlock x:Name="versionbox" Text="Version: "  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="75" />
                 </Grid>
             </TabItem>
+
         </TabControl>
 
     </Grid>

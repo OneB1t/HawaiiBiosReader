@@ -99,7 +99,7 @@ namespace HawaiBiosReader
                 SAMULimitTableData.Clear();
                 ACPLimitTableData.Clear();
                 fanList.Clear();
-                VRMSettingsTableData.Clear();
+                vrmList.Clear();
 
                 // Open the selected file to read.
                 System.IO.Stream fileStream = openFileDialog.OpenFile();
@@ -253,12 +253,47 @@ namespace HawaiBiosReader
                         fanList.Add(new GenericGridRow("0x" + (fanTablePosition + 16).ToString("X"), getNBitValueFromPosition(8, fanTablePosition + 16, romStorageBuffer), "1/0", "8-bit")); //fanControlType
                         fanList.Add(new GenericGridRow("0x" + (fanTablePosition + 17).ToString("X"), getNBitValueFromPosition(16, fanTablePosition + 17, romStorageBuffer), "%", "8-bit")); //pwmFanMax
                         fanTable.ItemsSource = fanList;
-                        
+
                         // VRM list
-                        
+                        vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + 6).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + 6, romStorageBuffer), "size", "16-bit"));
+                        for(int i= 0; i < getNBitValueFromPosition(16, gpuVRMTablePosition + 6, romStorageBuffer);i = i+ 2) // size of vrm table
+                        {
+                            switch (getNBitValueFromPosition(16, gpuVRMTablePosition + 6 + i, romStorageBuffer))
+                            {
+                                case 0x22: // VRM switching VDDC
+                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x22 - Loop 1, VDDC", "16-bit"));
+                                    break;
+                                case 0x23: // VRM switching VDDCI
+                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x23 - Loop 2, VDDCI", "16-bit"));
+                                    break;
+                                case 0x26:
+                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x26 - hidden VDDC/VDDCI", "16-bit"));
+                                    break;
+                                case 0x33:
+                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x33 - unknown", "16-bit"));
+                                    break;
+                                case 0x34:
+                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x34 - unknown", "16-bit"));
+                                    break;
+                                case 0x3D:
+                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x3D - VDDCR Limit", "16-bit"));
+                                    break;
+                                case 0x38:
+                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x38 - LLC ", "16-bit"));
+                                    break;
+                                case 0x8D:
+                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x8D - VDDC Offset", "16-bit"));
+                                    break;
+                                case 0x8E:
+                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x8E - VDDCI Offset", "16-bit"));
+                                    break;
+                            }
+                        }
+                        VRMSettingTable.ItemsSource = vrmList;
+
 
                         // this is here as hackfix to show which columns can be edited...
-                        switch(tabControl1.SelectedIndex)
+                        switch (tabControl1.SelectedIndex)
                         {
                             case 1:
                                 memgpuFrequencyTable.UpdateLayout();
@@ -427,6 +462,7 @@ namespace HawaiBiosReader
                 saveList(UVDLimitTableData, false);
                 saveList(SAMULimitTableData, false);
                 saveList(fanList, true);
+                saveList(vrmList, false);
                 fixChecksum(true);
                 bw.Write(romStorageBuffer);
 
@@ -605,10 +641,10 @@ namespace HawaiBiosReader
         }
         private void vrmSettingsTable_GotFocus(object sender, RoutedEventArgs e)
         {
-            fanTable.Columns[0].IsReadOnly = true;
-            fanTable.Columns[1].IsReadOnly = false;
-            fanTable.Columns[2].IsReadOnly = true;
-            fanTable.Columns[3].IsReadOnly = true;
+            VRMSettingTable.Columns[0].IsReadOnly = true;
+            VRMSettingTable.Columns[1].IsReadOnly = false;
+            VRMSettingTable.Columns[2].IsReadOnly = true;
+            VRMSettingTable.Columns[3].IsReadOnly = true;
             colorColumn(VRMSettingTable, 1);
         }
 
