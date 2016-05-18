@@ -20,7 +20,7 @@ namespace HawaiBiosReader
 
         ObservableCollection<GenericGridRow> gpumemFrequencyListAndPowerLimit = new ObservableCollection<GenericGridRow>();
         ObservableCollection<GenericGridRow> fanList = new ObservableCollection<GenericGridRow>();
-        ObservableCollection<GenericGridRow> vrmList = new ObservableCollection<GenericGridRow>();
+        ObservableCollection<VRMGrid> vrmList = new ObservableCollection<VRMGrid>();
 
         ObservableCollection<GridRow> vddciList = new ObservableCollection<GridRow>();
         ObservableCollection<GridRow> gpuFrequencyList = new ObservableCollection<GridRow>();
@@ -255,37 +255,37 @@ namespace HawaiBiosReader
                         fanTable.ItemsSource = fanList;
 
                         // VRM list
-                        vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + 6).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + 6, romStorageBuffer), "size", "16-bit"));
-                        for(int i= 0; i < getNBitValueFromPosition(16, gpuVRMTablePosition + 6, romStorageBuffer);i = i+ 2) // size of vrm table
+                        vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + 6).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + 6, romStorageBuffer), "size", "16-bit"));
+                        for (int i = 0; i < getNBitValueFromPosition(16, gpuVRMTablePosition + 6, romStorageBuffer); i = i + 2) // size of vrm table
                         {
                             switch (getNBitValueFromPosition(16, gpuVRMTablePosition + 6 + i, romStorageBuffer))
                             {
                                 case 0x22: // VRM switching VDDC
-                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x22 - Loop 1, VDDC", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x22 - Loop 1, VDDC", "16-bit"));
                                     break;
                                 case 0x23: // VRM switching VDDCI
-                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x23 - Loop 2, VDDCI", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x23 - Loop 2, VDDCI", "16-bit"));
                                     break;
                                 case 0x26:
-                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x26 - hidden VDDC/VDDCI", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x26 - hidden VDDC/VDDCI", "16-bit"));
                                     break;
                                 case 0x33:
-                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x33 - unknown", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x33 - unknown", "16-bit"));
                                     break;
                                 case 0x34:
-                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x34 - unknown", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x34 - unknown", "16-bit"));
                                     break;
                                 case 0x3D:
-                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x3D - VDDCR Limit", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x3D - VDDCR Limit", "16-bit"));
                                     break;
                                 case 0x38:
-                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x38 - LLC ", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x38 - LLC ", "16-bit"));
                                     break;
                                 case 0x8D:
-                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x8D - VDDC Offset", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x8D - VDDC Offset", "16-bit"));
                                     break;
                                 case 0x8E:
-                                    vrmList.Add(new GenericGridRow("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x8E - VDDCI Offset", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x8E - VDDCI Offset", "16-bit"));
                                     break;
                             }
                         }
@@ -313,7 +313,7 @@ namespace HawaiBiosReader
                             case 4:
                                 VRMSettingTable.UpdateLayout();
                                 VRMSettingTable.Focus();
-                                vrmSettingsTable_GotFocus(null,null);
+                                vrmSettingsTable_GotFocus(null, null);
                                 break;
                         }
                     }
@@ -550,6 +550,47 @@ namespace HawaiBiosReader
                 }
             }
         }
+        private void saveList(ObservableCollection<VRMGrid> list, bool isFrequency = false)
+        {
+            foreach (VRMGrid row in list)
+            {
+                int savePosition;
+                int value = row.Value;
+                if (row.Address.StartsWith("0x", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    row.Address = row.Address.Substring(2);
+                }
+                if (isFrequency) // there is hack for 16 bit need fix
+                {
+                    value *= 100;
+                }
+                if (int.TryParse(row.Address, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out savePosition))
+                {
+                    switch (row.Length)
+                    {
+                        case "24-bit":
+                            {
+                                // this is for 24 bit
+                                romStorageBuffer[savePosition] = (byte)value;
+                                romStorageBuffer[savePosition + 1] = (byte)(value >> 8);
+                                romStorageBuffer[savePosition + 2] = (byte)(value >> 16);
+                                break;
+                            }
+                        case "16-bit":
+                            {
+                                romStorageBuffer[savePosition] = (byte)row.Value;
+                                romStorageBuffer[savePosition + 1] = (byte)(row.Value >> 8);
+                                break;
+                            }
+                        case "8-bit":
+                            {
+                                romStorageBuffer[savePosition] = (byte)row.Value;
+                                break;
+                            }
+                    }
+                }
+            }
+        }
         private void saveList(ObservableCollection<GridRow> list, bool isFrequency = false)
         {
             foreach (GridRow row in list)
@@ -625,7 +666,7 @@ namespace HawaiBiosReader
                         grid.Items.Refresh();
                         break;
                     }
-                }                
+                }
             };
             Dispatcher.BeginInvoke(action, System.Windows.Threading.DispatcherPriority.Background);
 
@@ -642,10 +683,10 @@ namespace HawaiBiosReader
         private void vrmSettingsTable_GotFocus(object sender, RoutedEventArgs e)
         {
             VRMSettingTable.Columns[0].IsReadOnly = true;
-            VRMSettingTable.Columns[1].IsReadOnly = false;
-            VRMSettingTable.Columns[2].IsReadOnly = true;
+            VRMSettingTable.Columns[1].IsReadOnly = true;
+            VRMSettingTable.Columns[2].IsReadOnly = false;
             VRMSettingTable.Columns[3].IsReadOnly = true;
-            colorColumn(VRMSettingTable, 1);
+            colorColumn(VRMSettingTable, 2);
         }
 
         private void vddciTable_GotFocus(object sender, RoutedEventArgs e)
@@ -749,7 +790,7 @@ namespace HawaiBiosReader
         }
         private void gpuFrequencyTable_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            synchronizeValue(e,memFrequencyTable);
+            synchronizeValue(e, memFrequencyTable);
         }
 
         private void memFrequencyTable_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
