@@ -46,46 +46,54 @@
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
                     <TextBox x:Name="deviceID" Text="" Margin="10,68,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" />
+                    <TextBlock Text="SSVID:" Margin="10,142,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
+                    <TextBox x:Name="SSVID" Text="" Margin="10,160,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" Grid.Column="1" />
+                    <TextBlock Text="SSDID:" Margin="10,188,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
+                    <TextBox x:Name="SSDID" Text="" Margin="10,206,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" Grid.Column="1" />
                     <TextBlock Text="VENDOR ID:" Margin="10,97,0,0" FontSize="10"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
                     <TextBox x:Name="vendorID" Text="" Margin="10,115,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" />
-                    <TextBlock Text="Product Data:" Margin="10,147,0,0" FontSize="10"
+                    <TextBlock Text="Product Data:" Margin="193,55,0,0" FontSize="10"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
-                    <TextBox x:Name="productData" Text="" Margin="10,160,0,0"
+                    <TextBox x:Name="productData" Text="" Margin="193,68,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" />
-                    <TextBlock Text="Structure Lenght:" Margin="10,190,0,0" FontSize="10"
+                    <TextBlock Text="Structure Lenght:" Margin="193,98,0,0" FontSize="10"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
-                    <TextBox x:Name="structureLenght" Text="" Margin="10,206,0,0"
+                    <TextBox x:Name="structureLenght" Text="" Margin="193,114,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" />
-                    <TextBlock Text="Structure Revision:" Margin="10,229,0,0" FontSize="10"
+                    <TextBlock Text="Structure Revision:" Margin="193,137,0,0" FontSize="10"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
-                    <TextBox x:Name="structureRevision" Text="" Margin="10,247,0,0"
+                    <TextBox x:Name="structureRevision" Text="" Margin="193,155,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" />
-                    <TextBlock Text="Class Code:" Margin="10,275,0,0" FontSize="10"
+                    <TextBlock Text="Class Code:" Margin="193,183,0,0" FontSize="10"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
-                    <TextBox x:Name="classCode" Text="" Margin="10,288,0,0"
+                    <TextBox x:Name="classCode" Text="" Margin="193,196,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" />
+                    <TextBlock Text="Image Lenght:" Margin="193,229,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
+                    <TextBox x:Name="imageLenght" Text="" Margin="193,247,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" />
+                    <TextBlock Text="RevisionLevel:" Margin="192,275,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
+                    <TextBox x:Name="revisionLevel" Text="" Margin="193,293,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" />
+                    <TextBlock Text="Code Type:" Margin="192,321,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
+                    <TextBox x:Name="codeType" Text="" Margin="192,339,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" Grid.RowSpan="2" />
-                    <TextBlock Text="Image Lenght:" Margin="10,24,0,0" FontSize="10"
+                    <TextBlock Text="Indicator:" Margin="193,24,0,0" FontSize="10"
                                VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
-                    <TextBox x:Name="imageLenght" Text="" Margin="10,42,0,0"
+                    <TextBox x:Name="indicator" Text="" Margin="192,42,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" Grid.Row="1" />
-                    <TextBlock Text="RevisionLevel:" Margin="9,70,0,0" FontSize="10"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
-                    <TextBox x:Name="revisionLevel" Text="" Margin="10,88,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" Grid.Row="1" />
-                    <TextBlock Text="Code Type:" Margin="9,116,0,0" FontSize="10"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
-                    <TextBox x:Name="codeType" Text="" Margin="9,134,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" Grid.Row="1" />
-                    <TextBlock Text="Indicator:" Margin="10,162,0,0" FontSize="10"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
-                    <TextBox x:Name="indicator" Text="" Margin="9,180,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" Grid.Row="1" />
-                    <TextBlock Text="Reserved:" Margin="9,208,0,0" FontSize="10"
-                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
-                    <TextBox x:Name="reserved" Text="" Margin="9,226,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Column="1" Grid.Row="1" />
+                    <TextBlock Text="Reserved:" Margin="192,70,0,0" FontSize="10"
+                               VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" />
+                    <TextBox x:Name="reserved" Text="" Margin="192,88,0,0"
+                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" Grid.Row="1" Grid.Column="1" />
 
 
                     <TextBlock Text="Checksum control:" Margin="10,188,0,0" FontSize="10"

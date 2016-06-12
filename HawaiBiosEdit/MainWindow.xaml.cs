@@ -166,6 +166,10 @@ namespace HawaiBiosReader
                         powerDeliveryLimitOffset = tdpLimitOffset + 12;
                         tdcLimitOffset = tdpLimitOffset + 2;
 
+                        // SSVID & SSDID
+                        SSVID.Text = getNBitValueFromPosition(16, pciInfoPosition - 12, romStorageBuffer).ToString("X4");
+                        SSDID.Text = getNBitValueFromPosition(16, pciInfoPosition - 14, romStorageBuffer).ToString("X4");
+                        
                         // OverDrive Limits
                         int CCCLimitsPosition = powerTablePosition + getNBitValueFromPosition(16, powerTablePosition + 44, romStorageBuffer);
                         readValueFromPosition(gpuMaxClock, CCCLimitsPosition + 2, 1, "Mhz", true);
@@ -255,37 +259,37 @@ namespace HawaiBiosReader
                         fanTable.ItemsSource = fanList;
 
                         // VRM list
-                        vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + 6).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + 6, romStorageBuffer), "size", "16-bit"));
-                        for (int i = 0; i < getNBitValueFromPosition(16, gpuVRMTablePosition + 6, romStorageBuffer); i = i + 2) // size of vrm table
+                        vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + 6).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + 6, romStorageBuffer), "Table size", "16-bit"));
+                        for (int i = 2; i < getNBitValueFromPosition(16, gpuVRMTablePosition + 6, romStorageBuffer); i = i + 2) // size of vrm table
                         {
                             switch (getNBitValueFromPosition(16, gpuVRMTablePosition + 6 + i, romStorageBuffer))
                             {
                                 case 0x22: // VRM switching VDDC
-                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x22 - Loop 1, VDDC", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x22 fSW 1, VDDC", "16-bit"));
                                     break;
                                 case 0x23: // VRM switching VDDCI
-                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x23 - Loop 2, VDDCI", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x23 fsW 2, VDDCI", "16-bit"));
                                     break;
                                 case 0x26:
-                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x26 - hidden VDDC/VDDCI", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x26 hidden VDDC/VDDCI", "16-bit"));
                                     break;
                                 case 0x33:
-                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x33 - unknown", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x33 VoltageProtection", "16-bit"));
                                     break;
                                 case 0x34:
-                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x34 - unknown", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x34 CurrentProtection", "16-bit"));
                                     break;
                                 case 0x3D:
-                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x3D - VDDCR Limit", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x3D VDDCR Limit", "16-bit"));
                                     break;
                                 case 0x38:
-                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x38 - LLC ", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x38 LLC ", "16-bit"));
                                     break;
                                 case 0x8D:
-                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x8D - VDDC Offset", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x8D VDDC Offset", "16-bit"));
                                     break;
                                 case 0x8E:
-                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x8E - VDDCI Offset", "16-bit"));
+                                    vrmList.Add(new VRMGrid("0x" + (gpuVRMTablePosition + i + 8).ToString("X"), getNBitValueFromPosition(16, gpuVRMTablePosition + i + 8, romStorageBuffer), "0x8E VDDCI Offset", "16-bit"));
                                     break;
                             }
                         }
@@ -463,6 +467,7 @@ namespace HawaiBiosReader
                 saveList(SAMULimitTableData, false);
                 saveList(fanList, true);
                 saveList(vrmList, false);
+                //saveSSVIDDID();
                 fixChecksum(true);
                 bw.Write(romStorageBuffer);
 
@@ -470,6 +475,21 @@ namespace HawaiBiosReader
                 bw.Close();
             }
         }
+
+        private void saveSSVIDDID()
+        {
+            // SSVID
+            var SSVIDBytes = Int32.Parse(SSVID.Text.Substring(0,2));
+            var SSDIDBytes = Int32.Parse(SSDID.Text);
+
+            romStorageBuffer[pciInfoPosition - 12] = (byte)SSVIDBytes;
+            romStorageBuffer[pciInfoPosition - 13] = (byte)(SSVIDBytes >> 8);
+
+            // SSDID
+            romStorageBuffer[pciInfoPosition - 14] = (byte)SSDIDBytes;
+            romStorageBuffer[pciInfoPosition - 15] = (byte)(SSDIDBytes >> 8);
+        }
+
         private void fixChecksum(bool save)
         {
             Byte oldchecksum = romStorageBuffer[33];
