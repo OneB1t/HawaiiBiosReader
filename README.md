@@ -2,7 +2,7 @@
 Hawaii Bios Reader Tool for Bios development
 ![myimage-alt-tag](http://s32.postimg.org/3uwgpwlp1/newversion.png)
 
-Please go to http://forums.guru3d.com/showthread.php?t=400050 for further informations on how to use this tool
+Please go to http://forums.guru3d.com/showthread.php?t=400050 or http://www.overclock.net/t/1561372/hawaii-bios-editing-290-290x-295x2-390-390x for further informations on how to use this tool
 
 Binary (exe) files is in Releasebin folder, [link to the latest release here](https://github.com/OneB1t/HawaiiBiosReader/raw/master/ReleaseBin/HawaiiBiosReader.exe)
 
