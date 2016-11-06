@@ -46,3 +46,6 @@ If your card's ROM is not supported, then send me PM or write here on github and
 | DPM 7 | 1000 Mhz  | 1.21250 V |
 
 To find your DPM7, please use this tool (by The Stilt): http://1drv.ms/1Hln01F or AIDA64
+
+Info about VRM tab for advanced users
+https://docs.google.com/document/d/1WKZDKJlBvmRXwIKE5P-Shzu4iJ6YpuLRqYJr00gdeR0/edit
