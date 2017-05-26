@@ -33,7 +33,7 @@ namespace HawaiBiosReader
 
         Byte[] romStorageBuffer;
 
-        string[] supportedDevIDs = new string[] { "67A0", "67A1", "67A2", "67A8", "67A9", "67AA", "67B0", "67B1", "67B9" };
+        string[] supportedDevIDs = new string[] { "67A0", "67A1", "67A2", "67A8", "67A9", "67AA", "67B0", "67B1", "67B9", "665C", "665D", "6658", "665F" };
 
         // unknown table offsets
         int headerPosition;
@@ -129,11 +129,14 @@ namespace HawaiBiosReader
                     indicator.Text = "0x" + getNBitValueFromPosition(8, pciInfoPosition + 21, romStorageBuffer).ToString("X");
                     reserved.Text = "0x" + getNBitValueFromPosition(16, pciInfoPosition + 22, romStorageBuffer).ToString("X");
 
+                    MessageBoxResult result = MessageBoxResult.Yes;
+
                     if (!supportedDevIDs.Contains(devIDstr))
                     {
-                        MessageBoxResult result = MessageBox.Show("Unsupported ROM", "Error", MessageBoxButton.OK);
+                        result = MessageBox.Show("Unsupported ROM - Continue?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                     }
-                    else
+
+                    if (result == MessageBoxResult.Yes)
                     {
                         powerTableSize = getNBitValueFromPosition(16, powerTablePosition, romStorageBuffer);
                         powerTablesize.Text = powerTableSize.ToString();
