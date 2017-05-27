@@ -20,11 +20,18 @@ Binary (exe) files is in Releasebin folder, [link to the latest release here](ht
 
 #### Supported cards
 
+Generally this editor supports editing BIOS ROMs of the GCN2 generation of GPUs, namely Hawaii and Bonaire.
+
 * R9 390/R9 390X 8GB
 * R9 290/R9 290X reference 4GB/8GB
 * R9 295X2 reference (no fantable yet)
+* R7 360
+* R7 260/R7 260X
+* HD 7790
 * FirePro W9100
 * FirePro W8100 - partial support
+
+If you try to load an unsupported ROM there is an option to continue anyway, use at your own risk.
 
 If your card's ROM is not supported, then send me PM or write here on github and I will try to fix it :)
 
