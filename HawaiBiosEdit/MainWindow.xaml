@@ -101,7 +101,7 @@
                     <TextBox x:Name="checksumResult" Text="" Margin="10,206,0,0"
                              HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsReadOnly="True" />
                     <TextBlock Text="!!!RESET OVERCLOCKING SOFTWARE SETTINGS BEFORE FLASHING OR IT CAN CAUSE OVERVOLT!!!" Margin="0" 
-                    	VerticalAlignment="Top" Grid.ColumnSpan="2" Width="535" Height="30" Foreground="Red" HorizontalAlignment="Center" Padding="0,10,0,0" />
+                    	VerticalAlignment="Top" Grid.ColumnSpan="2" Width="auto" Height="30" Foreground="Red" HorizontalAlignment="Center" Padding="0,10,0,0" />
 
                 </Grid>
             </TabItem>
@@ -161,7 +161,7 @@
                               CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="gpuFrequencyTable_GotFocus" RowEditEnding="gpuFrequencyTable_RowEditEnding"  FontSize="11" ToolTip="For 3D voltage change edit DPM7 state from EVV (65xxx) to hardcoded value (1300 for 1.3v)" Grid.RowSpan="2"/>
                     <TextBlock Text="GPU Max Clock:" Margin="426,70,0,0"
                                    VerticalAlignment="Top" HorizontalAlignment="Left" Height="16" Width="91" />
-                    <TextBox x:Name="gpuMaxClock" Text="" Margin="396,90,10,0"
+                    <TextBox x:Name="gpuMaxClock" Text="" Margin="396,90,10,0" Padding="0,-1,0,0"
                              VerticalAlignment="Top" IsReadOnly="True" Height="18"/>
 
                     <TextBlock Text="MEM Freq Table (voltage edit):" Margin="10,24,0,0"
@@ -170,7 +170,7 @@
                               CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="memFrequencyTable_GotFocus" RowEditEnding="memFrequencyTable_RowEditEnding" FontSize="11" ToolTip="For 3D voltage change edit DPM7 state from EVV (65xxx) to hardcoded value (1300 for 1.3v)"/>
                     <TextBlock Text="MEM Max Clock:" Margin="426,10,0,0"
                                    VerticalAlignment="Top" HorizontalAlignment="Left" Height="16" Width="91" />
-                    <TextBox x:Name="memMaxClock" Text="" Margin="396,30,10,0"
+                    <TextBox x:Name="memMaxClock" Text="" Margin="396,30,10,0" Padding="0,-1,0,0"
                              VerticalAlignment="Top" IsReadOnly="True" Height="18"/>
 
                 </Grid>
@@ -250,12 +250,12 @@
                         <ColumnDefinition Width="99*"/>
                         <ColumnDefinition Width="185*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="!!!MESSING WITH THIS CAN DESTROY YOUR CARD !!!" Margin="109,10,150,0" 
-            	VerticalAlignment="Top" Width="309" Height="30" Foreground="Red" HorizontalAlignment="Center" Padding="0,10,0,0" Grid.ColumnSpan="2" />
+                    <TextBlock Text="!!!MESSING WITH THIS CAN DESTROY YOUR CARD!!!" Margin="107,10,107,0" 
+            	VerticalAlignment="Top" Width="auto" Height="30" Foreground="Red" HorizontalAlignment="Center" Padding="5,10,5,10" Grid.ColumnSpan="2" />
                     <DataGrid Name="VRMSettingTable" Margin="10,64,10,379"
                               CanUserAddRows="False" CanUserResizeRows="False" ColumnWidth="*" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="Azure" GotFocus="vrmSettingsTable_GotFocus" FontSize="12" Grid.ColumnSpan="2"/>
-                    <TextBlock Margin="21,327,42,0" 
-                    	VerticalAlignment="Top" Width="505" Height="338" Foreground="Black" HorizontalAlignment="Center" Padding="5,0,0,0" Grid.ColumnSpan="2" ><Run Text="If value is not in table above your BIOS does not use this value."/><LineBreak/><Run Text="All values are decimal"/><Run Text="."/><LineBreak/><Run/><LineBreak/><Run Text="fSW (VRM switching frequency)"/><Run Text=" values"/><Run Text=":"/><LineBreak/><Run Text="240 = 200kHz"/><LineBreak/><Run Text="160"/><Run Text=" "/><Run Text="= 300kHz"/><LineBreak/><Run Text="120"/><Run Text=" "/><Run Text="= 400kHz"/><LineBreak/><Run Text="96"/><Run Text="   "/><Run Text="= 500kHz (default value)"/><LineBreak/><Run Text="80 "/><Run Text="  "/><Run Text="= 600kHz"/><LineBreak/><Run Text="60"/><Run Text="   "/><Run Text="= 800kHz"/><LineBreak/><Run Text="48"/><Run Text="   "/><Run Text="= 1000"/><Run Text="kHz"/><LineBreak/><Run/><LineBreak/><Run Text="Also on cards which have doubled VRM phases the fSW must be doubled. So in case you"/><LineBreak/><Run Text="want a doubled VRM to run at 400kHz you must set the fSW to 800kHz. Same applies for"/><LineBreak/><Run Text="quadrupled phases, the effective fSW is the controller fSW divider by four. Before tampering"/><LineBreak/><Run Text="with any of these settings, you should check what kind of configuration does your card use. "/><LineBreak/><Run Text="All MBA (reference) boards use native phases."/></TextBlock>
+                    <TextBlock Margin="21,327,21,0" 
+                    	VerticalAlignment="Top" Width="auto" Height="338" Foreground="Black" HorizontalAlignment="Center" Padding="8,0,0,0" Grid.ColumnSpan="2" ><Run Text="If value is not in table above your BIOS does not use this value."/><LineBreak/><Run Text="All values are decimal"/><Run Text="."/><LineBreak/><Run/><LineBreak/><Run Text="fSW (VRM switching frequency)"/><Run Text=" values"/><Run Text=":"/><LineBreak/><Run Text="240 = 200kHz"/><LineBreak/><Run Text="160"/><Run Text=" "/><Run Text="= 300kHz"/><LineBreak/><Run Text="120"/><Run Text=" "/><Run Text="= 400kHz"/><LineBreak/><Run Text="96"/><Run Text="   "/><Run Text="= 500kHz (default value)"/><LineBreak/><Run Text="80 "/><Run Text="  "/><Run Text="= 600kHz"/><LineBreak/><Run Text="60"/><Run Text="   "/><Run Text="= 800kHz"/><LineBreak/><Run Text="48"/><Run Text="   "/><Run Text="= 1000"/><Run Text="kHz"/><LineBreak/><Run/><LineBreak/><Run Text="Also on cards which have doubled VRM phases the fSW must be doubled."/><LineBreak/><Run Text="So in case you want a doubled VRM to run at 400kHz you must set the fSW to 800kHz."/><LineBreak/><Run Text="Same applies for quadrupled phases, the effective fSW is the controller fSW divider by four."/><LineBreak/><Run Text="Before tampering with any of these settings, you should check what kind of configuration"/><LineBreak/><Run Text="does your card use. All MBA (reference) boards use native phases."/></TextBlock>
                 </Grid>
 
             </TabItem>
