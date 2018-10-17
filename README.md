@@ -1,8 +1,9 @@
 # HawaiiBiosReader
 Hawaii Bios Reader Tool for Bios development
-![myimage-alt-tag](http://s32.postimg.org/3uwgpwlp1/newversion.png)
 
-Please go to http://forums.guru3d.com/showthread.php?t=400050 or http://www.overclock.net/t/1561372/hawaii-bios-editing-290-290x-295x2-390-390x for further informations on how to use this tool
+Please go to http://forums.guru3d.com/showthread.php?t=400050
+or http://www.overclock.net/t/1561372/hawaii-bios-editing-290-290x-295x2-390-390x
+for further informations on how to use this tool.
 
 Latest version can be downloaded from the "Releases section". [Download here.](https://github.com/OneB1t/HawaiiBiosReader/releases)
 
@@ -52,7 +53,7 @@ If your card's ROM is not supported, then send me PM or write here on github and
 | DPM 6 |  977 Mhz  | 1.18750 V |
 | DPM 7 | 1000 Mhz  | 1.21250 V |
 
-To find your DPM7, please use this tool (by The Stilt): http://1drv.ms/1Hln01F or AIDA64
+To find your DPM7, please use AIDA64.
 
 Info about VRM tab for advanced users
 https://docs.google.com/document/d/1WKZDKJlBvmRXwIKE5P-Shzu4iJ6YpuLRqYJr00gdeR0/edit
