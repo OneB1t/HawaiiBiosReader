@@ -1,8 +1,8 @@
 # HawaiiBiosReader
 Hawaii Bios Reader Tool for Bios development
 
-Please go to http://forums.guru3d.com/showthread.php?t=400050   
-or http://www.overclock.net/t/1561372/hawaii-bios-editing-290-290x-295x2-390-390x   
+Please go to https://forums.guru3d.com/threads/390x-bios-leaked.400050/ 
+or https://www.overclock.net/threads/hawaii-bios-editing-290-290x-295x2-390-390x.1561372/ 
 for further informations on how to use this tool.
 
 Latest version can be downloaded from the "Releases section". [Download here.](https://github.com/OneB1t/HawaiiBiosReader/releases)
